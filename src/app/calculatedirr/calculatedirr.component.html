@@ -1,0 +1,679 @@
+<!-- RESULTS PAGE — matches reference HTML exactly -->
+<div class="results-page" id="contentToConvert">
+
+  <!-- ── HEADER ── -->
+  <div class="rp-header">
+    <div class="rp-header-top">
+      <div style="display:flex;align-items:flex-start;gap:14px">
+        <div class="rp-green-bar"></div>
+        <div>
+          <h1 class="rp-title">Results</h1>
+          <p class="rp-subtitle">The results calculated according to the values entered.</p>
+        </div>
+      </div>
+      <div class="rp-header-actions noprint">
+        <button class="rp-btn-sm" (click)="startagain()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.9"/></svg>
+          Back
+        </button>
+        <button *ngIf="!loadingSharebtn" class="rp-btn-sm" (click)="emailpopup()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          Share
+        </button>
+        <button *ngIf="loadingSharebtn" class="rp-btn-sm rp-btn-loading"><i class="fa fa-spin fa-spinner"></i></button>
+        <button class="rp-btn-green" (click)="startagain()">Recalculate</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── KPI CARDS ── -->
+  <div class="rp-kpi-row">
+    <!-- Wealth Multiple -->
+    <div class="rp-kpi featured">
+      <div class="rp-kpi-label">YOUR WEALTH MULTIPLE</div>
+      <div class="rp-kpi-inner">
+        <div class="rp-kpi-icon-box rp-kpi-icon-dark">
+          <svg width="26" height="26" viewBox="0 0 48 48" fill="none">
+            <path d="M8 40V24l8-8 8 8 8-12 8 8v20H8z" fill="#132147" opacity="0.3"/>
+            <path d="M10 38V26l6-6 8 8 8-12 6 6v16" stroke="#6b9fd4" stroke-width="2.5" fill="none"/>
+            <circle cx="36" cy="16" r="3" fill="#6b9fd4"/>
+          </svg>
+        </div>
+        <div class="rp-kpi-value">{{wealthMultiple}}x</div>
+      </div>
+      <div class="rp-kpi-note">
+        You Invested
+        <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(-graphInitialInvestmentInHomeCurrency|number:'1.0-0')}}</ng-container>
+        <ng-container *ngIf="homecurrencyText!='INR'">{{-graphInitialInvestmentInHomeCurrency|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+        And Receive
+        <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(TotalReturnOfInvestment-graphInitialInvestmentInHomeCurrency|number:'1.0-0')}}</ng-container>
+        <ng-container *ngIf="homecurrencyText!='INR'">{{TotalReturnOfInvestment-graphInitialInvestmentInHomeCurrency|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+        At Exit
+      </div>
+    </div>
+
+    <!-- Total Profit -->
+    <div class="rp-kpi">
+      <div class="rp-kpi-label">TOTAL PROFIT</div>
+      <div class="rp-kpi-inner">
+        <div class="rp-kpi-icon-box rp-kpi-icon-green">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+            <polyline points="17 6 23 6 23 12"/>
+          </svg>
+        </div>
+        <div class="rp-kpi-value">
+          <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(TotalReturnOfInvestment|number:'1.0-0')}}</ng-container>
+          <ng-container *ngIf="homecurrencyText!='INR'">{{TotalReturnOfInvestment|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+        </div>
+      </div>
+      <div class="rp-kpi-note"><span class="roe-tag">ROE {{returnOnEquity|number:'1.0-0'}}%</span></div>
+    </div>
+
+    <!-- IRR GBP -->
+    <div class="rp-kpi">
+      <div class="rp-kpi-label">IRR (GBP)</div>
+      <div class="rp-kpi-inner">
+        <div class="rp-kpi-icon-box rp-kpi-icon-plain">£</div>
+        <div class="rp-kpi-value">{{IrrInGBP | number:'1.2-2'}}%</div>
+      </div>
+      <div class="rp-kpi-note">Internal Rate Of Return</div>
+    </div>
+
+    <!-- IRR Home Currency -->
+    <div class="rp-kpi">
+      <div class="rp-kpi-label">IRR ( {{homecurrencyText}} )</div>
+      <div class="rp-kpi-inner">
+        <div class="rp-kpi-icon-box rp-kpi-icon-plain">
+          <ng-container *ngIf="homecurrencyText=='INR'">₹</ng-container>
+          <ng-container *ngIf="homecurrencyText!='INR'">{{homecurrencyText}}</ng-container>
+        </div>
+        <div class="rp-kpi-value">{{IrrInHomeCurrency | number:'1.2-2'}}%</div>
+      </div>
+      <div class="rp-kpi-note">Including FX Appreciation</div>
+    </div>
+  </div>
+
+  <!-- ── SCROLLABLE BODY ── -->
+  <div class="rp-body">
+
+    <!-- Section 1: Returns Breakdown + Investment Journey -->
+    <div class="rp-two-col rp-section">
+
+      <!-- Where Your Returns Come From (donut) -->
+      <div class="rp-card">
+        <div class="rp-card-header">
+          <h3>Where Your Returns Come From</h3>
+          <p>Breakdown of
+            <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(TotalReturnOfInvestment|number:'1.0-0')}}</ng-container>
+            <ng-container *ngIf="homecurrencyText!='INR'">{{TotalReturnOfInvestment|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+            total profit
+          </p>
+        </div>
+        <div class="donut-wrap">
+          <canvas id="can" width="270" height="270"></canvas>
+          <div class="donut-legend">
+            <span><i style="background:#3b82f6"></i> Capital Growth &nbsp;{{(capitalAppreciation/makePositive(TotalReturnOfInvestment))*100|number:'1.0-0'}}%</span>
+            <span><i style="background:#8b5cf6"></i> FX Appreciation &nbsp;{{((TotalReturnOfInvestment-capitalAppreciation-RentalIncome)/makePositive(TotalReturnOfInvestment))*100|number:'1.0-0'}}%</span>
+            <span><i style="background:#374151"></i> Net Rental Income &nbsp;{{(RentalIncome/makePositive(TotalReturnOfInvestment))*100|number:'1.0-0'}}%</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Investment Journey -->
+      <div class="rp-card">
+        <div class="rp-card-header">
+          <h3>Investment Journey</h3>
+          <p>From initial outlay to exit value over {{calcData?.investedTenure}} years</p>
+        </div>
+        <div class="journey-items">
+          <div class="journey-row">
+            <div class="journey-row-top">
+              <span class="journey-label">Initial Investment</span>
+              <span class="journey-val">
+                <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(-graphInitialInvestmentInHomeCurrency|number:'1.0-0')}}</ng-container>
+                <ng-container *ngIf="homecurrencyText!='INR'">{{-graphInitialInvestmentInHomeCurrency|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+              </span>
+            </div>
+            <div class="journey-bar-bg"><div class="journey-bar" style="background:#3b82f6;width:60%"></div></div>
+          </div>
+          <div class="journey-row">
+            <div class="journey-row-top">
+              <span class="journey-label">Capital Growth</span>
+              <span class="journey-val">
+                <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(capitalAppreciation|number:'1.0-0')}}</ng-container>
+                <ng-container *ngIf="homecurrencyText!='INR'">{{capitalAppreciation|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+              </span>
+            </div>
+            <div class="journey-bar-bg"><div class="journey-bar" style="background:#22c55e;" [style.width.%]="(capitalAppreciation/makePositive(TotalReturnOfInvestment-graphInitialInvestmentInHomeCurrency))*80"></div></div>
+          </div>
+          <div class="journey-row">
+            <div class="journey-row-top">
+              <span class="journey-label">FX Appreciation</span>
+              <span class="journey-val">
+                <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma((TotalReturnOfInvestment-capitalAppreciation-RentalIncome)|number:'1.0-0')}}</ng-container>
+                <ng-container *ngIf="homecurrencyText!='INR'">{{(TotalReturnOfInvestment-capitalAppreciation-RentalIncome)|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+              </span>
+            </div>
+            <div class="journey-bar-bg"><div class="journey-bar" style="background:#a78bfa;" [style.width.%]="((TotalReturnOfInvestment-capitalAppreciation-RentalIncome)/makePositive(TotalReturnOfInvestment-graphInitialInvestmentInHomeCurrency))*80"></div></div>
+          </div>
+          <div class="journey-row">
+            <div class="journey-row-top">
+              <span class="journey-label">Net Rental Income</span>
+              <span class="journey-val">
+                <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(RentalIncome|number:'1.0-0')}}</ng-container>
+                <ng-container *ngIf="homecurrencyText!='INR'">{{RentalIncome|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+              </span>
+            </div>
+            <div class="journey-bar-bg"><div class="journey-bar" style="background:#f59e0b;" [style.width.%]="(RentalIncome/makePositive(TotalReturnOfInvestment-graphInitialInvestmentInHomeCurrency))*80"></div></div>
+          </div>
+          <div class="journey-total">
+            <span class="journey-total-lbl">Value at Exit</span>
+            <span class="journey-total-val">
+              <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(TotalReturnOfInvestment-graphInitialInvestmentInHomeCurrency|number:'1.0-0')}}</ng-container>
+              <ng-container *ngIf="homecurrencyText!='INR'">{{TotalReturnOfInvestment-graphInitialInvestmentInHomeCurrency|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 2: How Does This Compare (Benchmarks) -->
+    <div class="rp-section">
+      <div class="rp-card">
+        <div class="rp-card-bench-header">
+          <div>
+            <h3>How Does This Compare?</h3>
+            <p>Your {{homecurrencyText}} IRR vs common investment alternatives</p>
+          </div>
+          <span class="rp-bench-pill">annualised returns, {{calcData?.investedTenure}}-year horizon</span>
+        </div>
+        <div class="bench-list">
+          <div class="bench-row">
+            <span class="bench-row-label">This Property ({{homecurrencyText}})</span>
+            <div class="bench-bar-bg">
+              <div class="bench-bar" style="background:#22c55e" [style.width.%]="benchMax > 0 ? (IrrInHomeCurrency / benchMax * 100) : 100">
+                <span>{{IrrInHomeCurrency | number:'1.1-1'}}%</span>
+              </div>
+            </div>
+          </div>
+          <div class="bench-row">
+            <span class="bench-row-label">This Property (GBP)</span>
+            <div class="bench-bar-bg">
+              <div class="bench-bar" style="background:#3b82f6" [style.width.%]="benchMax > 0 ? (IrrInGBP / benchMax * 100) : 80">
+                <span>{{IrrInGBP | number:'1.1-1'}}%</span>
+              </div>
+            </div>
+          </div>
+          <div class="bench-row">
+            <span class="bench-row-label">UK Equity (avg 10yr)</span>
+            <div class="bench-bar-bg">
+              <div class="bench-bar" style="background:#8b5cf6" [style.width.%]="benchMax > 0 ? (8 / benchMax * 100) : 40">
+                <span>8%</span>
+              </div>
+            </div>
+          </div>
+          <div class="bench-row">
+            <span class="bench-row-label">Domestic Real Estate</span>
+            <div class="bench-bar-bg">
+              <div class="bench-bar" style="background:#f59e0b" [style.width.%]="benchMax > 0 ? (7 / benchMax * 100) : 35">
+                <span>7%</span>
+              </div>
+            </div>
+          </div>
+          <div class="bench-row">
+            <span class="bench-row-label">Fixed Deposit / Bonds</span>
+            <div class="bench-bar-bg">
+              <div class="bench-bar" style="background:#ef4444" [style.width.%]="benchMax > 0 ? (5 / benchMax * 100) : 25">
+                <span>5%</span>
+              </div>
+            </div>
+          </div>
+          <div class="bench-row">
+            <span class="bench-row-label">Savings Account</span>
+            <div class="bench-bar-bg">
+              <div class="bench-bar" style="background:#6b7280" [style.width.%]="benchMax > 0 ? (3.5 / benchMax * 100) : 18">
+                <span>3.5%</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="bench-note">
+          At <strong style="color:#fff">{{IrrInHomeCurrency | number:'1.2-2'}}% IRR</strong>, this property outperforms major asset classes over a comparable {{calcData?.investedTenure}}-year horizon. The FX tailwind adds ~{{calcData?.fxgrowth}}% p.a. that domestic investments don't capture.
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 3: IRR Trajectory Chart -->
+    <div class="rp-section">
+      <div class="rp-card">
+        <div class="rp-card-header">
+          <h3>IRR Trajectory Over Holding Period</h3>
+          <p>Annualised internal rate of return, measured at each year-end</p>
+        </div>
+        <div class="rp-chart-wrap">
+          <canvas id="canvas" class="chartjs-render-monitor printimportant"></canvas>
+        </div>
+        <div class="rp-chart-legend">
+          <span><i style="background:#6b9fd4;display:inline-block;height:3px;width:28px;border-radius:2px;vertical-align:middle"></i> GBP IRR</span>
+          <span><i style="background:#22c55e;display:inline-block;height:3px;width:28px;border-radius:2px;vertical-align:middle"></i> {{homecurrencyText}} IRR</span>
+        </div>
+        <p class="rp-chart-note">Early years may show lower IRR because upfront costs (SDLT, fees) drag the annualised return. By Year 3, compounding rental income and capital growth overcome the initial drag. The gap between GBP and {{homecurrencyText}} widens as FX appreciation compounds.</p>
+
+        <!-- Country tabs -->
+        <div class="country-tabs">
+          <button
+            *ngFor="let c of countryList"
+            class="country-tab"
+            [class.active]="selectedCountry === c"
+            (click)="selectCountry(c)">
+            {{c}}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 4: Annual Cash Flow Table -->
+    <div class="rp-section">
+      <div class="rp-card">
+        <div class="rp-card-header">
+          <h3>Annual Cash Flow Summary</h3>
+          <p>Year-by-year breakdown of your investment performance</p>
+        </div>
+        <div style="overflow-x:auto">
+          <table class="rp-table">
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th>Property Value (GBP)</th>
+                <th>Gross Rent</th>
+                <th>Letting Fee</th>
+                <th>Interest</th>
+                <th>Net Cash Flow</th>
+                <th>Cash Flow ({{homecurrencyText}})</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let row of TenureWisePropertyData; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{row.PropertyValue|currency:'GBP':'symbol':'1.0-0'}}</td>
+                <td>{{row.GrossRent|currency:'GBP':'symbol':'1.0-0'}}</td>
+                <td>{{row.LettingFee|currency:'GBP':'symbol':'1.0-0'}}</td>
+                <td>{{row.Interest|currency:'GBP':'symbol':'1.0-0'}}</td>
+                <td [class.pos]="row.CashFlow>=0" [class.neg]="row.CashFlow<0">{{row.CashFlow|currency:'GBP':'symbol':'1.0-0'}}</td>
+                <td [class.pos]="row.CashFlowInHomeCurrency>=0" [class.neg]="row.CashFlowInHomeCurrency<0">
+                  <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(row.CashFlowInHomeCurrency|number:'1.0-0')}}</ng-container>
+                  <ng-container *ngIf="homecurrencyText!='INR'">{{row.CashFlowInHomeCurrency|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section 5: Your Inputs -->
+    <div class="rp-section">
+      <div class="rp-card">
+        <div class="rp-card-header">
+          <h3>Your Inputs</h3>
+          <p>All assumptions used in this calculation</p>
+        </div>
+        <div class="rp-inputs-grid">
+          <div class="rp-input-row">
+            <span class="rp-input-label">Property Value</span>
+            <span class="rp-input-val">{{calcData?.PropertyValue | currency:'GBP':'symbol':'1.0-0'}}</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Loan Amount</span>
+            <span class="rp-input-val" *ngIf="calcData?.optmortgage=='1'">{{calcData?.PropertyValue * calcData?.loanAmount / 100 | currency:'GBP':'symbol':'1.0-0'}}</span>
+            <span class="rp-input-val" *ngIf="calcData?.optmortgage!='1'">No Mortgage</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Mortgage Interest Rate</span>
+            <span class="rp-input-val" *ngIf="calcData?.optmortgage=='1'">{{calcData?.mortgageInterestRate}}%</span>
+            <span class="rp-input-val" *ngIf="calcData?.optmortgage!='1'">—</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Mortgage Type</span>
+            <span class="rp-input-val" *ngIf="calcData?.optmortgage=='1'">{{calcData?.mortgageType=='1' ? 'Interest Only' : 'Principal + Interest'}}</span>
+            <span class="rp-input-val" *ngIf="calcData?.optmortgage!='1'">—</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Mortgage Tenure</span>
+            <span class="rp-input-val" *ngIf="calcData?.optmortgage=='1'">{{calcData?.mortgageTenure}} years</span>
+            <span class="rp-input-val" *ngIf="calcData?.optmortgage!='1'">—</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Investment Tenure</span>
+            <span class="rp-input-val">{{calcData?.investedTenure}} years</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Home Currency (1 GBP)</span>
+            <span class="rp-input-val">{{homecurrencyText}} {{calcData?.homecurrency}}</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Rental Yield</span>
+            <span class="rp-input-val">{{calcData?.rentalYeild}}%</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Rental Escalation</span>
+            <span class="rp-input-val">{{calcData?.rentalGrowthEscalation}}%</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Capital Growth</span>
+            <span class="rp-input-val">{{calcData?.capitalgrowth}}%</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">FX Appreciation</span>
+            <span class="rp-input-val">{{calcData?.fxgrowth}}%</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Stamp Duty (SDLT)</span>
+            <span class="rp-input-val">{{calcData?.stampDutyLandTax | currency:'GBP':'symbol':'1.0-0'}}</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Loan Origination Fee</span>
+            <span class="rp-input-val" *ngIf="calcData?.optmortgage=='1'">{{calcData?.loanOriginationFee}}%</span>
+            <span class="rp-input-val" *ngIf="calcData?.optmortgage!='1'">—</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Letting Management</span>
+            <span class="rp-input-val">{{calcData?.letteingManagFee}}%</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Ground Rent</span>
+            <span class="rp-input-val">{{(calcData?.groundRent || 0) | currency:'GBP':'symbol':'1.0-0'}}</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Service Charges</span>
+            <span class="rp-input-val">{{(calcData?.serviceCharges || 0) | currency:'GBP':'symbol':'1.0-0'}}</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Misc. Expenses</span>
+            <span class="rp-input-val">{{(calcData?.miscelleneousExpense || 0) | currency:'GBP':'symbol':'1.0-0'}}</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Foreign Buyer</span>
+            <span class="rp-input-val">{{calcData?.ForeignBuyer=='1' ? 'Yes' : 'No'}}</span>
+          </div>
+        </div>
+        <p class="rp-chart-note" style="margin-top:16px;">Early years show negative IRR because upfront costs (SDLT, fees) drag the annualised return. By Year 3, compounding rental income and capital growth overcome the initial drag. The gap between GBP and {{homecurrencyText}} widens as FX appreciation compounds.</p>
+      </div>
+    </div>
+
+    <!-- Section 6: Annexure A — Market Intelligence -->
+    <div class="annexure-divider-wrap">
+      <div class="annexure-divider-pill">Annexure A</div>
+    </div>
+    <div class="rp-section">
+      <div class="rp-card rp-annexure">
+        <div class="rp-annexure-cover">
+          <div class="annexure-header">
+            <div class="annexure-header-left">
+              <h2 class="rp-annexure-title">Manchester City Centre (M1)</h2>
+              <p class="rp-annexure-sub">Prepared for Adventum Investors &nbsp;·&nbsp; {{validation.getCurrentDateWithSpecificFormat()}}</p>
+            </div>
+            <div class="annexure-intel-badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+              Local Market Intelligence Report
+            </div>
+          </div>
+          <div class="rp-annexure-divider"></div>
+        </div>
+
+        <!-- 1. Executive Summary -->
+        <div class="rp-annexure-section">
+          <div class="rp-annexure-section-title">1. Executive Summary</div>
+          <p class="rp-annexure-section-sub">Key market indicators at a glance</p>
+          <div class="rp-stat-grid">
+            <div class="rp-stat-card rp-stat-green">
+              <div class="rp-stat-val">+19.3%</div>
+              <div class="rp-stat-lbl">JLL cumulative price growth forecast by 2028</div>
+            </div>
+            <div class="rp-stat-card rp-stat-green">
+              <div class="rp-stat-val">6.5–6.8%</div>
+              <div class="rp-stat-lbl">Current M1 average gross rental yields</div>
+            </div>
+            <div class="rp-stat-card rp-stat-blue">
+              <div class="rp-stat-val">+12.9%</div>
+              <div class="rp-stat-lbl">GBP appreciation vs INR over past 12 months</div>
+            </div>
+            <div class="rp-stat-card rp-stat-purple">
+              <div class="rp-stat-val">3.75%</div>
+              <div class="rp-stat-lbl">BoE Base Rate (Feb 2026) — dovish trajectory</div>
+            </div>
+          </div>
+          <p class="rp-annexure-body">Manchester City Centre (M1) continues to present one of the most compelling property investment opportunities in the United Kingdom. As the economic engine of the Northern Powerhouse, Manchester has consistently outperformed national averages across rental growth, capital appreciation, and investor demand.</p>
+          <p class="rp-annexure-body">With the Bank of England easing monetary policy through 2025 into 2026, borrowing costs have materially reduced, improving yield spreads and making leveraged returns more attractive. Savills projects the North West will see 28.8% cumulative growth by 2028, significantly outpacing the national average.</p>
+          <p class="rp-annexure-body">For NRI investors, the structural GBP appreciation against INR adds a currency tailwind. Over the past 12 months, GBP has appreciated 12.9% versus INR, and long-term trends favour continued sterling strength driven by interest rate differentials and trade balance dynamics.</p>
+        </div>
+
+        <!-- 2. BoE Base Rate -->
+        <div class="rp-annexure-section">
+          <div class="rp-annexure-section-title">2. Bank of England Base Rate Analysis</div>
+          <p class="rp-annexure-section-sub">MPC trajectory — current stance and forward guidance</p>
+          <table class="rp-table rp-annexure-table">
+            <thead><tr><th>Indicator</th><th>Value</th></tr></thead>
+            <tbody>
+              <tr><td>BoE Base Rate (Feb 2026)</td><td class="pos">3.75%</td></tr>
+              <tr><td>Peak Rate (Aug 2023–Jul 2024)</td><td>5.25%</td></tr>
+              <tr><td>Total Cuts Since Peak</td><td class="pos">150 bps</td></tr>
+              <tr><td>CPI Inflation (Dec 2025)</td><td>3.4%</td></tr>
+              <tr><td>BoE Inflation Target</td><td>2.0%</td></tr>
+              <tr><td>BoE CPI Forecast (Jun 2026)</td><td class="pos">2.0%</td></tr>
+              <tr><td>Next MPC Meeting</td><td>19 Mar 2026</td></tr>
+              <tr><td>Probability of Mar Cut</td><td class="pos">~65–70%</td></tr>
+              <tr><td>Consensus Rate (End 2026)</td><td class="pos">3.00–3.25%</td></tr>
+            </tbody>
+          </table>
+          <p class="rp-annexure-body">HSBC forecasts the base rate falling to 3.00% by end-2026. Each 25bps reduction translates to ~£25/month savings per £100,000 of variable-rate BTL mortgage debt, directly improving net cashflow.</p>
+        </div>
+
+        <!-- 3. Mortgage Market -->
+        <div class="rp-annexure-section">
+          <div class="rp-annexure-section-title">3. UK Mortgage Market &amp; BTL Costs</div>
+          <p class="rp-annexure-section-sub">Current buy-to-let rates and market activity</p>
+          <table class="rp-table rp-annexure-table">
+            <thead><tr><th>Mortgage Indicator</th><th>Rate / Value</th></tr></thead>
+            <tbody>
+              <tr><td>Avg. 2-Year Fixed BTL</td><td>4.70%</td></tr>
+              <tr><td>Avg. 5-Year Fixed BTL</td><td>5.09%</td></tr>
+              <tr><td>Best 2-Year Fixed BTL</td><td class="pos">2.20% + 7% fee</td></tr>
+              <tr><td>Best 5-Year Fixed BTL</td><td class="pos">3.44%</td></tr>
+              <tr><td>Avg. 2-Year Residential Fixed</td><td>4.85%</td></tr>
+              <tr><td>Avg. 5-Year Residential Fixed</td><td>4.94%</td></tr>
+              <tr><td>BTL Rate Change (2025)</td><td class="pos">5.48% → 4.70%</td></tr>
+              <tr><td>New BTL Mortgages (Autumn 2025)</td><td class="pos">+23% YoY</td></tr>
+              <tr><td>BTL Companies Formed (2025)</td><td class="pos">66,587 (Record)</td></tr>
+            </tbody>
+          </table>
+          <p class="rp-annexure-body">M1 gross yields of 6.5–6.8% vs BTL mortgage costs of 4.70–5.09% = net positive carry of 140–210 bps before expenses. The healthiest spread since the 2021 rate-hiking cycle began.</p>
+        </div>
+
+        <!-- 4. Manchester Outlook -->
+        <div class="rp-annexure-section">
+          <div class="rp-annexure-section-title">4. Manchester City Centre (M1) — Local Market Outlook</div>
+          <p class="rp-annexure-section-sub">JLL identifies Manchester as the UK's second fastest-growing economy — 2.1% annual GDP growth forecast 2025–2028 vs 1.6% nationally</p>
+          <div class="rp-outlook-grid">
+            <div class="rp-outlook-card">
+              <div class="rp-outlook-title">Price Growth</div>
+              <p class="rp-outlook-body">JLL: +4.0% in 2026, +5.0% in 2027, cumulative <strong style="color:#22c55e">+19.3%</strong> by 2028. Savills: +28.8% cumulative for North West — 5.5% in 2026, 6.5% in 2027.</p>
+            </div>
+            <div class="rp-outlook-card">
+              <div class="rp-outlook-title">Rental Demand</div>
+              <p class="rp-outlook-body">City centre expected to house 100,000 residents by 2026. Rents rose <strong style="color:#22c55e">+5.1%</strong> past 12 months; 1-bed flats at £1,000–1,300/month, purchase prices £180k–250k.</p>
+            </div>
+            <div class="rp-outlook-card">
+              <div class="rp-outlook-title">Affordability &amp; Regeneration</div>
+              <p class="rp-outlook-body">Avg. price ~£252k — 50% below London. £10bn regeneration: Mayfield (£1.5bn), Victoria North (£4bn, 15,000 homes), Old Trafford (£2bn) — historically drives 15–25% local price premiums.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Catalysts -->
+        <div class="rp-annexure-section">
+          <div class="rp-annexure-section-title">5. Positive Financial News &amp; Catalysts</div>
+          <p class="rp-annexure-section-sub">Key macro and structural drivers supporting Manchester M1 investment in 2026</p>
+          <div class="rp-catalyst-list">
+            <div class="rp-catalyst-item">
+              <div class="rp-catalyst-dot rp-catalyst-green"></div>
+              <div>
+                <div class="rp-catalyst-title">Interest Rate Tailwind</div>
+                <p class="rp-catalyst-body">A 1% rate reduction improves purchasing power by 10–12% in Manchester. Consensus expects 50–75bps further cuts in 2026, expanding buyer affordability and supporting price appreciation.</p>
+              </div>
+            </div>
+            <div class="rp-catalyst-item">
+              <div class="rp-catalyst-dot rp-catalyst-green"></div>
+              <div>
+                <div class="rp-catalyst-title">Record BTL Company Formation</div>
+                <p class="rp-catalyst-body">66,587 BTL limited companies formed in 2025 — the highest ever recorded. Professional landlords locking in corporate structures for tax efficiency, signalling long-term confidence.</p>
+              </div>
+            </div>
+            <div class="rp-catalyst-item">
+              <div class="rp-catalyst-dot rp-catalyst-blue"></div>
+              <div>
+                <div class="rp-catalyst-title">Northern Powerhouse Outperformance</div>
+                <p class="rp-catalyst-body">CBRE and Avison Young identify Manchester, Birmingham, and Leeds as the top three performing regional cities. Manchester leads with a 2.1% annual GDP growth forecast.</p>
+              </div>
+            </div>
+            <div class="rp-catalyst-item">
+              <div class="rp-catalyst-dot rp-catalyst-blue"></div>
+              <div>
+                <div class="rp-catalyst-title">Structural Housing Undersupply</div>
+                <p class="rp-catalyst-body">UK delivers ~230,000 homes p.a. against a 300,000 target. 1.35 million households on social housing waiting lists. New completions fell 19% YoY — underpinning sustained rental growth.</p>
+              </div>
+            </div>
+            <div class="rp-catalyst-item">
+              <div class="rp-catalyst-dot rp-catalyst-purple"></div>
+              <div>
+                <div class="rp-catalyst-title">GBP Currency Strength</div>
+                <p class="rp-catalyst-body">GBP appreciated +12.9% vs INR over the past year. This currency tailwind compounds on top of property capital gains and rental income, significantly boosting total returns in home currency terms.</p>
+              </div>
+            </div>
+            <div class="rp-catalyst-item">
+              <div class="rp-catalyst-dot rp-catalyst-purple"></div>
+              <div>
+                <div class="rp-catalyst-title">India Budget 2026 NRI Reforms</div>
+                <p class="rp-catalyst-body">Union Budget 2026 introduced higher equity investment limits for NRIs and simplified property transaction compliance, signalling an increasingly investor-friendly environment for cross-border capital flows.</p>
+              </div>
+            </div>
+            <div class="rp-catalyst-item">
+              <div class="rp-catalyst-dot rp-catalyst-green"></div>
+              <div>
+                <div class="rp-catalyst-title">Victoria North Regeneration</div>
+                <p class="rp-catalyst-body">The £4bn Victoria North project is driving projected price surges of 25.8% by 2026 in adjacent postcodes. Early investors in regeneration zones have historically captured 150–250bps of yield premium.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Regional Comparables -->
+        <div class="rp-annexure-section">
+          <div class="rp-annexure-section-title">6. Regional Comparables</div>
+          <p class="rp-annexure-section-sub">UK city comparison for buy-to-let investment — 2026 outlook</p>
+          <div style="overflow-x:auto">
+            <table class="rp-table rp-annexure-table">
+              <thead>
+                <tr>
+                  <th>City</th>
+                  <th>Avg. Yield</th>
+                  <th>2026 Growth</th>
+                  <th>Avg. Price</th>
+                  <th>BTL Rating</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td style="color:#fff;font-weight:700">Manchester (M1)</td>
+                  <td class="pos">6.6–6.8%</td>
+                  <td class="pos">+4.0%</td>
+                  <td>£252k</td>
+                  <td><span class="rp-rating-pill rp-rating-green">Strong Buy</span></td>
+                </tr>
+                <tr>
+                  <td>Birmingham (B1)</td>
+                  <td class="pos">6.0–6.2%</td>
+                  <td class="pos">+5.0–7.0%</td>
+                  <td>£220k</td>
+                  <td><span class="rp-rating-pill rp-rating-green">Strong Buy</span></td>
+                </tr>
+                <tr>
+                  <td>Liverpool (L1)</td>
+                  <td class="pos">8.0–8.5%</td>
+                  <td class="pos">+3.5%</td>
+                  <td>£195k</td>
+                  <td><span class="rp-rating-pill rp-rating-blue">Buy</span></td>
+                </tr>
+                <tr>
+                  <td>Leeds (LS1)</td>
+                  <td class="pos">6.0–6.5%</td>
+                  <td class="pos">+4.0%</td>
+                  <td>£235k</td>
+                  <td><span class="rp-rating-pill rp-rating-blue">Buy</span></td>
+                </tr>
+                <tr>
+                  <td>London (E1)</td>
+                  <td>3.5–4.0%</td>
+                  <td>+2.0%</td>
+                  <td>£520k</td>
+                  <td><span class="rp-rating-pill rp-rating-grey">Hold</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Annexure Disclaimer -->
+        <div class="rp-annexure-disclaimer">
+          <strong>Disclaimer</strong> This annexure has been prepared by Adventum Capital for informational purposes only and does not constitute investment advice, a personal recommendation, or an offer or solicitation to buy or sell any property or financial instrument. Past performance is not indicative of future results. Property values and rental income may go down as well as up. Investors should conduct their own due diligence and seek independent financial, legal, and tax advice before making any investment decisions. Data sourced from Bank of England, UK Finance, ONS, JLL, Savills, CBRE, Avison Young, and Moneyfacts as of February 2026.
+        </div>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer-box rp-section">
+      <h5>Important Disclaimer</h5>
+      <p>This analysis is produced for illustrative and educational purposes only. It is not financial advice. Property values, rental income, exchange rates and all other inputs are subject to market risk and may differ materially from projections. Adventum Calculators accepts no liability for investment decisions made in reliance on this output. Always consult a qualified financial adviser before investing.</p>
+    </div>
+
+  </div><!-- /rp-body -->
+
+  <!-- ── STICKY FOOTER ── -->
+  <div class="rp-footer noprint">
+    <button class="rp-footer-btn rp-footer-back" [routerLink]="['/step4']">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back
+    </button>
+    <button *ngIf="!loadingSharebtn" class="rp-footer-btn rp-footer-share" (click)="emailpopup()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Share
+    </button>
+    <button class="rp-footer-btn rp-footer-recalc" (click)="startagain()">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.9"/></svg>
+      Recalculate
+    </button>
+  </div>
+
+</div><!-- /results-page -->
+
+<!-- SHARE MODAL -->
+<div class="modal fade noprint" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content rp-modal">
+      <div class="modal-header rp-modal-header">
+        <h5>Share Report</h5>
+      </div>
+      <div class="modal-body rp-modal-body">
+        <label>Enter email IDs of recipients</label>
+        <input type="email" id="email" class="rp-modal-input" placeholder="e.g. joe@gmail.com, mark@gmail.com"
+          name="email" [(ngModel)]="Email" autocomplete="off">
+      </div>
+      <div class="modal-footer rp-modal-footer">
+        <button *ngIf="loadingSharebtn" class="rp-modal-send rp-btn-loading"><i class="fa fa-spin fa-spinner"></i> Please Wait...</button>
+        <button *ngIf="!loadingSharebtn" class="rp-modal-send" (click)="shareReport()">Send</button>
+        <button class="rp-modal-cancel" id="cancelbtn" (click)="cancel()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>

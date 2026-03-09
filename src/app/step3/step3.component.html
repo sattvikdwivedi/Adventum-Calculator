@@ -1,0 +1,283 @@
+<!-- CURRENCY & GROWTH PAGE -->
+<div class="assumptions-page">
+
+  <!-- LEFT PANEL -->
+  <div class="panel-left">
+    <div class="panel-left-bg"></div>
+    <div class="panel-left-content">
+
+      <!-- Logo -->
+      <div class="panel-logo">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+          <path d="M16 4L28 26H4L16 4Z" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" fill="none"/>
+          <path d="M16 13L21 22H11L16 13Z" fill="rgba(34,197,94,0.9)"/>
+        </svg>
+        <div>
+          <span class="panel-logo-text">AD<span class="panel-logo-green">V</span>ENTUM<sup class="panel-logo-reg">®</sup></span>
+          <span class="panel-logo-sub">CALCULATORS</span>
+        </div>
+      </div>
+
+      <!-- Hero card -->
+      <div class="panel-hero-card">
+        <p class="panel-hero-title">Project Your <strong>Returns</strong></p>
+        <p class="panel-hero-sub">Configure growth assumptions based on historical UK market performance.</p>
+
+        <!-- Dynamic summary grid -->
+        <div class="summary-grid" *ngIf="rentalYeild!='' || capitalgrowth!='' || fxgrowth!='' || homecurrency!=''">
+          <div class="summary-card" *ngIf="rentalYeild!=''">
+            <div class="summary-card-lbl">Rental Yield</div>
+            <div class="summary-card-val">{{rentalYeild}}</div>
+            <div class="summary-card-note">per annum</div>
+          </div>
+          <div class="summary-card" *ngIf="capitalgrowth!=''">
+            <div class="summary-card-lbl">Capital Growth</div>
+            <div class="summary-card-val">{{capitalgrowth}}</div>
+            <div class="summary-card-note">per annum</div>
+          </div>
+          <div class="summary-card" *ngIf="fxgrowth!=''">
+            <div class="summary-card-lbl">FX Appreciation</div>
+            <div class="summary-card-val">{{fxgrowth}}</div>
+            <div class="summary-card-note">GBP vs home</div>
+          </div>
+          <div class="summary-card hi" *ngIf="homecurrency!='' && homecurrencyText!=''">
+            <div class="summary-card-lbl">Exchange Rate</div>
+            <div class="summary-card-val">£1 = {{homecurrency}}</div>
+            <div class="summary-card-note">{{homecurrencyText}}</div>
+          </div>
+        </div>
+
+        <!-- Static stats before data entry -->
+        <div class="panel-stats" *ngIf="rentalYeild=='' && capitalgrowth=='' && fxgrowth=='' && homecurrency==''">
+          <div class="panel-stat">
+            <div class="panel-stat-val">Step</div>
+            <div class="panel-stat-lbl">3 of 5</div>
+          </div>
+          <div class="panel-stat">
+            <div class="panel-stat-val">FX</div>
+            <div class="panel-stat-lbl">&amp; Returns</div>
+          </div>
+          <div class="panel-stat">
+            <div class="panel-stat-val">Live</div>
+            <div class="panel-stat-lbl">Rates</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="panel-right">
+    <div class="panel-right-inner">
+
+      <!-- Top bar -->
+      <div class="panel-topbar">
+        <button class="btn-circle-back" [routerLink]="['/step2']">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <div class="location-pill">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          London
+        </div>
+      </div>
+
+      <!-- Progress bar at top -->
+      <div class="progress-wrap">
+        <progress-bar
+          [progress]="50+(homecurrency!=''?7.5:0)+(investedTenure!=''?7.5:0)+(rentalYeild!=''?7.5:0)+(capitalgrowth!=''?7.5:0)+(fxgrowth!=''?7.5:0)"
+          [color]="'#22c55e'">
+        </progress-bar>
+        <span class="progress-label">
+          {{50+(homecurrency!=''?7.5:0)+(investedTenure!=''?7.5:0)+(rentalYeild!=''?7.5:0)+(capitalgrowth!=''?7.5:0)+(fxgrowth!=''?7.5:0) | number:'1.0-0'}}% data received
+        </span>
+      </div>
+
+      <!-- Heading -->
+      <h2 class="section-title">Currency &amp; Growth</h2>
+      <p class="section-sub">Set your home currency and expected growth rates.</p>
+
+      <!-- Home Currency -->
+      <div class="field-group">
+        <div class="field-label-row">
+          <span class="field-label">Home Currency</span>
+        </div>
+        <div class="field-select-wrap">
+          <select id="homecurrencyText" class="field-select" [(ngModel)]="homecurrencyText" (change)="homecurrencyChange()">
+            <option value="">Select currency</option>
+            <option value='INR'>Indian Rupee (INR)</option>
+            <option value='AED'>AED</option>
+            <option value='AFN'>AFN</option>
+            <option value='ALL'>ALL</option>
+            <option value='AMD'>AMD</option>
+            <option value='ANG'>ANG</option>
+            <option value='AOA'>AOA</option>
+            <option value='ARS'>ARS</option>
+            <option value='AUD'>AUD</option>
+            <option value='AWG'>AWG</option>
+            <option value='AZN'>AZN</option>
+            <option value='BAM'>BAM</option>
+            <option value='BBD'>BBD</option>
+            <option value='BDT'>BDT</option>
+            <option value='BGN'>BGN</option>
+            <option value='BHD'>BHD</option>
+            <option value='BIF'>BIF</option>
+            <option value='BMD'>BMD</option>
+            <option value='BND'>BND</option>
+            <option value='BOB'>BOB</option>
+            <option value='BRL'>BRL</option>
+            <option value='BSD'>BSD</option>
+            <option value='BTN'>BTN</option>
+            <option value='BWP'>BWP</option>
+            <option value='BYN'>BYN</option>
+            <option value='BZD'>BZD</option>
+            <option value='CAD'>CAD</option>
+            <option value='CHF'>CHF</option>
+            <option value='CLP'>CLP</option>
+            <option value='CNY'>CNY</option>
+            <option value='COP'>COP</option>
+            <option value='CZK'>CZK</option>
+            <option value='DKK'>DKK</option>
+            <option value='DOP'>DOP</option>
+            <option value='DZD'>DZD</option>
+            <option value='EGP'>EGP</option>
+            <option value='EUR'>EUR</option>
+            <option value='GBP'>GBP</option>
+            <option value='GHS'>GHS</option>
+            <option value='HKD'>HKD</option>
+            <option value='HUF'>HUF</option>
+            <option value='IDR'>IDR</option>
+            <option value='ILS'>ILS</option>
+            <option value='IQD'>IQD</option>
+            <option value='JPY'>JPY</option>
+            <option value='KES'>KES</option>
+            <option value='KRW'>KRW</option>
+            <option value='KWD'>KWD</option>
+            <option value='KZT'>KZT</option>
+            <option value='LKR'>LKR</option>
+            <option value='MAD'>MAD</option>
+            <option value='MXN'>MXN</option>
+            <option value='MYR'>MYR</option>
+            <option value='NGN'>NGN</option>
+            <option value='NOK'>NOK</option>
+            <option value='NPR'>NPR</option>
+            <option value='NZD'>NZD</option>
+            <option value='OMR'>OMR</option>
+            <option value='PHP'>PHP</option>
+            <option value='PKR'>PKR</option>
+            <option value='PLN'>PLN</option>
+            <option value='QAR'>QAR</option>
+            <option value='RON'>RON</option>
+            <option value='RUB'>RUB</option>
+            <option value='SAR'>SAR</option>
+            <option value='SEK'>SEK</option>
+            <option value='SGD'>SGD</option>
+            <option value='THB'>THB</option>
+            <option value='TRY'>TRY</option>
+            <option value='TWD'>TWD</option>
+            <option value='UAH'>UAH</option>
+            <option value='USD'>USD</option>
+            <option value='UZS'>UZS</option>
+            <option value='VND'>VND</option>
+            <option value='XAF'>XAF</option>
+            <option value='ZAR'>ZAR</option>
+            <option value='ZMW'>ZMW</option>
+          </select>
+          <svg class="select-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+      </div>
+
+      <!-- Investment Period — pill buttons -->
+      <div class="field-group" [@affirst]="homecurrencyText!=''?'visible':'hide'">
+        <div class="field-label-row">
+          <span class="field-label">Investment Period</span>
+          <span class="field-hint">+ Years</span>
+        </div>
+        <div class="pill-row">
+          <button class="pill-btn" [class.active]="investedTenure=='3'"  (click)="investedTenure='3'">3 Yrs</button>
+          <button class="pill-btn" [class.active]="investedTenure=='5'"  (click)="investedTenure='5'">5 Yrs</button>
+          <button class="pill-btn" [class.active]="investedTenure=='7'"  (click)="investedTenure='7'">7 Yrs</button>
+          <button class="pill-btn" [class.active]="investedTenure=='10'" (click)="investedTenure='10'">10 Yrs</button>
+        </div>
+      </div>
+
+      <!-- Gross Rental Yield -->
+      <div class="field-group" [@asfirst]="investedTenure!='' && homecurrencyText!=''?'visible':'hide'">
+        <div class="field-label-row">
+          <span class="field-label">Gross Rental Yield</span>
+          <span class="field-hint">+ 10yr UK avg: 6.2%</span>
+        </div>
+        <div class="field-input-wrap">
+          <span class="field-prefix">%</span>
+          <input
+            class="field-input"
+            type="text"
+            id="rentalYeild"
+            autocomplete="off"
+            placeholder="e.g. {{PropertyLondon == 1 ? '4.5' : '6.2'}}"
+            [(ngModel)]="rentalYeild"
+            (keyup)="rentalYeild=validation.appendPercent($event,rentalYeild)"
+            (keypress)="validation.DesimalOnly($event,rentalYeild)">
+        </div>
+      </div>
+
+      <!-- Annual Capital Growth -->
+      <div class="field-group" [@atfirst]="rentalYeild!=''?'visible':'hide'">
+        <div class="field-label-row">
+          <span class="field-label">Annual Capital Growth</span>
+          <span class="field-hint">+ 10yr UK avg: 4.8%</span>
+        </div>
+        <div class="field-input-wrap">
+          <span class="field-prefix">%</span>
+          <input
+            class="field-input"
+            type="text"
+            id="capitalgrowth"
+            autocomplete="off"
+            placeholder="e.g. {{PropertyLondon == 1 ? '4.0' : '4.8'}}"
+            [(ngModel)]="capitalgrowth"
+            (keyup)="capitalgrowth=validation.appendPercent($event,capitalgrowth)"
+            (keypress)="validation.DesimalOnly($event,capitalgrowth)">
+        </div>
+      </div>
+
+      <!-- FX Appreciation -->
+      <div class="field-group" *ngIf="capitalgrowth!=''" [@afrfirst]="'visible'">
+        <div class="field-label-row">
+          <span class="field-label">FX Appreciation</span>
+          <span class="field-hint">+ GBP vs home currency</span>
+        </div>
+        <div class="field-input-wrap">
+          <span class="field-prefix">%</span>
+          <input
+            class="field-input"
+            type="text"
+            id="fxgrowth"
+            autocomplete="off"
+            placeholder="e.g. 4.0"
+            [(ngModel)]="fxgrowth"
+            (keyup)="fxgrowth=validation.appendPercent($event,fxgrowth)"
+            (keypress)="validation.DesimalOnly($event,fxgrowth)">
+        </div>
+      </div>
+
+      <!-- Nav buttons -->
+      <div class="panel-nav" *ngIf="fxgrowth!=''">
+        <button class="btn-back-outline" [routerLink]="['/step2']">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back
+        </button>
+        <button
+          class="btn-continue btn-continue--active"
+          type="button"
+          (click)="next()">
+          Continue
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

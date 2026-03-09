@@ -1,0 +1,262 @@
+<!-- Capital Growth Result — dark navy theme matching reference HTML -->
+<div class="results-page" id="contentToConvert">
+
+  <!-- ── Header ── -->
+  <div class="rp-header">
+    <div class="rp-header-top">
+      <div>
+        <div class="rp-title">Investment Property Analysis</div>
+        <div class="rp-subtitle">
+          {{validation.getCurrentDateWithSpecificFormat()}}
+          &nbsp;·&nbsp; {{calcData?.homecurrencyText}}
+          &nbsp;·&nbsp; {{investedTenure}} year hold
+        </div>
+      </div>
+      <div class="rp-header-actions noprint">
+        <button class="rp-btn-sm" (click)="startagain()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 .49-4.05"></path></svg>
+          Recalculate
+        </button>
+        <button class="rp-btn-sm" (click)="printScreen()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          Print
+        </button>
+        <button class="rp-btn-sm" (click)="convetToPDF()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          Download PDF
+        </button>
+        <button class="rp-btn-green noprint" (click)="emailpopup()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          Share Report
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── KPI Cards ── -->
+  <div class="rp-kpi-row">
+    <div class="rp-kpi featured">
+      <div class="rp-kpi-label">IRR IN GBP <span class="up-arrow">↑</span></div>
+      <div class="rp-kpi-value">{{calculatedCapitalGrowtharray[calculatedCapitalGrowtharray.length-1]?.toFixed(2)}}%</div>
+      <div class="rp-kpi-note">Total capital appreciation in GBP</div>
+    </div>
+    <div class="rp-kpi featured">
+      <div class="rp-kpi-label">IRR IN {{calcData?.homecurrencyText}} <span class="up-arrow">↑</span></div>
+      <div class="rp-kpi-value">{{CaptitalGrowthinHomeCurrencyArray[CaptitalGrowthinHomeCurrencyArray.length-1]?.toFixed(2)}}%</div>
+      <div class="rp-kpi-note">Home currency return including FX</div>
+    </div>
+    <div class="rp-kpi">
+      <div class="rp-kpi-label">VALUE AT EXIT</div>
+      <div class="rp-kpi-value">{{calculatedCapitalGrowth | currency:'GBP':'symbol':'1.0-0'}}</div>
+      <div class="rp-kpi-note">
+        <span *ngIf="calcData?.homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(CaptitalGrowthinHomeCurrency | number:'1.0-0')}}</span>
+        <span *ngIf="calcData?.homecurrencyText!='INR'">{{CaptitalGrowthinHomeCurrency | currency:calcData?.homecurrencyText:'symbol':'1.0-0'}}</span>
+      </div>
+    </div>
+    <div class="rp-kpi">
+      <div class="rp-kpi-label">INITIAL INVESTMENT</div>
+      <div class="rp-kpi-value">{{propertyValue | currency:'GBP':'symbol':'1.0-0'}}</div>
+      <div class="rp-kpi-note">Capital deployed</div>
+    </div>
+  </div>
+
+  <!-- ── Scrollable body ── -->
+  <div class="rp-body">
+
+    <!-- Row 1: Chart + Return Breakdown -->
+    <div class="rp-two-col rp-section">
+
+      <!-- Growth Chart -->
+      <div class="rp-card">
+        <div class="rp-card-header">
+          <h3>Capital Growth Over Time</h3>
+          <p>Annualised return accounting for capital & FX appreciation</p>
+        </div>
+        <div class="rp-chart-wrap">
+          <canvas id="canvas"></canvas>
+        </div>
+        <div class="rp-chart-legend">
+          <span><i style="background:#4f6ef7;display:inline-block;"></i> GBP Growth</span>
+          <span><i style="background:#22c55e;display:inline-block;"></i> {{calcData?.homecurrencyText}} Growth (incl. FX)</span>
+        </div>
+        <p class="rp-chart-note">Chart shows cumulative percentage growth year by year. Past performance is not a guarantee of future results.</p>
+      </div>
+
+      <!-- Return Breakdown donut -->
+      <div class="rp-card">
+        <div class="rp-card-header">
+          <h3>Return Breakdown</h3>
+          <p>Contribution of each growth driver</p>
+        </div>
+        <div class="donut-wrap">
+          <canvas id="can" width="200" height="200"></canvas>
+          <div class="donut-legend">
+            <span><i style="background:#4f6ef7;"></i> Capital Growth</span>
+            <span><i style="background:#22c55e;"></i> FX Appreciation</span>
+          </div>
+        </div>
+
+        <!-- Investment Journey bars -->
+        <div style="margin-top:24px;">
+          <div class="rp-card-header" style="margin-bottom:14px;">
+            <h3>Investment Journey</h3>
+            <p>From initial outlay to exit value over {{investedTenure}} years</p>
+          </div>
+          <div class="journey-items">
+            <div class="journey-row">
+              <div class="journey-row-top">
+                <span class="journey-label">Initial Investment (GBP)</span>
+                <span class="journey-val">{{propertyValue | currency:'GBP':'symbol':'1.0-0'}}</span>
+              </div>
+              <div class="journey-bar-bg">
+                <div class="journey-bar" style="width:60%; background:#4f6ef7;"></div>
+              </div>
+            </div>
+            <div class="journey-row">
+              <div class="journey-row-top">
+                <span class="journey-label">Capital Growth</span>
+                <span class="journey-val">{{(calculatedCapitalGrowth - propertyValue) | currency:'GBP':'symbol':'1.0-0'}}</span>
+              </div>
+              <div class="journey-bar-bg">
+                <div class="journey-bar" style="width:40%; background:#22c55e;"></div>
+              </div>
+            </div>
+            <div class="journey-row">
+              <div class="journey-row-top">
+                <span class="journey-label">Initial Investment ({{calcData?.homecurrencyText}})</span>
+                <span class="journey-val">
+                  <ng-container *ngIf="calcData?.homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(propertyValueHomeCurrency | number:'1.0-0')}}</ng-container>
+                  <ng-container *ngIf="calcData?.homecurrencyText!='INR'">{{propertyValueHomeCurrency | currency:calcData?.homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+                </span>
+              </div>
+              <div class="journey-bar-bg">
+                <div class="journey-bar" style="width:45%; background:#7c3aed;"></div>
+              </div>
+            </div>
+            <div class="journey-total">
+              <span class="journey-total-lbl">Value at Exit ({{calcData?.homecurrencyText}})</span>
+              <span class="journey-total-val">
+                <ng-container *ngIf="calcData?.homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(CaptitalGrowthinHomeCurrency | number:'1.0-0')}}</ng-container>
+                <ng-container *ngIf="calcData?.homecurrencyText!='INR'">{{CaptitalGrowthinHomeCurrency | currency:calcData?.homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Inputs used -->
+    <div class="rp-section">
+      <div class="rp-card">
+        <div class="rp-card-header">
+          <h3>Inputs Used</h3>
+          <p>Parameters used for this calculation</p>
+        </div>
+        <div class="rp-inputs-grid">
+          <div class="rp-input-row">
+            <span class="rp-input-label">Property Value</span>
+            <span class="rp-input-val">{{propertyValue | currency:'GBP':'symbol':'1.0-0'}}</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Capital Growth p.a.</span>
+            <span class="rp-input-val">{{calcData?.capitalgrowth}}%</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">FX Growth p.a.</span>
+            <span class="rp-input-val">{{calcData?.fxgrowth}}%</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Investment Period</span>
+            <span class="rp-input-val">{{investedTenure}} years</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Home Currency</span>
+            <span class="rp-input-val">{{calcData?.homecurrencyText}}</span>
+          </div>
+          <div class="rp-input-row">
+            <span class="rp-input-label">Exchange Rate</span>
+            <span class="rp-input-val">{{calcData?.homecurrency}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 3: Year-by-year table -->
+    <div class="rp-section">
+      <div class="rp-card">
+        <div class="rp-card-header">
+          <h3>Year-by-Year Growth</h3>
+          <p>Cumulative percentage appreciation by year</p>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="rp-table">
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th>GBP Cumulative Growth (%)</th>
+                <th>{{calcData?.homecurrencyText}} Cumulative Growth (%)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let yr of calculatedCapitalGrowtharray; let i=index">
+                <td>Year {{i+1}}</td>
+                <td class="pos">{{yr}}%</td>
+                <td class="pos">{{CaptitalGrowthinHomeCurrencyArray[i]}}%</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Disclaimer -->
+    <div class="disclaimer-box rp-section">
+      <h5>Important Disclaimer</h5>
+      <p>This report is for informational purposes only and does not constitute financial, investment, legal or tax advice. Past performance is not indicative of future results. Property values and exchange rates are subject to change. Please consult a qualified financial adviser before making investment decisions.</p>
+    </div>
+
+  </div><!-- /rp-body -->
+
+  <!-- ── Sticky footer ── -->
+  <div class="rp-footer noprint">
+    <button class="rp-footer-btn rp-footer-back" (click)="startagain()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      Back
+    </button>
+    <button class="rp-footer-btn rp-footer-share" (click)="emailpopup()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+      Share
+    </button>
+    <button class="rp-footer-btn rp-footer-recalc" (click)="startagain()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 .49-4.05"></path></svg>
+      Recalculate
+    </button>
+  </div>
+
+</div><!-- /results-page -->
+
+<!-- Share Modal -->
+<div class="modal fade noprint" id="myModal">
+  <div class="modal-dialog">
+    <div class="rp-modal-content">
+      <div class="rp-modal-header">
+        <h5>Share Report</h5>
+        <button class="rp-modal-close" (click)="cancel()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="rp-modal-body">
+        <label class="rp-modal-label">Recipient email addresses (comma-separated, max 5)</label>
+        <input type="email" class="rp-modal-input" placeholder="e.g. joe@example.com, jane@example.com"
+          [(ngModel)]="Email" autocomplete="off">
+      </div>
+      <div class="rp-modal-footer">
+        <button class="rp-modal-cancel" id="cancelbtn" (click)="cancel()">Cancel</button>
+        <button class="rp-modal-send" (click)="shareReport()">
+          <span *ngIf="loadingSharebtn"><i class="fa fa-spin fa-spinner"></i> Sending...</span>
+          <span *ngIf="!loadingSharebtn">Send Report</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,151 @@
+<div class="container" style="margin-top: 100px;"> 
+    <!-- First -->
+    <div class="row mt-30" id="firstMain">
+      <div class="col-md-6 col-6">
+          <img class="logo-icon" src="assets/cashflow-breadcrumb.svg" alt="logo" class="wd125" >
+      </div>
+      <div class="col-md-6 col-12 bread-p text-right">
+          <p class="mb-1">Cashflow Calculator</p>
+          <p class="mb-0">{{validation.getCurrentDateWithSpecificFormat()}}</p>
+      </div> 
+  </div>
+    <!-- First -->
+  
+     <!-- Second -->
+    <div class="row mt-3 plr-1"  id="secondMain">
+      <div class="mapcontainer">
+          <app-googlemap [MapClassLoad]="MapLoad" [latitude]="lat" [longitude]="long"></app-googlemap>
+        </div>
+    </div>
+     <!-- Second -->
+  
+      <!-- Third -->
+    <div class="row  mt-3 plr-15"  id="thirdMain">
+      <div class="col-md-12 p0 prl10">
+          <progress-bar [progress]="10+(PropertyValue!=''?10:0)+(optmortgage==''?0:(optmortgage=='1'?6.25:31.25))+(optmortgage=='1'?((loanAmount!=''?6.25:0)+(mortgageInterestRate!=''?6.25:0)+(mortgageTenure!=''?6.25:0)+(mortgageType!=''?6.25:0)):0)" [color]="'#488aff'">
+          </progress-bar>
+      </div>
+      <div class="col-md-2 col-6 p-back pl17">
+          <a [routerLink]="['/cashflow/step1']" class="backlink">Back</a>
+      </div>
+      <div class="col-md-10 col-6 p-rec pr13">
+          <label class="float-right">{{10+(PropertyValue!=''?10:0)+(optmortgage==''?0:(optmortgage=='1'?6.25:31.25))+(optmortgage=='1'?(+(loanAmount!=''?6.25:0)+(mortgageInterestRate!=''?6.25:0)+(mortgageTenure!=''?6.25:0)+(mortgageType!=''?6.25:0)):0)|number:'1.0-0'}}% data recieved</label>
+      </div>
+    </div>
+        <!-- Third -->
+  
+  <div class="row mt-3 plr-15">
+      <div class="col-md-5 pl0">
+          <h5>
+              <b class="questyle">
+               Property Value?
+             </b>
+           </h5>
+      </div>
+      <div class="col-md-7 pr0">
+          <span class="input-euro left">
+          <input type="text" id="propertyValue" autocomplete="off" (keyup)="PropertyValue=validation.amountWithComma(PropertyValue)" (keypress)="validation.numberOnly($event)" placeholder="Enter Property Value" [(ngModel)]="PropertyValue"> 
+      </span>
+      <span *ngIf="PropertyValue!=''" class="tick-g"><i class="fa fa-check" aria-hidden="true"></i></span>
+      </div>
+  </div>
+    <!-- Fourth -->
+  <div class="row mt-3 plr-15" [@otpmort]="PropertyValue!=''?'visible':'hide'">
+      <div class="col-md-5 pl0">
+          <h5>
+              <b class="questyle">
+                  Need a mortgage?
+                </b>
+          </h5>
+      </div>
+      <div class="col-md-7 pr0">
+          <select id="optmortgage" [(ngModel)]="optmortgage">
+              <option value="">Select</option>
+              <option value="1">Yes</option>
+              <option value="0">No</option>
+          </select>
+      </div>
+  </div>
+  
+  <div class="row mt-3 plr-15"  [@asfirst]="optmortgage=='1'?'visible':'hide'">
+      <div class="col-md-5 pl0">
+          <h5>
+              <b class="questyle">
+                  Loan to Value?
+                </b>
+          </h5>
+      </div>
+      <div class="col-md-7 pr0">
+        <select id="loanAmount" [(ngModel)]="loanAmount">
+            <option value="">Select</option>
+            <option value="50">50%</option>
+            <option value="60">60%</option>
+            <option value="65">65%</option>
+            <option value="70">70%</option>
+            <option value="75">75%</option>
+        </select>
+          <!-- <span class="input-euro left">
+              <input type="text" id="loanAmount" placeholder="Loan to value (50%)" (click)="showControls(3)" (focus)="showControls(3)" [(ngModel)]="loanAmount">
+          </span> -->
+          <!-- <input type="text" id="loanAmount" autocomplete="off" (keyup)="loanAmount=validation.appendPercent($event,loanAmount)" (keypress)="validation.numberOnly($event)" placeholder="Loan to value (60%)" [(ngModel)]="loanAmount">
+          <span *ngIf="loanAmount!=''" class="tick-g"><i class="fa fa-check" aria-hidden="true"></i></span> -->
+      </div>
+  </div>
+  <div class="row mt-3 plr-15" [@atfirst]="loanAmount!='' && optmortgage=='1'?'visible':'hide'">
+      <div class="col-md-5 pl0">
+          <h5>
+              <b class="questyle">
+                  Interest Rate?
+               </b>
+          </h5>
+      </div>
+      <div class="col-md-7 pr0">
+          <input type="text" id="mortgageInterestRate" autocomplete="off" (keyup)="mortgageInterestRate=validation.appendPercent($event,mortgageInterestRate)" (keypress)="validation.DesimalOnly($event,mortgageInterestRate)" placeholder="Mortgage interest rate (3.75%)" [(ngModel)]="mortgageInterestRate">
+          <span *ngIf="mortgageInterestRate!=''" class="tick-g"><i class="fa fa-check" aria-hidden="true"></i></span>
+      </div>
+  </div>
+  <div class="row mt-3 plr-15" [@afrfirst]="mortgageInterestRate!='' && optmortgage=='1'?'visible':'hide'">
+      <div class="col-md-5 pl0">
+          <h5>
+              <b class="questyle">
+                  Loan tenure?
+                </b>
+          </h5>
+      </div>
+      <div class="col-md-7 pr0">
+        <select id="mortgageTenure" [(ngModel)]="mortgageTenure">
+            <option value="">Select</option>
+            <option value="5">5</option>
+            <option value="10">10</option>
+            <option value="15">15</option>
+        </select>
+          <!-- <input type="text" id="mortgageTenure" autocomplete="off" (keypress)="validation.numberOnly($event)" placeholder="Mortgage tenure (15 years)" [(ngModel)]="mortgageTenure">
+          <span *ngIf="mortgageTenure!=''" class="tick-g"><i class="fa fa-check" aria-hidden="true"></i></span> -->
+      </div>
+  </div>
+  <div class="row mt-3 plr-15"  [@affirst]="mortgageTenure!=''&& mortgageInterestRate!='' && loanAmount!='' && optmortgage!='' && optmortgage=='1'?'visible':'hide'">
+      <div class="col-md-5 pl0">
+          <h5>
+              <b class="questyle">
+               Mortgage Type?
+              </b>
+          </h5>
+      </div>
+      <div class="col-md-7 pr0">
+          <select id="mortgageType" [(ngModel)]="mortgageType" disabled="true">
+              <option value="">Select</option>
+              <option value="1" selected>Interest Only</option>
+              <option value="2">Principle + Interest</option>
+          </select>
+          <!-- <span class="input-euro left">
+              <input type="text" id="propVal" placeholder="6000" >
+          </span> -->
+      </div>
+  </div>
+  <div class="row mt-3">
+      <div class="col-md-12 mobile-center" style="text-align: right;" *ngIf="mortgageType!='' || optmortgage=='0'">
+          <button class="btn btn-defaultNext" type="button" (click)="next()">Next</button>
+      </div>
+  </div>
+  </div>
+    <!-- Fourth -->

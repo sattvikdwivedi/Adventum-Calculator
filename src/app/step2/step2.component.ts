@@ -1,0 +1,163 @@
+import { Component, ElementRef, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { DataService } from '../data.service';
+import { trigger,state,style,animate,transition } from '@angular/animations';
+import { ValidationService } from '../validation.service';
+@Component({
+  selector: 'app-step2',
+  templateUrl: './step2.component.html',
+  styleUrls: ['./step2.component.css'],
+  animations: [
+    trigger('otpmort',[
+      state('visible', style({ opacity:'1', height:'*' })),
+      state('hide',    style({ opacity:'0', height:'0px', overflow:'hidden' })),
+      transition('hide => visible', [animate('400ms ease-out')]),
+      transition('visible => hide', [animate('200ms ease-in')])
+    ]),
+    trigger('affirst',[
+      state('visible', style({ opacity:'1', height:'*' })),
+      state('hide',    style({ opacity:'0', height:'0px', overflow:'hidden' })),
+      transition('hide => visible', [animate('400ms ease-out')]),
+      transition('visible => hide', [animate('200ms ease-in')])
+    ]),
+    trigger('asfirst',[
+      state('visible', style({ opacity:'1', height:'*' })),
+      state('hide',    style({ opacity:'0', height:'0px', overflow:'hidden' })),
+      transition('hide => visible', [animate('400ms ease-out')]),
+      transition('visible => hide', [animate('200ms ease-in')])
+    ]),
+    trigger('atfirst',[
+      state('visible', style({ opacity:'1', height:'*' })),
+      state('hide',    style({ opacity:'0', height:'0px', overflow:'hidden' })),
+      transition('hide => visible', [animate('400ms ease-out')]),
+      transition('visible => hide', [animate('200ms ease-in')])
+    ]),
+    trigger('afrfirst',[
+      state('visible', style({ opacity:'1', height:'*' })),
+      state('hide',    style({ opacity:'0', height:'0px', overflow:'hidden' })),
+      transition('hide => visible', [animate('400ms ease-out')]),
+      transition('visible => hide', [animate('200ms ease-in')])
+    ])
+  ]
+})
+
+export class Step2Component implements OnInit {
+  percentInput: ElementRef | undefined;
+  PropertyValue:string="";
+  optmortgage:string="";
+  loanvalue:any="";
+  mortgageType:string="";
+  loanAmount:string="";
+  mortgageInterestRate:string="";
+  mortgageTenure:string="";
+  calcData:any;
+  MapLoad=true;
+  
+  lat :number | undefined;
+  long :number | undefined;
+
+  constructor(
+    private router:Router,
+    private dataService: DataService,
+    public validation:ValidationService) {
+    const calcDataString = localStorage.getItem("calcData");
+    this.calcData = calcDataString ? JSON.parse(calcDataString) : {};
+   
+    if(!this.dataService.EmptyNullOrUndefined(this.calcData.PropertyValue)){
+      this.PropertyValue=this.validation.amountWithComma(this.calcData.PropertyValue);
+    }
+    // if(!this.dataService.EmptyNullOrUndefined(this.calcData.loanvalue)){
+    //   this.loanvalue=this.validation.amountWithComma(this.calcData.loanvalue);
+    // }
+  if(!this.dataService.EmptyNullOrUndefined(this.calcData.optmortgage)){
+    this.optmortgage=this.calcData.optmortgage;
+  }
+  if(!this.dataService.EmptyNullOrUndefined(this.calcData.mortgageType)){
+    this.mortgageType=this.calcData.mortgageType; 
+  }
+  if(!this.dataService.EmptyNullOrUndefined(this.calcData.loanAmount)){
+    this.loanAmount=this.calcData.loanAmount; 
+  }
+  if(!this.dataService.EmptyNullOrUndefined(this.calcData.mortgageInterestRate)){
+    this.mortgageInterestRate=this.calcData.mortgageInterestRate+"%"; 
+  }
+  if(!this.dataService.EmptyNullOrUndefined(this.calcData.mortgageTenure)){
+    this.mortgageTenure=this.calcData.mortgageTenure; 
+  } 
+  if(!this.dataService.EmptyNullOrUndefined(this.calcData.lat)){
+    this.lat=this.calcData.lat; 
+  } 
+  if(!this.dataService.EmptyNullOrUndefined(this.calcData.long)){
+    this.long=this.calcData.long; 
+  } 
+ 
+}
+  ngOnInit(): void {
+  // $(document).ready(function(){
+  //   $(".percent").on('input', function() {
+  //     $(this).val(function(i, v) {
+  //      return v.replace('%','') + '%';  });
+  //   });
+  // });
+  }
+
+  next(){
+    debugger;
+    let flag=true;
+    if(!this.dataService.EmptyNullOrUndefined(this.optmortgage)){
+        this.calcData.optmortgage=this.optmortgage;
+        if(!this.dataService.EmptyNullOrUndefined(this.PropertyValue)){
+          this.calcData.PropertyValue=this.PropertyValue.replace(/,/g,'');
+        }else{
+          let element=document.getElementById("propertyValue");
+          element.classList.add("error-input");
+          flag=false;
+        }
+
+        // if(!this.dataService.EmptyNullOrUndefined(this.loanvalue)){
+        //   this.calcData.loanvalue=this.loanvalue.replace(/,/g,'');
+        // }else{
+        //   let element=document.getElementById("loanvalue");
+        //   element.classList.add("error-input");
+        //   flag=false;
+        // }
+
+
+
+
+        if(this.optmortgage=="1"){
+          if(!this.dataService.EmptyNullOrUndefined(this.mortgageType)){
+            this.calcData.mortgageType=this.mortgageType;
+          }else{
+            flag=false;
+          }
+          if(!this.dataService.EmptyNullOrUndefined(this.loanAmount)){
+            this.calcData.loanAmount=this.loanAmount.replace("%",'');
+          }else{
+            flag=false;
+          }
+          if(!this.dataService.EmptyNullOrUndefined(this.mortgageInterestRate)){
+            this.calcData.mortgageInterestRate=this.mortgageInterestRate.replace("%",'');
+          }else{
+            let element=document.getElementById("mortgageInterestRate");
+            element.classList.add("error-input");
+            flag=false;
+          }
+          if(!this.dataService.EmptyNullOrUndefined(this.mortgageTenure)){
+            this.calcData.mortgageTenure=this.mortgageTenure;
+          }else{
+            flag=false;
+          }
+        }
+      }else{
+        flag=false;
+      }
+    
+   if(flag){
+    this.calcData.reportSavedOnServer=false;
+    localStorage.setItem("calcData",JSON.stringify(this.calcData));
+    this.router.navigate(['/step3']);
+   }
+  }
+
+}

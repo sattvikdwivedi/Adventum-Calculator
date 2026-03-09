@@ -1,0 +1,236 @@
+<!-- ── FINANCING PAGE ── -->
+<div class="financing-page">
+
+  <!-- ── LEFT PANEL ── -->
+  <div class="panel-left">
+    <div class="panel-left-bg"></div>
+    <div class="panel-left-content">
+
+      <!-- Logo -->
+      <div class="panel-logo">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+          <path d="M16 4L28 26H4L16 4Z" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" fill="none"/>
+          <path d="M16 13L21 22H11L16 13Z" fill="rgba(34,197,94,0.9)"/>
+        </svg>
+        <div>
+          <span class="panel-logo-text">AD<span class="panel-logo-green">V</span>ENTUM<sup class="panel-logo-reg">®</sup></span>
+          <span class="panel-logo-sub">CALCULATORS</span>
+        </div>
+      </div>
+
+      <!-- Hero card -->
+      <div class="panel-hero-card">
+        <p class="panel-hero-title"><strong>Investment Property Calculator</strong></p>
+        <p class="panel-hero-sub">Define your property value and financing structure to model accurate investment returns.</p>
+
+        <!-- Dynamic summary cards -->
+        <div class="summary-grid" *ngIf="PropertyValue!=''">
+          <div class="summary-card">
+            <div class="summary-card-lbl">Property Value</div>
+            <div class="summary-card-val">£{{PropertyValue}}</div>
+          </div>
+          <div class="summary-card" [class.hi]="optmortgage=='0'">
+            <div class="summary-card-lbl">Mortgage</div>
+            <div class="summary-card-val">{{optmortgage=='1' ? 'Yes' : optmortgage=='0' ? 'No' : '—'}}</div>
+          </div>
+          <div class="summary-card" *ngIf="optmortgage=='1' && loanAmount!=''">
+            <div class="summary-card-lbl">Loan to Value</div>
+            <div class="summary-card-val">{{loanAmount}}%</div>
+          </div>
+          <div class="summary-card hi" *ngIf="optmortgage=='1' && mortgageInterestRate!=''">
+            <div class="summary-card-lbl">Interest Rate</div>
+            <div class="summary-card-val">{{mortgageInterestRate}}</div>
+          </div>
+          <div class="summary-card" *ngIf="optmortgage=='1' && mortgageTenure!=''">
+            <div class="summary-card-lbl">Tenure</div>
+            <div class="summary-card-val">{{mortgageTenure}} yrs</div>
+          </div>
+          <div class="summary-card" *ngIf="optmortgage=='1' && mortgageType!=''">
+            <div class="summary-card-lbl">Type</div>
+            <div class="summary-card-val">{{mortgageType=='1' ? 'Int. Only' : 'P+I'}}</div>
+          </div>
+        </div>
+
+        <!-- Static stats before data entry -->
+        <div class="panel-stats" *ngIf="PropertyValue==''">
+          <div class="panel-stat">
+            <div class="panel-stat-val">Step</div>
+            <div class="panel-stat-lbl">2 of 5</div>
+          </div>
+          <div class="panel-stat">
+            <div class="panel-stat-val">Finance</div>
+            <div class="panel-stat-lbl">Setup</div>
+          </div>
+          <div class="panel-stat">
+            <div class="panel-stat-val">Free</div>
+            <div class="panel-stat-lbl">Always</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── RIGHT PANEL ── -->
+  <div class="panel-right">
+    <div class="panel-right-inner">
+
+      <!-- Top bar -->
+      <div class="panel-topbar">
+        <button class="btn-circle-back" [routerLink]="['/step1']">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <div class="location-pill">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          London
+        </div>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="progress-wrap">
+        <progress-bar
+          [progress]="10+(PropertyValue!=''?10:0)+(optmortgage==''?0:(optmortgage=='1'?6.25:31.25))+(optmortgage=='1'?((loanAmount!=''?6.25:0)+(mortgageInterestRate!=''?6.25:0)+(mortgageTenure!=''?6.25:0)+(mortgageType!=''?6.25:0)):0)"
+          [color]="'#22c55e'">
+        </progress-bar>
+        <span class="progress-label">
+          {{10+(PropertyValue!=''?10:0)+(optmortgage==''?0:(optmortgage=='1'?6.25:31.25))+(optmortgage=='1'?(+(loanAmount!=''?6.25:0)+(mortgageInterestRate!=''?6.25:0)+(mortgageTenure!=''?6.25:0)+(mortgageType!=''?6.25:0)):0)|number:'1.0-0'}}% data received
+        </span>
+      </div>
+
+      <!-- Heading -->
+      <h2 class="section-title">Property &amp; Financing</h2>
+      <p class="section-sub">Set up your investment structure and mortgage preferences.</p>
+
+      <!-- Property Value -->
+      <div class="field-group">
+        <div class="field-label-row">
+          <span class="field-label">Property Value</span>
+          <span class="field-hint">+ UK market average: £280k</span>
+        </div>
+        <div class="field-input-wrap" [class.field-input-wrap--error]="PropertyValue==''">
+          <span class="field-prefix">£</span>
+          <input
+            class="field-input"
+            type="text"
+            id="propertyValue"
+            autocomplete="off"
+            placeholder="e.g. 250,000"
+            [(ngModel)]="PropertyValue"
+            (keyup)="PropertyValue=validation.amountWithComma(PropertyValue)"
+            (keypress)="validation.numberOnly($event)">
+        </div>
+      </div>
+
+      <!-- Will you need a mortgage? -->
+      <div class="field-group" [@otpmort]="PropertyValue!=''?'visible':'hide'">
+        <div class="field-label-row">
+          <span class="field-label">Will you need a mortgage?</span>
+        </div>
+        <div class="toggle-pair">
+          <button
+            class="toggle-opt"
+            [class.active]="optmortgage=='1'"
+            (click)="optmortgage='1'">
+            Yes
+          </button>
+          <button
+            class="toggle-opt"
+            [class.active]="optmortgage=='0'"
+            (click)="optmortgage='0'">
+            No
+          </button>
+        </div>
+      </div>
+
+      <!-- Loan to Value — pill buttons -->
+      <div class="field-group" [@asfirst]="optmortgage=='1'?'visible':'hide'">
+        <div class="field-label-row">
+          <span class="field-label">Loan to Value (LTV)</span>
+          <span class="field-hint">+ Higher LTV = less deposit required</span>
+        </div>
+        <div class="pill-row">
+          <button class="pill-btn" [class.active]="loanAmount=='50'" (click)="loanAmount='50'">50%</button>
+          <button class="pill-btn" [class.active]="loanAmount=='55'" (click)="loanAmount='55'">55%</button>
+          <button class="pill-btn" [class.active]="loanAmount=='60'" (click)="loanAmount='60'">60%</button>
+          <button class="pill-btn" [class.active]="loanAmount=='65'" (click)="loanAmount='65'">65%</button>
+          <button class="pill-btn" [class.active]="loanAmount=='70'" (click)="loanAmount='70'">70%</button>
+          <button class="pill-btn" [class.active]="loanAmount=='75'" (click)="loanAmount='75'">75%</button>
+          <button class="pill-btn" [class.active]="loanAmount=='80'" (click)="loanAmount='80'">80%</button>
+        </div>
+      </div>
+
+      <!-- Interest Rate -->
+      <div class="field-group" [@atfirst]="loanAmount!='' && optmortgage=='1'?'visible':'hide'">
+        <div class="field-label-row">
+          <span class="field-label">Interest Rate</span>
+          <span class="field-hint">+ Current avg: 5.2%</span>
+        </div>
+        <div class="field-input-wrap">
+          <span class="field-prefix">%</span>
+          <input
+            class="field-input"
+            type="text"
+            id="mortgageInterestRate"
+            autocomplete="off"
+            placeholder="e.g. 3.75"
+            [(ngModel)]="mortgageInterestRate"
+            (keyup)="mortgageInterestRate=validation.appendPercent($event,mortgageInterestRate)"
+            (keypress)="validation.DesimalOnly($event,mortgageInterestRate)">
+        </div>
+      </div>
+
+      <!-- Loan Tenure — pill buttons -->
+      <div class="field-group" [@afrfirst]="mortgageInterestRate!='' && optmortgage=='1'?'visible':'hide'">
+        <div class="field-label-row">
+          <span class="field-label">Loan Tenure</span>
+          <span class="field-hint">+ Typical BTL: 10-25 years</span>
+        </div>
+        <div class="pill-row">
+          <button class="pill-btn" [class.active]="mortgageTenure=='5'"  (click)="mortgageTenure='5'">5 Yrs</button>
+          <button class="pill-btn" [class.active]="mortgageTenure=='10'" (click)="mortgageTenure='10'">10 Yrs</button>
+          <button class="pill-btn" [class.active]="mortgageTenure=='15'" (click)="mortgageTenure='15'">15 Yrs</button>
+          <button class="pill-btn" [class.active]="mortgageTenure=='20'" (click)="mortgageTenure='20'">20 Yrs</button>
+          <button class="pill-btn" [class.active]="mortgageTenure=='25'" (click)="mortgageTenure='25'">25 Yrs</button>
+        </div>
+      </div>
+
+      <!-- Mortgage Type — toggle pair -->
+      <div class="field-group" [@affirst]="mortgageTenure!=''?'visible':'hide'">
+        <div class="field-label-row">
+          <span class="field-label">Mortgage Type</span>
+        </div>
+        <div class="toggle-pair">
+          <button
+            class="toggle-opt"
+            [class.active]="mortgageType=='1'"
+            (click)="mortgageType='1'">
+            Interest Only
+          </button>
+          <button
+            class="toggle-opt"
+            [class.active]="mortgageType=='2'"
+            (click)="mortgageType='2'">
+            Repayment
+          </button>
+        </div>
+      </div>
+
+      <!-- Nav buttons -->
+      <div class="panel-nav" *ngIf="mortgageType!='' || optmortgage=='0'">
+        <button class="btn-back-outline" [routerLink]="['/step1']">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back
+        </button>
+        <button
+          class="btn-continue btn-continue--active"
+          type="button"
+          (click)="next()">
+          Continue
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

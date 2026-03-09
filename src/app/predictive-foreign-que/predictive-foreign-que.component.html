@@ -1,0 +1,269 @@
+<div class="container" style="margin-top: 100px;"> 
+<div class="row mt-30">
+     <div class="col-md-6 col-6">
+      <img src="./assets/exchange-breadcrumb.svg" class="wd125">
+    </div> 
+    <div class="col-md-6 col-12 bread-p text-right">
+      <p class="mb-1">Foreign Exchange Calculator</p>
+      <p class="mb-0">{{validation.getCurrentDateWithSpecificFormat()}}</p>
+    </div> 
+  </div>
+  <div class="row mt-3 plr-1"  id="secondMain">
+    <div class="mapcontainer">
+        <app-googlemap [MapClassLoad]="MapLoad" [latitude]="lat" [longitude]="long"></app-googlemap>
+    </div>
+  </div>
+  <div class="row  mt-3 plr-15"  id="thirdMain">
+    <div class="col-md-12 p0 prl10">
+        <progress-bar [progress]="15+(InvestmentGBP!=''?20:0)+(PreHomeCurrency==''?9.25:31.25)+(FXGrowth==''?9.25:31.25)" [color]="'#488aff'">
+        </progress-bar>
+    </div>
+    <div class="col-md-2 col-6 p-back pl17">
+        <a [routerLink]="['/step1']" class="backlink">Back</a>
+    </div>
+    <div class="col-md-10 col-6 p-rec pr13">
+       <label class="float-right">{{17+(InvestmentGBP!=''?20:0)+(PreHomeCurrency==''?9.25:31.25)+(FXGrowth==''?9.25:31.25)|number:'1.0-0'}}% data recieved</label> 
+    </div>
+  </div>
+  <div class="row mt-3 plr-15">
+    <div class="col-md-5 pl0">
+      <h5>
+        <b class="questyle">
+          Investment in GBP?
+        </b>
+      </h5>
+    </div>
+    <div class="col-md-7 pr0">
+      <span class="input-euro left">
+        <input type="text" id="InvestmentGBP" autocomplete="off" (keyup)="InvestmentGBP=validation.amountWithComma(InvestmentGBP)" placeholder="Enter Investment Value" [(ngModel)]="InvestmentGBP"> 
+      </span>
+      <span *ngIf="InvestmentGBP!=''" class="tick-g"><i class="fa fa-check" aria-hidden="true"></i></span>
+    </div>
+  </div>
+  <div class="row mt-3 plr-15" [@InvestGBP]="InvestmentGBP!=''?'visible':'hide'">
+    <div class="col-md-5 pl0">
+      <h5>
+        <b class="questyle">
+         Home Currency?
+       </b>
+     </h5>
+   </div>
+   <div class="col-md-7 pr0">
+    <select id="PreHomeCurrency" [(ngModel)]="PreHomeCurrency" (change)="homecurrencyChange()">
+      <option value="">Select</option>
+            <option value='INR'>INR</option>
+            <option value='AED'>AED</option>
+            <option value='AFN'>AFN</option>
+            <option value='ALL'>ALL</option>
+            <option value='AMD'>AMD</option>
+            <option value='ANG'>ANG</option>
+            <option value='AOA'>AOA</option>
+            <option value='ARS'>ARS</option>
+            <option value='AUD'>AUD</option>
+            <option value='AWG'>AWG</option>
+            <option value='AZN'>AZN</option>
+            <option value='BAM'>BAM</option>
+            <option value='BBD'>BBD</option>
+            <option value='BDT'>BDT</option>
+            <option value='BGN'>BGN</option>
+            <option value='BHD'>BHD</option>
+            <option value='BIF'>BIF</option>
+            <option value='BMD'>BMD</option>
+            <option value='BND'>BND</option>
+            <option value='BOB'>BOB</option>
+            <option value='BRL'>BRL</option>
+            <option value='BSD'>BSD</option>
+            <option value='BTC'>BTC</option>
+            <option value='BTN'>BTN</option>
+            <option value='BWP'>BWP</option>
+            <option value='BYR'>BYR</option>
+            <option value='BYN'>BYN</option>
+            <option value='BZD'>BZD</option>
+            <option value='CAD'>CAD</option>
+            <option value='CDF'>CDF</option>
+            <option value='CHF'>CHF</option>
+            <option value='CLF'>CLF</option>
+            <option value='CLP'>CLP</option>
+            <option value='CNY'>CNY</option>
+            <option value='COP'>COP</option>
+            <option value='CRC'>CRC</option>
+            <option value='CUC'>CUC</option>
+            <option value='CUP'>CUP</option>
+            <option value='CVE'>CVE</option>
+            <option value='CZK'>CZK</option>
+            <option value='DJF'>DJF</option>
+            <option value='DKK'>DKK</option>
+            <option value='DOP'>DOP</option>
+            <option value='DZD'>DZD</option>
+            <option value='EGP'>EGP</option>
+            <option value='ERN'>ERN</option>
+            <option value='ETB'>ETB</option>
+            <option value='EUR'>EUR</option>
+            <option value='FJD'>FJD</option>
+            <option value='FKP'>FKP</option>
+            <option value='GBP'>GBP</option>
+            <option value='GEL'>GEL</option>
+            <option value='GGP'>GGP</option>
+            <option value='GHS'>GHS</option>
+            <option value='GIP'>GIP</option>
+            <option value='GMD'>GMD</option>
+            <option value='GNF'>GNF</option>
+            <option value='GTQ'>GTQ</option>
+            <option value='GYD'>GYD</option>
+            <option value='HKD'>HKD</option>
+            <option value='HNL'>HNL</option>
+            <option value='HRK'>HRK</option>
+            <option value='HTG'>HTG</option>
+            <option value='HUF'>HUF</option>
+            <option value='IDR'>IDR</option>
+            <option value='ILS'>ILS</option>
+            <option value='IMP'>IMP</option>
+            
+            <option value='IQD'>IQD</option>
+            <option value='IRR'>IRR</option>
+            <option value='ISK'>ISK</option>
+            <option value='JEP'>JEP</option>
+            <option value='JMD'>JMD</option>
+            <option value='JOD'>JOD</option>
+            <option value='JPY'>JPY</option>
+            <option value='KES'>KES</option>
+            <option value='KGS'>KGS</option>
+            <option value='KHR'>KHR</option>
+            <option value='KMF'>KMF</option>
+            <option value='KPW'>KPW</option>
+            <option value='KRW'>KRW</option>
+            <option value='KWD'>KWD</option>
+            <option value='KYD'>KYD</option>
+            <option value='KZT'>KZT</option>
+            <option value='LAK'>LAK</option>
+            <option value='LBP'>LBP</option>
+            <option value='LKR'>LKR</option>
+            <option value='LRD'>LRD</option>
+            <option value='LSL'>LSL</option>
+            <option value='LTL'>LTL</option>
+            <option value='LVL'>LVL</option>
+            <option value='LYD'>LYD</option>
+            <option value='MAD'>MAD</option>
+            <option value='MDL'>MDL</option>
+            <option value='MGA'>MGA</option>
+            <option value='MKD'>MKD</option>
+            <option value='MMK'>MMK</option>
+            <option value='MNT'>MNT</option>
+            <option value='MOP'>MOP</option>
+            <option value='MRO'>MRO</option>
+            <option value='MUR'>MUR</option>
+            <option value='MVR'>MVR</option>
+            <option value='MWK'>MWK</option>
+            <option value='MXN'>MXN</option>
+            <option value='MYR'>MYR</option>
+            <option value='MZN'>MZN</option>
+            <option value='NAD'>NAD</option>
+            <option value='NGN'>NGN</option>
+            <option value='NIO'>NIO</option>
+            <option value='NOK'>NOK</option>
+            <option value='NPR'>NPR</option>
+            <option value='NZD'>NZD</option>
+            <option value='OMR'>OMR</option>
+            <option value='PAB'>PAB</option>
+            <option value='PEN'>PEN</option>
+            <option value='PGK'>PGK</option>
+            <option value='PHP'>PHP</option>
+            <option value='PKR'>PKR</option>
+            <option value='PLN'>PLN</option>
+            <option value='PYG'>PYG</option>
+            <option value='QAR'>QAR</option>
+            <option value='RON'>RON</option>
+            <option value='RSD'>RSD</option>
+            <option value='RUB'>RUB</option>
+            <option value='RWF'>RWF</option>
+            <option value='SAR'>SAR</option>
+            <option value='SBD'>SBD</option>
+            <option value='SCR'>SCR</option>
+            <option value='SDG'>SDG</option>
+            <option value='SEK'>SEK</option>
+            <option value='SGD'>SGD</option>
+            <option value='SHP'>SHP</option>
+            <option value='SLL'>SLL</option>
+            <option value='SOS'>SOS</option>
+            <option value='SRD'>SRD</option>
+            <option value='STD'>STD</option>
+            <option value='SVC'>SVC</option>
+            <option value='SYP'>SYP</option>
+            <option value='SZL'>SZL</option>
+            <option value='THB'>THB</option>
+            <option value='TJS'>TJS</option>
+            <option value='TMT'>TMT</option>
+            <option value='TND'>TND</option>
+            <option value='TOP'>TOP</option>
+            <option value='TRY'>TRY</option>
+            <option value='TTD'>TTD</option>
+            <option value='TWD'>TWD</option>
+            <option value='TZS'>TZS</option>
+            <option value='UAH'>UAH</option>
+            <option value='UGX'>UGX</option>
+            <option value='USD'>USD</option>
+            <option value='UYU'>UYU</option>
+            <option value='UZS'>UZS</option>
+            <option value='VEF'>VEF</option>
+            <option value='VND'>VND</option>
+            <option value='VUV'>VUV</option>
+            <option value='WST'>WST</option>
+            <option value='XAF'>XAF</option>
+            <option value='XAG'>XAG</option>
+            <option value='XAU'>XAU</option>
+            <option value='XCD'>XCD</option>
+            <option value='XDR'>XDR</option>
+            <option value='XOF'>XOF</option>
+            <option value='XPF'>XPF</option>
+            <option value='YER'>YER</option>
+            <option value='ZAR'>ZAR</option>
+            <option value='ZMK'>ZMK</option>
+            <option value='ZMW'>ZMW</option>
+            <option value='ZWL'>ZWL</option>
+    </select> 
+    <!-- <span *ngIf="PreHomeCurrency!=''" class="tick-g"><i class="fa fa-check" aria-hidden="true"></i></span> -->
+  </div>
+</div>
+<div class="row plr-15 mt-3" *ngIf="PreHomeCurrency!==''">
+  <div class="col-md-5 pl0" style="padding-right: 32px;">
+      <h5><b class="questyle">Home Currency Value?</b></h5>
+  </div>
+  <div class="col-md-7 pr0">
+      <input type="text" id="homecurrencyvalue" autocomplete="off" (keypress)="validation.DesimalOnly($event,homecurrency)" placeholder="Home Currency Value" [(ngModel)]="homecurrency">
+      <span *ngIf="homecurrency!=''" class="tick-g"><i class="fa fa-check" aria-hidden="true"></i></span>
+  </div>
+</div>
+<div class="row mt-3 plr-15" [@PreHC]="PreHomeCurrency!=''?'visible':'hide'">
+    <div class="col-md-5 pl0">
+      <h5>
+        <b class="questyle">
+          FX Growth p.a?
+        </b>
+      </h5>
+    </div>
+    <div class="col-md-7 pr0">
+      <input type="text" id="FXGrowth" autocomplete="off" (keyup)="FXGrowth=validation.appendPercent($event,FXGrowth)" placeholder="FX Growth (3%)" [(ngModel)]="FXGrowth"> 
+      <span  *ngIf="FXGrowth!=''" class="tick-g"><i class="fa fa-check" aria-hidden="true"></i></span>
+    </div> 
+  </div>
+  <div class="row plr-15 mt-3" [@PreHC]="FXGrowth!=''?'visible':'hide'" >
+    <div class="col-md-5 pl0" style="padding-right: 32px;">
+        <h5><b class="questyle">Investment Period?</b></h5>
+    </div>
+    <div class="col-md-7 pr0">
+      <select id="investedTenure" [(ngModel)]="investedTenure">
+        <option value="">Select</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="15">15</option>
+    </select>
+        <!-- <input type="text" id="investedTenure" autocomplete="off" (keypress)="validation.DesimalOnly($event,investedTenure)" placeholder="Investment tenure (In Years)" [(ngModel)]="investedTenure">
+        <span *ngIf="investedTenure!=''" class="tick-g"><i class="fa fa-check" aria-hidden="true"></i></span> -->
+    </div>
+  </div>
+  <div class="row mt-3 plr-15">
+    <div class="col-md-12 pr0 mobile-center" style="text-align: right;" *ngIf="FXGrowth!=''">
+    <button class="btn btn-defaultNext" type="button" (click)="next()">Next</button>
+   </div>
+ </div>
+ </div>

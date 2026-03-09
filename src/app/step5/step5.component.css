@@ -1,0 +1,47 @@
+ 
+#firstMain span{
+    display: inline-block;
+    background: #adb5bd;
+    width: 114.07px;
+    height: 69.77px;
+  }
+
+  #firstMain label{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: small;
+  } 
+  #thirdMain label{
+    display:block; 
+    text-align:right;
+    font-size: small;
+  }
+  button{
+    float: right;
+    /* margin: 20px 0px 20px 0px; */
+    width: 250px;
+}
+#progressPerc label{
+  display:block; 
+  text-align:right;
+  font-size: small;
+}
+.backlink{
+  text-align: left;
+  color: black;
+  font-size: small;
+}
+#secondMain{
+  height: 150px;
+}
+
+.btn-success{
+  padding: 15px;
+	font-weight: 700!important;
+}
+.questyle {
+  font-size: 20px!important;
+  font-weight: 300!important;
+ 
+}

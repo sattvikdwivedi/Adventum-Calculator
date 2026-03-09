@@ -1,0 +1,216 @@
+<div class="container" id="contentToConvert" style="margin-top: 100px;"> 
+<div class="row mt-30">
+    <div class="col-md-6 col-6">
+        <img src="./assets/stamp-breadcrumb.svg" class="wd125">
+    </div>
+    <div class="col-md-6 col-12 bread-p text-right">
+        <p class="mb-1">Stamp Duty Calculator</p>
+        <p class="mb-0">{{validation.getCurrentDateWithSpecificFormat()}}</p>
+    </div> 
+</div>
+<div class="row mt-3 plr-1"  id="secondMain">
+    <div class="mapcontainer">
+        <app-googlemap [MapClassLoad]="MapLoad" [latitude]="lat" [longitude]="long"></app-googlemap>
+    </div>
+  </div>
+<div class="row mt-30">
+    <div class="col-md-6 col-lg-6">
+        
+       
+        <app-calculatordetails [coldesign]="12"></app-calculatordetails>
+
+        <div class="row text-right noprint">
+            <div class="col-md-12">
+                <!-- <button type="submit" class="btn btn-default submit-btn text-right"><img src="assets/img/save-report1.svg"> Save Reports</button> -->
+                <button type="submit" class="btn btn-default submit-btn text-right" (click)="startagain()"> <img src="./assets/recalculate1.svg">  Recalculate</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-6">
+        <div class="progress-box box2">
+            <h4>Stamp Duty </h4>
+            <p>SDLT Payable : {{stampDutyLandTax|currency:"GBP": 'symbol' : '1.0-0'}}</p>
+            <p>Effective Rate : {{effectiveRate}}%</p>
+            <!-- <p>
+                For property investment of {{GBPValue|currency:"GBP": 'symbol' : '1.0-0'}} stamp duty land tax amounts {{stampDutyLandTax|currency:"GBP": 'symbol' : '1.0-0'}} with effective rate {{effectiveRate}}%
+            </p> -->
+
+
+            <!-- <p>
+                For property investment of {{GBPValue|currency:"GBP": 'symbol' : '1.0-0'}} 
+            </p>
+            <p>stamp duty land tax amounts
+                <span class="thm-black-bold-text">&nbsp;{{stampDutyLandTax|currency:"GBP": 'symbol' : '1.0-0'}}</span>
+            </p>
+            <p>with effective rate <span class="thm-black-bold-text">{{effectiveRate}}%</span></p> -->
+
+            
+            <!-- <h4>{{stampDutyLandTax|currency:"GBP"}}</h4> -->
+            <!-- <h4>12,56,000 INR</h4> -->
+            <!-- <p>Over 20 Years</p> -->
+        </div>
+    </div>
+
+</div>
+<!-- <div class="row mt-15 mb-15">
+    <div class="col-md-12">
+       
+        <div class="progress-box m-box">
+            <h4 class="hidden-xs" style="margin-bottom: 30px;">Stamp Duty </h4>
+            <div style="width:100%;">
+                <div class="chartjs-size-monitor">
+                    <div class="chartjs-size-monitor-expand">
+                        <div class=""></div>
+                    </div>
+                    <div class="chartjs-size-monitor-shrink">
+                        <div class=""></div>
+                    </div>
+                </div>
+                <canvas id="canvas" style="display: block; width: 1379px; height: 689px;" width="1379" height="689" class="chartjs-render-monitor"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-30">
+    <div class="col-md-12 col-lg-6">
+       
+        <div class="progress-box  only-title  hidden-xs" style="background-color: transparent;">
+            <h4  class="hidden-xs">Here's Your IRR <span>(Internal Rate of Return)</span></h4>
+        </div>
+    </div>
+    <div class="col-md-12 col-lg-6">
+        <div class="progress-box piediagram" style="background-color: transparent; padding-top: 10px; padding-bottom: 10px;">
+            
+            <div class="demo">
+                <svg class="progress" width="200" height="200" viewBox="0 0 200 200">
+                    <defs>
+                        <linearGradient id="linearColors" x1="1" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stop-color="#fff"></stop>
+                            <stop offset="25%" stop-color="#f7f7f7"></stop>
+                            <stop offset="40%" stop-color="#b3b9e2"></stop>
+                            <stop offset="60%" stop-color="#b3b9e2"></stop>
+                            <stop offset="80%" stop-color="#5a52a5"></stop>
+                            <stop offset="100%" stop-color="#5a52a5"></stop>
+                        </linearGradient>
+                    </defs>
+                    <circle class="progress__meter" cx="100" cy="100" r="84" stroke-width="15" />
+                    <circle class="progress__value" cx="100" cy="100" r="84" stroke-width="15" stroke="url(#linearColors)" />
+                </svg>
+                <h2 class="display-value">60% <span class="prg">Progress</span></h2>
+                <input id="control" type="range" value="60" style="visibility: hidden;" />
+                <h5>GBP ($) <span class="curr-text">British Pound</span></h5>
+            </div>
+
+            <div class="demo">
+                <svg class="progress" width="200" height="200" viewBox="0 0 200 200">
+                    <defs>
+                        <linearGradient id="linearColors1" x1="1" y1="0" x2="0" y2="1">
+                            <stop offset="5%" stop-color="#fff"></stop>
+                            <stop offset="25%" stop-color="#f7f7f7"></stop>
+                            <stop offset="40%" stop-color="#bcf3cf"></stop>
+                            <stop offset="60%" stop-color="#bcf3cf"></stop>
+                            <stop offset="80%" stop-color="#2bba5a"></stop>
+                            <stop offset="100%" stop-color="#2bba5a"></stop>
+                        </linearGradient>
+                    </defs>
+                    <circle class="progress__meter1" cx="100" cy="100" r="84" stroke-width="15" />
+                    <circle class="progress__value1" cx="100" cy="100" r="84" stroke-width="15" stroke="url(#linearColors1)" />
+                </svg>
+                <h2 class="display-value">60% <span class="prg">Progress</span></h2>
+                <input id="control1" class="input2" type="range" value="60" style="visibility: hidden;" />
+                <h5>INR (₹) <span class="curr-text nat-rup" style="left: 12%;">Indian National Rupee</span></h5>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-30 mb-15">
+    <div class="col-md-12">
+       
+        <div class="progress-box m-box">
+            <h4 class="hidden-xs" style="margin-bottom: 30px;">Yearly IRR <span>(Internal Rate of Return)</span></h4>
+            <div style="width:100%;">
+                <div class="chartjs-size-monitor">
+                    <div class="chartjs-size-monitor-expand">
+                        <div class=""></div>
+                    </div>
+                    <div class="chartjs-size-monitor-shrink">
+                        <div class=""></div>
+                    </div>
+                </div>
+                <canvas id="canvas2" style="display: block; width: 1379px; height: 689px;" width="1379" height="689" class="chartjs-render-monitor"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+	<div class="col-md-12 col-lg-3 offset-lg-2 mob-center text-center">
+				<button type="submit" class="btn btn-default report-btn text-right"><img src="assets/save-report1.svg"> Save Report</button>
+				
+			</div>
+			<div class="col-md-7 col-lg-3 mob-center text-center">
+				<button type="submit" class="btn btn-default report-btn text-right"><img src="./assets/download-cursor1.svg"> Download Report</button>
+				
+			</div>
+			<div class="col-md-5 col-lg-3 mob-center text-center">
+			
+				<button type="submit" class="btn btn-default report-btn text-right"><img src="assets/share-report1.svg">Share Report</button>
+			</div>
+ 
+	</div> -->
+
+    <div class="row noprint" id="buttonsrow" style="justify-content:center;padding-top:30px;">
+        <div class="col-md-6 col-lg-3 mob-center text-right">
+            <button *ngIf="loadingPrintbtn" type="submit" class="btn btn-default report-btn text-right"><i class="fa fa-spin fa-spinner"></i>
+                Please Wait...</button>
+            <button *ngIf="!loadingPrintbtn" type="submit" class="btn btn-default report-btn text-right" (click)="printScreen()"><img src="./assets/save-report1.svg">
+                Print Report</button>
+        </div>
+        <div class="col-md-7 col-lg-3 mob-center text-center" id="downloadreportdiv" style="display:none;">
+            <button *ngIf="loadingDownloadbtn" type="submit" class="btn btn-default report-btn text-right"><i class="fa fa-spin fa-spinner"></i>
+                Please Wait...</button>
+            <button *ngIf="!loadingDownloadbtn" type="submit" class="btn btn-default report-btn text-right" (click)="convetToPDF()"><img
+                    src="./assets/download-cursor1.svg"> Download Report</button>
+        </div>
+        <div class="col-md-6 col-lg-3 mob-center text-left">
+            <button *ngIf="loadingSharebtn" type="submit" class="btn btn-default report-btn text-right"><i class="fa fa-spin fa-spinner"></i>
+                Please Wait...</button>
+            <button *ngIf="!loadingSharebtn" type="submit" class="btn btn-default report-btn text-right" (click)="emailpopup()"><img
+                    src="./assets/share-report1.svg">Share Report</button>
+        </div>
+    </div>
+    
+    </div>
+
+    <div class="modal fade noprint" id="myModal">
+        <div class="modal-dialog">
+          <div class="modal-content" style="top: 100px;">
+      
+            <!-- Modal Header -->
+            <div class="modal-header" style="border-bottom:0px;padding-bottom:0px">
+              <h5 class="modal-title" style="color:#1d1751;padding-left:12px;">Share Report</h5>
+              <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+            </div>
+      
+            <!-- Modal body -->
+            <div class="modal-body" style="padding-top: 20px;padding-bottom:5px;">
+                <div class="form-group col-md-12">
+                    <label style="color:#444854;font-size:14px;">Enter email ids of recipients</label>
+                    <input type="email" class="form-control" id="email" placeholder="example : joe@gmail.com,mark@gmail.com" name="email" [(ngModel)]="Email" autocomplete="off"  style="height:45px !important;" data-role="tagsinput">
+                </div>
+            </div>
+      
+            <!-- Modal footer -->
+            <div class="modal-footer" style="border-top: 0px;padding-top: 0px;padding-bottom: 8px;">
+                <div  style="width:100%;display:flex;justify-content:center;">
+                   
+                    <button *ngIf="loadingSharebtn" type="submit" class="btn modal-btn"><i class="fa fa-spin fa-spinner"></i>
+                        Please Wait...</button>
+                    <button *ngIf="!loadingSharebtn" type="submit" class="btn modal-btn" (click)=" shareReport()">Send</button>
+                    <button type="button" class="btn modal-cancel-btn" id="cancelbtn" (click)="cancel()">Cancel</button>
+                </div>
+            
+            </div>
+      
+          </div>
+        </div>
+      </div>

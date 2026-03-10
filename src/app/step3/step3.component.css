@@ -473,11 +473,35 @@
 }
 
 .summary-card.hi .summary-card-val { color: #22c55e; }
+.summary-card-val--green { color: #22c55e; }
 
 .summary-card-note {
   font-size: 11px;
   color: rgba(255,255,255,0.4);
   margin-top: 2px;
+}
+
+/* Foreign buyer notice card */
+.foreign-notice {
+  margin-top: 14px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 10px;
+  padding: 14px 16px;
+}
+
+.foreign-notice-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+.foreign-notice-text {
+  font-size: 12px;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.55;
+  margin: 0;
 }
 
 /* UK Market Context note */

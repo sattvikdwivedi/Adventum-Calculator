@@ -78,7 +78,15 @@ export class CalculatedirrComponent implements OnInit, AfterViewInit {
     const sym = this.getCurrencySymbol(currencyCode);
     const abs = Math.abs(value);
     let formatted: string;
-    if (abs >= 1e9) {
+    if (currencyCode === 'INR') {
+      if (abs >= 1e7) {
+        formatted = (abs / 1e7).toFixed(2).replace(/\.?0+$/, '') + ' Cr';
+      } else if (abs >= 1e5) {
+        formatted = (abs / 1e5).toFixed(2).replace(/\.?0+$/, '') + ' L';
+      } else {
+        formatted = Math.round(abs).toLocaleString('en-IN');
+      }
+    } else if (abs >= 1e9) {
       formatted = (abs / 1e9).toFixed(2).replace(/\.?0+$/, '') + 'B';
     } else if (abs >= 1e6) {
       formatted = (abs / 1e6).toFixed(2).replace(/\.?0+$/, '') + 'M';
@@ -265,7 +273,7 @@ export class CalculatedirrComponent implements OnInit, AfterViewInit {
       data: {
         labels: ['Net Rental Income', 'FX Appreciation', 'Capital Growth'],
         datasets: [{
-          backgroundColor: ['#374151', '#8b5cf6', '#3b82f6'],
+          backgroundColor: ['#56637A', '#BBC1C4', '#8EAAD2'],
           borderColor: ['#0c1a2e', '#0c1a2e', '#0c1a2e'],
           borderWidth: 3,
           data: [
@@ -312,6 +320,7 @@ export class CalculatedirrComponent implements OnInit, AfterViewInit {
     this.calcData.loanAmount = parseFloat(this.calcData.loanAmount) || 0;
     this.calcData.mortgageInterestRate = parseFloat(this.calcData.mortgageInterestRate) || 0;
     this.calcData.loanOriginationFee = parseFloat(this.calcData.loanOriginationFee) || 0;
+    this.calcData.legalFees = parseFloat((this.calcData.legalFees + '').replace(/,/g,'')) || 0;
     this.calcData.homecurrency = parseFloat(this.calcData.homecurrency) || 1;
     this.homecurrency = this.calcData.homecurrency;
     this.Initialhomecurrency = this.calcData.homecurrency;

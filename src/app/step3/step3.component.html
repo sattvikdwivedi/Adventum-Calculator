@@ -23,44 +23,34 @@
         <p class="panel-hero-title">Project Your <strong>Returns</strong></p>
         <p class="panel-hero-sub">Configure growth assumptions based on historical UK market performance.</p>
 
-        <!-- Dynamic summary grid -->
-        <div class="summary-grid" *ngIf="rentalYeild!='' || capitalgrowth!='' || fxgrowth!='' || homecurrency!=''">
-          <div class="summary-card" *ngIf="rentalYeild!=''">
+        <!-- Always-visible 2×2 summary grid -->
+        <div class="summary-grid">
+          <div class="summary-card">
             <div class="summary-card-lbl">Rental Yield</div>
-            <div class="summary-card-val">{{rentalYeild}}</div>
+            <div class="summary-card-val">{{rentalYeild || '4%'}}</div>
             <div class="summary-card-note">per annum</div>
           </div>
-          <div class="summary-card" *ngIf="capitalgrowth!=''">
+          <div class="summary-card">
             <div class="summary-card-lbl">Capital Growth</div>
-            <div class="summary-card-val">{{capitalgrowth}}</div>
+            <div class="summary-card-val">{{capitalgrowth || '4%'}}</div>
             <div class="summary-card-note">per annum</div>
           </div>
-          <div class="summary-card" *ngIf="fxgrowth!=''">
+          <div class="summary-card">
             <div class="summary-card-lbl">FX Appreciation</div>
-            <div class="summary-card-val">{{fxgrowth}}</div>
+            <div class="summary-card-val">{{fxgrowth || '4%'}}</div>
             <div class="summary-card-note">GBP vs home</div>
           </div>
-          <div class="summary-card hi" *ngIf="homecurrency!='' && homecurrencyText!=''">
+          <div class="summary-card hi">
             <div class="summary-card-lbl">Exchange Rate</div>
-            <div class="summary-card-val">£1 = {{homecurrency}}</div>
-            <div class="summary-card-note">{{homecurrencyText}}</div>
+            <div class="summary-card-val summary-card-val--green">{{homecurrency ? '£1 = ' + homecurrency : '—'}}</div>
+            <div class="summary-card-note">{{homecurrencyText || 'INR'}}</div>
           </div>
         </div>
 
-        <!-- Static stats before data entry -->
-        <div class="panel-stats" *ngIf="rentalYeild=='' && capitalgrowth=='' && fxgrowth=='' && homecurrency==''">
-          <div class="panel-stat">
-            <div class="panel-stat-val">Step</div>
-            <div class="panel-stat-lbl">3 of 5</div>
-          </div>
-          <div class="panel-stat">
-            <div class="panel-stat-val">FX</div>
-            <div class="panel-stat-lbl">&amp; Returns</div>
-          </div>
-          <div class="panel-stat">
-            <div class="panel-stat-val">Live</div>
-            <div class="panel-stat-lbl">Rates</div>
-          </div>
+        <!-- Foreign buyer notice — shown when ForeignBuyer = 1 from step1 -->
+        <div class="foreign-notice" *ngIf="foreignbuyer=='1'">
+          <div class="foreign-notice-title">UK Market Context</div>
+          <p class="foreign-notice-text">Non-UK residents are subject to a 2% SDLT surcharge. This has been factored into your stamp duty estimate.</p>
         </div>
 
       </div>

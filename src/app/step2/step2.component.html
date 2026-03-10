@@ -23,47 +23,25 @@
         <p class="panel-hero-title"><strong>Investment Property Calculator</strong></p>
         <p class="panel-hero-sub">Define your property value and financing structure to model accurate investment returns.</p>
 
-        <!-- Dynamic summary cards -->
-        <div class="summary-grid" *ngIf="PropertyValue!=''">
+        <!-- 2×2 summary grid — always visible, values update live -->
+        <div class="summary-grid">
           <div class="summary-card">
             <div class="summary-card-lbl">Property Value</div>
-            <div class="summary-card-val">£{{PropertyValue}}</div>
+            <div class="summary-card-val">{{PropertyValue ? '£' + PropertyValue : '—'}}</div>
           </div>
-          <div class="summary-card" [class.hi]="optmortgage=='0'">
-            <div class="summary-card-lbl">Mortgage</div>
-            <div class="summary-card-val">{{optmortgage=='1' ? 'Yes' : optmortgage=='0' ? 'No' : '—'}}</div>
+          <div class="summary-card hi">
+            <div class="summary-card-lbl">Your Deposit</div>
+            <div class="summary-card-val summary-card-val--green">{{depositDisplay}}</div>
+            <div class="summary-card-note" *ngIf="depositNote">{{depositNote}}</div>
           </div>
-          <div class="summary-card" *ngIf="optmortgage=='1' && loanAmount!=''">
-            <div class="summary-card-lbl">Loan to Value</div>
-            <div class="summary-card-val">{{loanAmount}}%</div>
+          <div class="summary-card">
+            <div class="summary-card-lbl">Loan Amount</div>
+            <div class="summary-card-val">{{loanAmountDisplay}}</div>
           </div>
-          <div class="summary-card hi" *ngIf="optmortgage=='1' && mortgageInterestRate!=''">
-            <div class="summary-card-lbl">Interest Rate</div>
-            <div class="summary-card-val">{{mortgageInterestRate}}</div>
-          </div>
-          <div class="summary-card" *ngIf="optmortgage=='1' && mortgageTenure!=''">
-            <div class="summary-card-lbl">Tenure</div>
-            <div class="summary-card-val">{{mortgageTenure}} yrs</div>
-          </div>
-          <div class="summary-card" *ngIf="optmortgage=='1' && mortgageType!=''">
-            <div class="summary-card-lbl">Type</div>
-            <div class="summary-card-val">{{mortgageType=='1' ? 'Int. Only' : 'P+I'}}</div>
-          </div>
-        </div>
-
-        <!-- Static stats before data entry -->
-        <div class="panel-stats" *ngIf="PropertyValue==''">
-          <div class="panel-stat">
-            <div class="panel-stat-val">Step</div>
-            <div class="panel-stat-lbl">2 of 5</div>
-          </div>
-          <div class="panel-stat">
-            <div class="panel-stat-val">Finance</div>
-            <div class="panel-stat-lbl">Setup</div>
-          </div>
-          <div class="panel-stat">
-            <div class="panel-stat-val">Free</div>
-            <div class="panel-stat-lbl">Always</div>
+          <div class="summary-card hi">
+            <div class="summary-card-lbl">Est. Stamp Duty</div>
+            <div class="summary-card-val summary-card-val--green">{{stampDutyDisplay}}</div>
+            <div class="summary-card-note" *ngIf="stampDutyNote">{{stampDutyNote}}</div>
           </div>
         </div>
       </div>

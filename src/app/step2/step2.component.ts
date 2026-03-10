@@ -92,6 +92,47 @@ export class Step2Component implements OnInit {
   } 
  
 }
+  private get priceNum(): number {
+    return parseInt((this.PropertyValue || '0').replace(/,/g, ''), 10) || 0;
+  }
+
+  get depositDisplay(): string {
+    const price = this.priceNum;
+    if (!price) return '—';
+    const ltv = parseInt(this.loanAmount, 10) || 75;
+    const deposit = Math.round(price * (1 - ltv / 100));
+    return '£' + deposit.toLocaleString('en-GB');
+  }
+
+  get depositNote(): string {
+    if (!this.priceNum) return '';
+    const ltv = parseInt(this.loanAmount, 10) || 75;
+    return (100 - ltv) + '% equity';
+  }
+
+  get loanAmountDisplay(): string {
+    const price = this.priceNum;
+    if (!price) return '—';
+    const ltv = parseInt(this.loanAmount, 10) || 75;
+    const loan = Math.round(price * ltv / 100);
+    return '£' + loan.toLocaleString('en-GB');
+  }
+
+  get stampDutyDisplay(): string {
+    const price = this.priceNum;
+    if (!price) return '—';
+    let sdlt = 0;
+    if (price > 1500000) sdlt += (price - 1500000) * 0.12;
+    if (price > 925000)  sdlt += (Math.min(price, 1500000) - 925000) * 0.10;
+    if (price > 250000)  sdlt += (Math.min(price, 925000) - 250000) * 0.05;
+    sdlt = Math.round(sdlt);
+    return '£' + sdlt.toLocaleString('en-GB');
+  }
+
+  get stampDutyNote(): string {
+    return this.priceNum ? 'incl. 2% surcharge' : '';
+  }
+
   ngOnInit(): void {
   // $(document).ready(function(){
   //   $(".percent").on('input', function() {

@@ -55,6 +55,7 @@ const routes: Routes = [
   {path: 'capital-growth-calculator/result', component: CapitalGrowthResultComponent},
   {path: 'estimated-weekly-rent-calculator/result', component: EstimatedWeeklyRentResultComponent},
   {path: 'Predictive-Foreign-calculator/question', component: PredictiveForeignQueComponent},
+  {path: 'predictive-foreign-calculator/question', component: PredictiveForeignQueComponent},
   {path: 'predictive-foreign-calculator/result', component: PredictiveForeignResultComponent},
   {path: 'stamp-duty-calculator/question', component: StampDutyQueComponent},
   {path: 'stamp-duty-calculator/result', component: StampDutyResultComponent},

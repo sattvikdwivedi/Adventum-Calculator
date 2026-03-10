@@ -171,12 +171,20 @@ export class HomeComponent implements OnInit {
         case 4:
           localStorage.setItem('CalculatorType', '4');
           localStorage.setItem('CalculatorText', '4');
-          this.router.navigate(['/predictive-foreign-exchange/step1']);
+          if (!localStorage.getItem('calcData') || !JSON.parse(localStorage.getItem('calcData')).City) {
+            const d: any = { City: 'United Kingdom', lat: 51.6112486, long: -0.2806403, Country: 'england', reportSavedOnServer: false };
+            localStorage.setItem('calcData', JSON.stringify(d));
+          }
+          this.router.navigate(['/Predictive-Foreign-calculator/question']);
           break;
         case 5:
           localStorage.setItem('CalculatorType', '5');
           localStorage.setItem('CalculatorText', '5');
-          this.router.navigate(['/stamp-duty-calculator/step1']);
+          if (!localStorage.getItem('calcData') || !JSON.parse(localStorage.getItem('calcData')).City) {
+            const d: any = { City: 'United Kingdom', lat: 51.6112486, long: -0.2806403, Country: 'england', reportSavedOnServer: false };
+            localStorage.setItem('calcData', JSON.stringify(d));
+          }
+          this.router.navigate(['/stamp-duty-calculator/question']);
           break;
         case 6:
           localStorage.setItem('CalculatorType', '6');

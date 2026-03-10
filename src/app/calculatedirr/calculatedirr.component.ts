@@ -50,6 +50,44 @@ export class CalculatedirrComponent implements OnInit, AfterViewInit {
   countryList: string[] = ['India', 'USA', 'Hong Kong', 'UAE', 'Europe', 'Nigeria', 'Bangladesh', 'Pakistan'];
   irrChart: any = null;
 
+  // Comprehensive currency symbol map
+  currencySymbolMap: any = {
+    'AFN': '؋', 'ALL': 'L', 'AMD': '֏', 'ANG': 'ƒ', 'AOA': 'Kz', 'ARS': '$',
+    'AUD': 'A$', 'AWG': 'ƒ', 'AZN': '₼', 'BAM': 'KM', 'BBD': 'Bds$', 'BDT': '৳',
+    'BGN': 'лв', 'BHD': 'BD', 'BIF': 'Fr', 'BMD': '$', 'BND': '$', 'BOB': 'Bs.',
+    'BRL': 'R$', 'BSD': '$', 'BTN': 'Nu', 'BWP': 'P', 'BYN': 'Br', 'BZD': 'BZ$',
+    'CAD': 'C$', 'CHF': 'CHF', 'CLP': '$', 'CNY': '¥', 'COP': '$', 'CZK': 'Kč',
+    'DKK': 'kr', 'DOP': 'RD$', 'DZD': 'دج', 'EGP': '£', 'EUR': '€', 'GBP': '£',
+    'GHS': 'GH₵', 'HKD': 'HK$', 'HUF': 'Ft', 'IDR': 'Rp', 'ILS': '₪', 'INR': '₹',
+    'IQD': 'ع.د', 'JPY': '¥', 'KES': 'KSh', 'KRW': '₩', 'KWD': 'KD', 'KZT': '₸',
+    'LKR': 'Rs', 'MAD': 'MAD', 'MXN': '$', 'MYR': 'RM', 'NGN': '₦', 'NOK': 'kr',
+    'NPR': 'Rs', 'NZD': 'NZ$', 'OMR': 'ر.ع.', 'PHP': '₱', 'PKR': '₨', 'PLN': 'zł',
+    'QAR': 'ر.ق', 'RON': 'lei', 'RUB': '₽', 'SAR': '﷼', 'SEK': 'kr', 'SGD': 'S$',
+    'THB': '฿', 'TRY': '₺', 'TWD': 'NT$', 'UAH': '₴', 'USD': '$', 'UZS': 'сўм',
+    'VND': '₫', 'XAF': 'FCFA', 'ZAR': 'R', 'ZMW': 'ZK',
+    'AED': 'AED'
+  };
+
+  getCurrencySymbol(code: string): string {
+    if (!code) return '';
+    return this.currencySymbolMap[code.toUpperCase()] || code;
+  }
+
+  formatCurrency(value: number, currencyCode: string): string {
+    if (value === null || value === undefined || isNaN(value)) return '0';
+    const sym = this.getCurrencySymbol(currencyCode);
+    const abs = Math.abs(value);
+    let formatted: string;
+    if (abs >= 1e9) {
+      formatted = (abs / 1e9).toFixed(2).replace(/\.?0+$/, '') + 'B';
+    } else if (abs >= 1e6) {
+      formatted = (abs / 1e6).toFixed(2).replace(/\.?0+$/, '') + 'M';
+    } else {
+      formatted = Math.round(abs).toLocaleString('en-US');
+    }
+    return (value < 0 ? '-' : '') + sym + formatted;
+  }
+
   // Approximate GBP → currency rates and typical annual FX growth vs GBP
   countryFxMap: any = {
     'India':      { rate: 107,  fxGrowth: 2.5,  currency: 'INR' },

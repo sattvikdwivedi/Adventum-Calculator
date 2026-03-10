@@ -56,6 +56,17 @@
         </div>
       </div>
 
+      <!-- Progress bar -->
+      <div class="progress-wrap" *ngIf="City">
+        <progress-bar
+          [progress]="(Pincode!==''?6.25:0)+(City!==''?6.25:0)+(PropertyValue!==''?6.25:0)"
+          [color]="'#22c55e'">
+        </progress-bar>
+        <span class="progress-label">
+          {{(Pincode!==''?6.25:0)+(City!==''?6.25:0)+(PropertyValue!==''?6.25:0) | number:'1.0-0'}}% data received
+        </span>
+      </div>
+
       <!-- Heading -->
       <h2 class="section-title">Where would you like to invest?</h2>
       <p class="section-sub">Enter any UK postcode or select any city to explore investment potential</p>
@@ -118,17 +129,6 @@
             <button class="toggle-opt" [class.active]="foreignbuyer==='1'" (click)="foreignbuyer='1'">Foreign Buyer</button>
           </div>
         </div>
-      </div>
-
-      <!-- Progress bar -->
-      <div class="progress-wrap" *ngIf="City">
-        <progress-bar
-          [progress]="(Pincode!==''?6.25:0)+(City!==''?6.25:0)+(PropertyValue!==''?6.25:0)"
-          [color]="'#22c55e'">
-        </progress-bar>
-        <span class="progress-label">
-          {{(Pincode!==''?6.25:0)+(City!==''?6.25:0)+(PropertyValue!==''?6.25:0) | number:'1.0-0'}}% data received
-        </span>
       </div>
 
       <!-- Nav buttons -->

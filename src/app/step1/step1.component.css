@@ -13,8 +13,8 @@
 }
 .panel-left-bg {
   position: absolute; inset: 0; z-index: 0;
-  background: url('https://images.unsplash.com/photo-1563995103864-d87d3c1fdd39?w=1200&q=80') center/cover no-repeat;
-  opacity: 0.25;
+  background: url('/assets/Image_calci.png') center/cover no-repeat;
+  opacity: 0.35;
 }
 .panel-left-content {
   position: relative; z-index: 2;

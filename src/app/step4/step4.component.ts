@@ -75,24 +75,75 @@ export class Step4Component implements OnInit {
     }
   }
 
+  // Map any city/region name to valid propertydata.co.uk country param
+  resolveApiCountry(raw: string): string {
+    if (!raw) return 'england';
+    const r = raw.toLowerCase().trim();
+    if (r === 'scotland') return 'scotland';
+    if (r === 'wales') return 'wales';
+    if (r === 'northern-ireland' || r === 'northern ireland') return 'northern-ireland';
+    // All UK cities (Manchester, Birmingham, Liverpool, etc.) are in England
+    return 'england';
+  }
+
+  // Built-in UK SDLT calculator (investment/additional property rates as of 2024)
+  // Additional property surcharge: 3% on top of standard rates (raised to 5% Oct 2024)
+  calculateSdltFallback(value: number, isForeignBuyer: boolean): number {
+    const surcharge = 0.05; // 5% additional dwelling surcharge (from Oct 2024)
+    const foreignSurcharge = isForeignBuyer ? 0.02 : 0;
+    let sdlt = 0;
+
+    // Standard residential SDLT bands
+    if (value <= 125000) {
+      sdlt = 0;
+    } else if (value <= 250000) {
+      sdlt = (value - 125000) * 0.02;
+    } else if (value <= 925000) {
+      sdlt = (250000 - 125000) * 0.02 + (value - 250000) * 0.05;
+    } else if (value <= 1500000) {
+      sdlt = (250000 - 125000) * 0.02 + (925000 - 250000) * 0.05 + (value - 925000) * 0.10;
+    } else {
+      sdlt = (250000 - 125000) * 0.02 + (925000 - 250000) * 0.05 + (1500000 - 925000) * 0.10 + (value - 1500000) * 0.12;
+    }
+
+    // Add additional dwelling surcharge (5% on full value)
+    sdlt += value * surcharge;
+    // Add foreign buyer surcharge if applicable (2% on full value)
+    sdlt += value * foreignSurcharge;
+
+    return Math.round(sdlt);
+  }
+
   ngOnInit(): void {
     this.PropertyLondon = localStorage.getItem("PropertyLondon");
 
+    const apiCountry = this.resolveApiCountry(this.country);
+
     this.dataService.GetRequest(
       'https://api.propertydata.co.uk/stamp-duty-calculator?key=' + environment.PropertyDataKey +
-      '&value=' + this.PropertyValue + '&country=' + this.country + '&mode=investment'
+      '&value=' + this.PropertyValue + '&country=' + apiCountry + '&mode=investment'
     ).subscribe((res: Response) => {
       var obj = JSON.parse(JSON.stringify(res));
       if (obj.status === "success") {
+        let sdlt = parseFloat(obj.transaction_tax_payable);
         if (this.calcData.ForeignBuyer === "1") {
-          this.stampDutyLandTax = this.validation.amountWithComma(
-            (parseFloat(obj.transaction_tax_payable) + (parseFloat(this.calcData.PropertyValue) * 0.02)).toString()
-          );
-        } else {
-          this.stampDutyLandTax = this.validation.amountWithComma(obj.transaction_tax_payable.toString());
+          sdlt += parseFloat(this.calcData.PropertyValue) * 0.02;
         }
+        this.stampDutyLandTax = this.validation.amountWithComma(Math.round(sdlt).toString());
+        this.calcTotals();
+      } else {
+        // API failed — use built-in calculator
+        const propVal = parseFloat(this.PropertyValue) || 0;
+        const sdlt = this.calculateSdltFallback(propVal, this.calcData.ForeignBuyer === "1");
+        this.stampDutyLandTax = this.validation.amountWithComma(sdlt.toString());
         this.calcTotals();
       }
+    }, () => {
+      // HTTP error — use built-in calculator
+      const propVal = parseFloat(this.PropertyValue) || 0;
+      const sdlt = this.calculateSdltFallback(propVal, this.calcData.ForeignBuyer === "1");
+      this.stampDutyLandTax = this.validation.amountWithComma(sdlt.toString());
+      this.calcTotals();
     });
   }
 

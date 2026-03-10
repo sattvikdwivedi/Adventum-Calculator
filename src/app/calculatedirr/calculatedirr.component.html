@@ -44,10 +44,10 @@
       <div class="rp-kpi-note">
         You Invested
         <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(-graphInitialInvestmentInHomeCurrency|number:'1.0-0')}}</ng-container>
-        <ng-container *ngIf="homecurrencyText!='INR'">{{-graphInitialInvestmentInHomeCurrency|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+        <ng-container *ngIf="homecurrencyText!='INR'">{{formatCurrency(-graphInitialInvestmentInHomeCurrency, homecurrencyText)}}</ng-container>
         And Receive
         <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(TotalReturnOfInvestment-graphInitialInvestmentInHomeCurrency|number:'1.0-0')}}</ng-container>
-        <ng-container *ngIf="homecurrencyText!='INR'">{{TotalReturnOfInvestment-graphInitialInvestmentInHomeCurrency|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+        <ng-container *ngIf="homecurrencyText!='INR'">{{formatCurrency(TotalReturnOfInvestment-graphInitialInvestmentInHomeCurrency, homecurrencyText)}}</ng-container>
         At Exit
       </div>
     </div>
@@ -64,7 +64,7 @@
         </div>
         <div class="rp-kpi-value">
           <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(TotalReturnOfInvestment|number:'1.0-0')}}</ng-container>
-          <ng-container *ngIf="homecurrencyText!='INR'">{{TotalReturnOfInvestment|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+          <ng-container *ngIf="homecurrencyText!='INR'">{{formatCurrency(TotalReturnOfInvestment, homecurrencyText)}}</ng-container>
         </div>
       </div>
       <div class="rp-kpi-note"><span class="roe-tag">ROE {{returnOnEquity|number:'1.0-0'}}%</span></div>
@@ -106,7 +106,7 @@
           <h3>Where Your Returns Come From</h3>
           <p>Breakdown of
             <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(TotalReturnOfInvestment|number:'1.0-0')}}</ng-container>
-            <ng-container *ngIf="homecurrencyText!='INR'">{{TotalReturnOfInvestment|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+            <ng-container *ngIf="homecurrencyText!='INR'">{{formatCurrency(TotalReturnOfInvestment, homecurrencyText)}}</ng-container>
             total profit
           </p>
         </div>
@@ -132,7 +132,7 @@
               <span class="journey-label">Initial Investment</span>
               <span class="journey-val">
                 <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(-graphInitialInvestmentInHomeCurrency|number:'1.0-0')}}</ng-container>
-                <ng-container *ngIf="homecurrencyText!='INR'">{{-graphInitialInvestmentInHomeCurrency|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+                <ng-container *ngIf="homecurrencyText!='INR'">{{formatCurrency(-graphInitialInvestmentInHomeCurrency, homecurrencyText)}}</ng-container>
               </span>
             </div>
             <div class="journey-bar-bg"><div class="journey-bar" style="background:#3b82f6;width:60%"></div></div>
@@ -142,7 +142,7 @@
               <span class="journey-label">Capital Growth</span>
               <span class="journey-val">
                 <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(capitalAppreciation|number:'1.0-0')}}</ng-container>
-                <ng-container *ngIf="homecurrencyText!='INR'">{{capitalAppreciation|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+                <ng-container *ngIf="homecurrencyText!='INR'">{{formatCurrency(capitalAppreciation, homecurrencyText)}}</ng-container>
               </span>
             </div>
             <div class="journey-bar-bg"><div class="journey-bar" style="background:#22c55e;" [style.width.%]="(capitalAppreciation/makePositive(TotalReturnOfInvestment-graphInitialInvestmentInHomeCurrency))*80"></div></div>
@@ -152,7 +152,7 @@
               <span class="journey-label">FX Appreciation</span>
               <span class="journey-val">
                 <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma((TotalReturnOfInvestment-capitalAppreciation-RentalIncome)|number:'1.0-0')}}</ng-container>
-                <ng-container *ngIf="homecurrencyText!='INR'">{{(TotalReturnOfInvestment-capitalAppreciation-RentalIncome)|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+                <ng-container *ngIf="homecurrencyText!='INR'">{{formatCurrency(TotalReturnOfInvestment-capitalAppreciation-RentalIncome, homecurrencyText)}}</ng-container>
               </span>
             </div>
             <div class="journey-bar-bg"><div class="journey-bar" style="background:#a78bfa;" [style.width.%]="((TotalReturnOfInvestment-capitalAppreciation-RentalIncome)/makePositive(TotalReturnOfInvestment-graphInitialInvestmentInHomeCurrency))*80"></div></div>
@@ -162,7 +162,7 @@
               <span class="journey-label">Net Rental Income</span>
               <span class="journey-val">
                 <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(RentalIncome|number:'1.0-0')}}</ng-container>
-                <ng-container *ngIf="homecurrencyText!='INR'">{{RentalIncome|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+                <ng-container *ngIf="homecurrencyText!='INR'">{{formatCurrency(RentalIncome, homecurrencyText)}}</ng-container>
               </span>
             </div>
             <div class="journey-bar-bg"><div class="journey-bar" style="background:#f59e0b;" [style.width.%]="(RentalIncome/makePositive(TotalReturnOfInvestment-graphInitialInvestmentInHomeCurrency))*80"></div></div>
@@ -171,7 +171,7 @@
             <span class="journey-total-lbl">Value at Exit</span>
             <span class="journey-total-val">
               <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(TotalReturnOfInvestment-graphInitialInvestmentInHomeCurrency|number:'1.0-0')}}</ng-container>
-              <ng-container *ngIf="homecurrencyText!='INR'">{{TotalReturnOfInvestment-graphInitialInvestmentInHomeCurrency|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+              <ng-container *ngIf="homecurrencyText!='INR'">{{formatCurrency(TotalReturnOfInvestment-graphInitialInvestmentInHomeCurrency, homecurrencyText)}}</ng-container>
             </span>
           </div>
         </div>
@@ -303,7 +303,7 @@
                 <td [class.pos]="row.CashFlow>=0" [class.neg]="row.CashFlow<0">{{row.CashFlow|currency:'GBP':'symbol':'1.0-0'}}</td>
                 <td [class.pos]="row.CashFlowInHomeCurrency>=0" [class.neg]="row.CashFlowInHomeCurrency<0">
                   <ng-container *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(row.CashFlowInHomeCurrency|number:'1.0-0')}}</ng-container>
-                  <ng-container *ngIf="homecurrencyText!='INR'">{{row.CashFlowInHomeCurrency|currency:homecurrencyText:'symbol':'1.0-0'}}</ng-container>
+                  <ng-container *ngIf="homecurrencyText!='INR'">{{formatCurrency(row.CashFlowInHomeCurrency, homecurrencyText)}}</ng-container>
                 </td>
               </tr>
             </tbody>

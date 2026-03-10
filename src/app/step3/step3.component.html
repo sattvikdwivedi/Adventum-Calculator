@@ -103,88 +103,31 @@
         <div class="field-label-row">
           <span class="field-label">Home Currency</span>
         </div>
-        <div class="field-select-wrap">
-          <select id="homecurrencyText" class="field-select" [(ngModel)]="homecurrencyText" (change)="homecurrencyChange()">
-            <option value="">Select currency</option>
-            <option value='INR'>Indian Rupee (INR)</option>
-            <option value='AED'>AED</option>
-            <option value='AFN'>AFN</option>
-            <option value='ALL'>ALL</option>
-            <option value='AMD'>AMD</option>
-            <option value='ANG'>ANG</option>
-            <option value='AOA'>AOA</option>
-            <option value='ARS'>ARS</option>
-            <option value='AUD'>AUD</option>
-            <option value='AWG'>AWG</option>
-            <option value='AZN'>AZN</option>
-            <option value='BAM'>BAM</option>
-            <option value='BBD'>BBD</option>
-            <option value='BDT'>BDT</option>
-            <option value='BGN'>BGN</option>
-            <option value='BHD'>BHD</option>
-            <option value='BIF'>BIF</option>
-            <option value='BMD'>BMD</option>
-            <option value='BND'>BND</option>
-            <option value='BOB'>BOB</option>
-            <option value='BRL'>BRL</option>
-            <option value='BSD'>BSD</option>
-            <option value='BTN'>BTN</option>
-            <option value='BWP'>BWP</option>
-            <option value='BYN'>BYN</option>
-            <option value='BZD'>BZD</option>
-            <option value='CAD'>CAD</option>
-            <option value='CHF'>CHF</option>
-            <option value='CLP'>CLP</option>
-            <option value='CNY'>CNY</option>
-            <option value='COP'>COP</option>
-            <option value='CZK'>CZK</option>
-            <option value='DKK'>DKK</option>
-            <option value='DOP'>DOP</option>
-            <option value='DZD'>DZD</option>
-            <option value='EGP'>EGP</option>
-            <option value='EUR'>EUR</option>
-            <option value='GBP'>GBP</option>
-            <option value='GHS'>GHS</option>
-            <option value='HKD'>HKD</option>
-            <option value='HUF'>HUF</option>
-            <option value='IDR'>IDR</option>
-            <option value='ILS'>ILS</option>
-            <option value='IQD'>IQD</option>
-            <option value='JPY'>JPY</option>
-            <option value='KES'>KES</option>
-            <option value='KRW'>KRW</option>
-            <option value='KWD'>KWD</option>
-            <option value='KZT'>KZT</option>
-            <option value='LKR'>LKR</option>
-            <option value='MAD'>MAD</option>
-            <option value='MXN'>MXN</option>
-            <option value='MYR'>MYR</option>
-            <option value='NGN'>NGN</option>
-            <option value='NOK'>NOK</option>
-            <option value='NPR'>NPR</option>
-            <option value='NZD'>NZD</option>
-            <option value='OMR'>OMR</option>
-            <option value='PHP'>PHP</option>
-            <option value='PKR'>PKR</option>
-            <option value='PLN'>PLN</option>
-            <option value='QAR'>QAR</option>
-            <option value='RON'>RON</option>
-            <option value='RUB'>RUB</option>
-            <option value='SAR'>SAR</option>
-            <option value='SEK'>SEK</option>
-            <option value='SGD'>SGD</option>
-            <option value='THB'>THB</option>
-            <option value='TRY'>TRY</option>
-            <option value='TWD'>TWD</option>
-            <option value='UAH'>UAH</option>
-            <option value='USD'>USD</option>
-            <option value='UZS'>UZS</option>
-            <option value='VND'>VND</option>
-            <option value='XAF'>XAF</option>
-            <option value='ZAR'>ZAR</option>
-            <option value='ZMW'>ZMW</option>
-          </select>
-          <svg class="select-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+        <!-- Custom dropdown (replaces native select to fix dropdown-at-top issue) -->
+        <div class="custom-select-wrap" id="currencySelectWrap">
+          <button type="button" class="custom-select-btn" (click)="currencyDropdownOpen=!currencyDropdownOpen" [class.open]="currencyDropdownOpen">
+            <span class="custom-select-val" [class.placeholder]="!homecurrencyText">
+              {{homecurrencyText ? getCurrencyLabel(homecurrencyText) : 'Select currency'}}
+            </span>
+            <svg class="custom-select-chevron" [class.rotated]="currencyDropdownOpen" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+          </button>
+          <div class="custom-dropdown" *ngIf="currencyDropdownOpen">
+            <div class="custom-dropdown-search">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              <input type="text" class="custom-dropdown-input" placeholder="Search currency..." [(ngModel)]="currencySearch" autocomplete="off" (click)="$event.stopPropagation()">
+            </div>
+            <div class="custom-dropdown-list">
+              <div
+                *ngFor="let c of getFilteredCurrencies()"
+                class="custom-dropdown-item"
+                [class.selected]="homecurrencyText === c.code"
+                (click)="selectCurrency(c.code)">
+                <span class="cdd-name">{{c.name}}</span>
+                <span class="cdd-code">{{c.code}}</span>
+              </div>
+              <div class="custom-dropdown-empty" *ngIf="getFilteredCurrencies().length === 0">No currencies found</div>
+            </div>
+          </div>
         </div>
       </div>
 

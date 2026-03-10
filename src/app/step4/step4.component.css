@@ -179,7 +179,8 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  max-height: 100vh;
+  height: 100vh;
+  position: relative;
 }
 
 .panel-right-inner {

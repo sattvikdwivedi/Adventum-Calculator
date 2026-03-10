@@ -25,6 +25,7 @@ import { Cashflowstep2Component } from './cashflowstep2/cashflowstep2.component'
 import { Cashflowstep3Component } from './cashflowstep3/cashflowstep3.component';
 import { Cashflowstep4Component } from './cashflowstep4/cashflowstep4.component';
 import { CashflowresultComponent } from './cashflowresult/cashflowresult.component';
+import { CashflowStep1Component } from './cashflowstep1/cashflowstep1.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { Atedstep2Component } from './atedstep2/atedstep2.component';
 import { AtedresultComponent } from './atedresult/atedresult.component';
@@ -41,7 +42,7 @@ const routes: Routes = [
   {path: 'step3', component: Step3Component},
   {path: 'step4', component: Step4Component},
   {path: 'step5', component: Step5Component},
-  {path: 'cashflow/step1', component: Step1Component},
+  {path: 'cashflow/step1', component: CashflowStep1Component},
   {path: 'cashflow/step2', component: Cashflowstep2Component},
   {path: 'cashflow/step3', component: Cashflowstep3Component},
   {path: 'cashflow/step4', component: Cashflowstep4Component},

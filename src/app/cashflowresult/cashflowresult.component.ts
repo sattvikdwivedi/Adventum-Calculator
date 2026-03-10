@@ -16,8 +16,9 @@ import { TitleCasePipe } from '@angular/common';
   templateUrl: './cashflowresult.component.html',
   styleUrls: ['./cashflowresult.component.css']
 })
-export class CashflowresultComponent implements OnInit {
+export class CashflowresultComponent implements OnInit, AfterViewInit {
   @ViewChild('contentToConvert') content: ElementRef;
+  @ViewChild('cfBarChart') cfBarChartRef: ElementRef;
   Email:any;
   calcData: any;
   cashflowdata:any = [];
@@ -51,6 +52,7 @@ export class CashflowresultComponent implements OnInit {
   loadingDownloadbtn = false;
   loadingSharebtn = false;
   loanoriginationfee:any;
+  initialOutlay: number = 0;
   //lineChartData: ChartDataSets[];
   constructor(private router: Router, private dataService: DataService, public validation: ValidationService) {
     this.calcData = JSON.parse(localStorage.getItem("calcData"));
@@ -432,7 +434,10 @@ export class CashflowresultComponent implements OnInit {
     else{
     this.loanoriginationfee = (this.calcData.PropertyValue * (this.calcData.loanAmount / 100)) * ((this.calcData.loanOriginationFee / 100))
     }
-     
+    this.initialOutlay = (this.calcData.PropertyValue * ((100 - this.calcData.loanAmount) / 100))
+      + (parseFloat(this.calcData.stampDutyLandTax) || 0)
+      + this.loanoriginationfee;
+
     this.avgnetYield = 0;
     this.totalCashFlow = 0;
     for(var i = 0;i<=this.allCahsflow.length-1;i++){
@@ -450,6 +455,77 @@ export class CashflowresultComponent implements OnInit {
     this.totalCashFlow = this.totalCashFlow - this.allCahsflow[0]; 
   }
   
+
+  ngAfterViewInit(): void {
+    if (!this.cfBarChartRef || !this.cashflowdata || this.cashflowdata.length === 0) {
+      return;
+    }
+    const ctx = this.cfBarChartRef.nativeElement.getContext('2d');
+    const labels = this.cashflowdata.map((_: any, i: number) => 'Year ' + (i + 1));
+    const values = this.cashflowdata.map((row: any) => row.CashFlow);
+    const backgroundColors = values.map((v: number) => v >= 0 ? 'rgba(34,197,94,0.85)' : 'rgba(248,113,113,0.85)');
+
+    new (Chart as any)(ctx, {
+      type: 'bar',
+      data: {
+        labels: labels,
+        datasets: [{
+          label: 'Net Cashflow (£)',
+          data: values,
+          backgroundColor: backgroundColors,
+          borderWidth: 0,
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        legend: {
+          display: true,
+          position: 'top',
+          align: 'end',
+          labels: {
+            fontColor: 'rgba(255,255,255,0.5)',
+            fontFamily: 'Inter',
+            fontSize: 12,
+            boxWidth: 14,
+            generateLabels: () => [{
+              text: 'Net Cashflow (£)',
+              fillStyle: 'rgba(248,113,113,0.85)',
+              strokeStyle: 'rgba(248,113,113,0.85)',
+              lineWidth: 0,
+              hidden: false,
+              index: 0,
+              datasetIndex: 0
+            }]
+          }
+        },
+        tooltips: {
+          callbacks: {
+            label: (item: any) => ' £' + Number(item.yLabel).toLocaleString()
+          }
+        },
+        scales: {
+          xAxes: [{
+            gridLines: { color: 'rgba(255,255,255,0.05)' },
+            ticks: {
+              fontColor: 'rgba(255,255,255,0.45)',
+              fontFamily: 'Inter',
+              fontSize: 12
+            }
+          }],
+          yAxes: [{
+            gridLines: { color: 'rgba(255,255,255,0.05)' },
+            ticks: {
+              fontColor: 'rgba(255,255,255,0.45)',
+              fontFamily: 'Inter',
+              fontSize: 12,
+              callback: (value: any) => '£' + Number(value).toLocaleString()
+            }
+          }]
+        }
+      }
+    });
+  }
 
   makePositive(value){
     return Math.abs(value);

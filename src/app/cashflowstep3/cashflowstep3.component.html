@@ -1,292 +1,198 @@
- <!-- First -->
- <div class="container" style="margin-top: 100px;"> 
-    <div class="row mt-30" id="firstMain">
-       <div class="col-md-6 col-6">
-           <img class="logo-icon" src="assets/cashflow-breadcrumb.svg" alt="logo" class="wd125" >
-       </div>
-       <div class="col-md-6 col-12 bread-p text-right">
-           <p class="mb-1">Cashflow Calculator</p>
-           <p class="mb-0">{{validation.getCurrentDateWithSpecificFormat()}}</p>
-       </div> 
-   </div>
-     <!-- First -->
-   
-   <!-- Second -->
-   <div class="row mt-3 plr-1"  id="secondMain">
-       <div class="mapcontainer">
-           <app-googlemap [MapClassLoad]="MapLoad" [latitude]="lat" [longitude]="long"></app-googlemap>
-       </div>
-   </div>
-   <!-- Second -->
-   
-     <!-- Third -->
-     <div class="row mt-3 plr-15"  id="thirdMain">
-       <div class="col-md-12 p0 prl10">
-           <progress-bar [progress]="(50+(investedTenure!=''?8.25:0)+(rentalYeild!=''?8.25:0)+(rentalGrowthEscalation!=''?8.25:0))" [color]="'#488aff'">
-           </progress-bar>
-       </div>
-       <div class="col-md-2 col-6 p-0 pl17">
-           <a [routerLink]="['/cashflow/step2']" class="backlink">Back</a>
-       </div>
-       <div class="col-md-10 col-6 p-0 pr13">
-           <label class="float-right">{{50+(investedTenure!=''?8.25:0)+(rentalYeild!=''?8.25:0)+(rentalGrowthEscalation!=''?8.25:0) | number:'1.0-0'}}% data recieved</label>
-       </div>
-     </div>
-         <!-- Third -->
-   
-   
-     <!-- Fourth -->
-   <!-- <div class="row plr-15 mt-3">
-       <div class="col-md-5 pl0">
-           <h5><b class="questyle">Your Home Currency?</b></h5>
-       </div>
-       <div class="col-md-7 pr0">
-           <select  [(ngModel)]="homecurrencyText" id="homecurrencyText" (change)="homecurrencyChange()">
-               <option value="">Select</option>
-               <option value='AED'>AED</option>
-               <option value='AFN'>AFN</option>
-               <option value='ALL'>ALL</option>
-               <option value='AMD'>AMD</option>
-               <option value='ANG'>ANG</option>
-               <option value='AOA'>AOA</option>
-               <option value='ARS'>ARS</option>
-               <option value='AUD'>AUD</option>
-               <option value='AWG'>AWG</option>
-               <option value='AZN'>AZN</option>
-               <option value='BAM'>BAM</option>
-               <option value='BBD'>BBD</option>
-               <option value='BDT'>BDT</option>
-               <option value='BGN'>BGN</option>
-               <option value='BHD'>BHD</option>
-               <option value='BIF'>BIF</option>
-               <option value='BMD'>BMD</option>
-               <option value='BND'>BND</option>
-               <option value='BOB'>BOB</option>
-               <option value='BRL'>BRL</option>
-               <option value='BSD'>BSD</option>
-               <option value='BTC'>BTC</option>
-               <option value='BTN'>BTN</option>
-               <option value='BWP'>BWP</option>
-               <option value='BYR'>BYR</option>
-               <option value='BYN'>BYN</option>
-               <option value='BZD'>BZD</option>
-               <option value='CAD'>CAD</option>
-               <option value='CDF'>CDF</option>
-               <option value='CHF'>CHF</option>
-               <option value='CLF'>CLF</option>
-               <option value='CLP'>CLP</option>
-               <option value='CNY'>CNY</option>
-               <option value='COP'>COP</option>
-               <option value='CRC'>CRC</option>
-               <option value='CUC'>CUC</option>
-               <option value='CUP'>CUP</option>
-               <option value='CVE'>CVE</option>
-               <option value='CZK'>CZK</option>
-               <option value='DJF'>DJF</option>
-               <option value='DKK'>DKK</option>
-               <option value='DOP'>DOP</option>
-               <option value='DZD'>DZD</option>
-               <option value='EGP'>EGP</option>
-               <option value='ERN'>ERN</option>
-               <option value='ETB'>ETB</option>
-               <option value='EUR'>EUR</option>
-               <option value='FJD'>FJD</option>
-               <option value='FKP'>FKP</option>
-               <option value='GBP'>GBP</option>
-               <option value='GEL'>GEL</option>
-               <option value='GGP'>GGP</option>
-               <option value='GHS'>GHS</option>
-               <option value='GIP'>GIP</option>
-               <option value='GMD'>GMD</option>
-               <option value='GNF'>GNF</option>
-               <option value='GTQ'>GTQ</option>
-               <option value='GYD'>GYD</option>
-               <option value='HKD'>HKD</option>
-               <option value='HNL'>HNL</option>
-               <option value='HRK'>HRK</option>
-               <option value='HTG'>HTG</option>
-               <option value='HUF'>HUF</option>
-               <option value='IDR'>IDR</option>
-               <option value='ILS'>ILS</option>
-               <option value='IMP'>IMP</option>
-               <option value='INR'>INR</option>
-               <option value='IQD'>IQD</option>
-               <option value='IRR'>IRR</option>
-               <option value='ISK'>ISK</option>
-               <option value='JEP'>JEP</option>
-               <option value='JMD'>JMD</option>
-               <option value='JOD'>JOD</option>
-               <option value='JPY'>JPY</option>
-               <option value='KES'>KES</option>
-               <option value='KGS'>KGS</option>
-               <option value='KHR'>KHR</option>
-               <option value='KMF'>KMF</option>
-               <option value='KPW'>KPW</option>
-               <option value='KRW'>KRW</option>
-               <option value='KWD'>KWD</option>
-               <option value='KYD'>KYD</option>
-               <option value='KZT'>KZT</option>
-               <option value='LAK'>LAK</option>
-               <option value='LBP'>LBP</option>
-               <option value='LKR'>LKR</option>
-               <option value='LRD'>LRD</option>
-               <option value='LSL'>LSL</option>
-               <option value='LTL'>LTL</option>
-               <option value='LVL'>LVL</option>
-               <option value='LYD'>LYD</option>
-               <option value='MAD'>MAD</option>
-               <option value='MDL'>MDL</option>
-               <option value='MGA'>MGA</option>
-               <option value='MKD'>MKD</option>
-               <option value='MMK'>MMK</option>
-               <option value='MNT'>MNT</option>
-               <option value='MOP'>MOP</option>
-               <option value='MRO'>MRO</option>
-               <option value='MUR'>MUR</option>
-               <option value='MVR'>MVR</option>
-               <option value='MWK'>MWK</option>
-               <option value='MXN'>MXN</option>
-               <option value='MYR'>MYR</option>
-               <option value='MZN'>MZN</option>
-               <option value='NAD'>NAD</option>
-               <option value='NGN'>NGN</option>
-               <option value='NIO'>NIO</option>
-               <option value='NOK'>NOK</option>
-               <option value='NPR'>NPR</option>
-               <option value='NZD'>NZD</option>
-               <option value='OMR'>OMR</option>
-               <option value='PAB'>PAB</option>
-               <option value='PEN'>PEN</option>
-               <option value='PGK'>PGK</option>
-               <option value='PHP'>PHP</option>
-               <option value='PKR'>PKR</option>
-               <option value='PLN'>PLN</option>
-               <option value='PYG'>PYG</option>
-               <option value='QAR'>QAR</option>
-               <option value='RON'>RON</option>
-               <option value='RSD'>RSD</option>
-               <option value='RUB'>RUB</option>
-               <option value='RWF'>RWF</option>
-               <option value='SAR'>SAR</option>
-               <option value='SBD'>SBD</option>
-               <option value='SCR'>SCR</option>
-               <option value='SDG'>SDG</option>
-               <option value='SEK'>SEK</option>
-               <option value='SGD'>SGD</option>
-               <option value='SHP'>SHP</option>
-               <option value='SLL'>SLL</option>
-               <option value='SOS'>SOS</option>
-               <option value='SRD'>SRD</option>
-               <option value='STD'>STD</option>
-               <option value='SVC'>SVC</option>
-               <option value='SYP'>SYP</option>
-               <option value='SZL'>SZL</option>
-               <option value='THB'>THB</option>
-               <option value='TJS'>TJS</option>
-               <option value='TMT'>TMT</option>
-               <option value='TND'>TND</option>
-               <option value='TOP'>TOP</option>
-               <option value='TRY'>TRY</option>
-               <option value='TTD'>TTD</option>
-               <option value='TWD'>TWD</option>
-               <option value='TZS'>TZS</option>
-               <option value='UAH'>UAH</option>
-               <option value='UGX'>UGX</option>
-               <option value='USD'>USD</option>
-               <option value='UYU'>UYU</option>
-               <option value='UZS'>UZS</option>
-               <option value='VEF'>VEF</option>
-               <option value='VND'>VND</option>
-               <option value='VUV'>VUV</option>
-               <option value='WST'>WST</option>
-               <option value='XAF'>XAF</option>
-               <option value='XAG'>XAG</option>
-               <option value='XAU'>XAU</option>
-               <option value='XCD'>XCD</option>
-               <option value='XDR'>XDR</option>
-               <option value='XOF'>XOF</option>
-               <option value='XPF'>XPF</option>
-               <option value='YER'>YER</option>
-               <option value='ZAR'>ZAR</option>
-               <option value='ZMK'>ZMK</option>
-               <option value='ZMW'>ZMW</option>
-               <option value='ZWL'>ZWL</option>
-             </select> -->
-           <!-- <input type="text" id="homecurrencyText"  [(ngModel)]="homecurrencyText" placeholder="Home currency (INR)"> -->
-           <!-- <span *ngIf="homecurrencyText!=''" class="tick-g"><i class="fa fa-check" aria-hidden="true"></i></span> -->
-       <!-- </div>
-   </div> -->
-   <!-- <div class="row plr-15 mt-3" [@affirst]="homecurrencyText!=''?'visible':'hide'">
-       <div class="col-md-5 pl0" style="padding-right: 32px;">
-           <h5><b class="questyle">Home Currency Value?</b></h5>
-       </div>
-       <div class="col-md-7 pr0">
-           <input type="text" id="homecurrencyvalue" (keypress)="validation.DesimalOnly($event,homecurrency)" placeholder="Home Currency Value" [(ngModel)]="homecurrency">
-           <span *ngIf="homecurrency!=''" class="tick-g"><i class="fa fa-check" aria-hidden="true"></i></span>
-       </div>
-   </div> -->
-   <div class="row plr-15 mt-3">
-       <div class="col-md-5 pl0" style="padding-right: 32px;">
-           <h5><b class="questyle">Investment Period?</b></h5>
-       </div>
-       <div class="col-md-7 pr0">
-        <select id="investedTenure" [(ngModel)]="investedTenure">
-            <option value="">Select</option>
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-        </select>
-           <!-- <input type="text" id="investedTenure" autocomplete="off" (keypress)="validation.DesimalOnly($event,investedTenure)" placeholder="Investment tenure (15 Years)" [(ngModel)]="investedTenure">
-           <span *ngIf="investedTenure!=''" class="tick-g"><i class="fa fa-check" aria-hidden="true"></i></span> -->
-       </div>
-   </div>
-   <div class="row plr-15 mt-3" [@asfirst]="investedTenure!=''?'visible':'hide'">
-       <div class="col-md-5 pl0">
-           <h5><b class="questyle">Rental Yield?</b></h5>
-       </div>
-    <div class="col-md-7 pr0">
-        <input type="text" id="rentalYeild" autocomplete="off" (keyup)="rentalYeild=validation.appendPercent($event,rentalYeild)"(keypress)="validation.DesimalOnly($event,rentalYeild)" placeholder="Rental yield ({{PropertyLondon == 1 ? '4%' : '6%'}})" [(ngModel)]="rentalYeild" class="">
-        <span *ngIf="rentalYeild!=''" class="tick-g"><i class="fa fa-check" aria-hidden="true"></i></span>
-   
+<!-- CASHFLOW STEP 3 — Costs & Expenses -->
+<div class="cf-page">
+
+  <!-- LEFT PANEL -->
+  <div class="panel-left">
+    <div class="panel-left-bg"></div>
+    <div class="panel-left-inner">
+
+      <!-- Logo -->
+      <div class="panel-logo">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+          <path d="M16 4L28 26H4L16 4Z" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" fill="none"/>
+          <path d="M16 13L21 22H11L16 13Z" fill="rgba(34,197,94,0.9)"/>
+        </svg>
+        <div>
+          <span class="panel-logo-text">AD<span class="panel-logo-green">V</span>ENTUM<sup class="panel-logo-reg">®</sup></span>
+          <span class="panel-logo-sub">CALCULATORS</span>
+        </div>
+      </div>
+
+      <!-- Preview card -->
+      <div class="hero-card">
+        <p class="hero-card-pretitle">Cashflow Calculator</p>
+        <h2 class="hero-card-title">Your <strong>Cashflow</strong> at a Glance</h2>
+        <p class="hero-card-sub">Watch your net income update as you configure — step 3 of 3.</p>
+        <div class="cf-stats-grid">
+          <div class="cf-stat">
+            <div class="cf-stat-lbl">Gross Annual</div>
+            <div class="cf-stat-val">£{{grossAnnual | number:'1.0-0'}}</div>
+          </div>
+          <div class="cf-stat accent">
+            <div class="cf-stat-lbl">Net Annual</div>
+            <div class="cf-stat-val">£{{netAnnual | number:'1.0-0'}}</div>
+          </div>
+          <div class="cf-stat">
+            <div class="cf-stat-lbl">Net Monthly</div>
+            <div class="cf-stat-val">£{{(netAnnual/12) | number:'1.0-0'}}</div>
+          </div>
+          <div class="cf-stat accent">
+            <div class="cf-stat-lbl">Net Yield</div>
+            <div class="cf-stat-val">{{netYield | number:'1.1-1'}}%</div>
+          </div>
+        </div>
+      </div>
+
     </div>
-   </div>
-   <div class="row plr-15 mt-3" [@aftfirst]="rentalYeild!=''?'visible':'hide'">
-       <div class="col-md-5 pl0">
-           <h5><b class="questyle">Rental growth p.a?</b></h5>
-       </div>
-       <div class="col-md-7 pr0">
-           <input type="text" id="rentalGrowthEscalation" autocomplete="off" (keyup)="rentalGrowthEscalation=validation.appendPercent($event,rentalGrowthEscalation)" (keypress)="validation.DesimalOnly($event,rentalGrowthEscalation)" placeholder="Rental growth/escalation ({{PropertyLondon == 1 ? '4%' : '5%'}})" [(ngModel)]="rentalGrowthEscalation" class="">
-           <span *ngIf="rentalGrowthEscalation!=''" class="tick-g"><i class="fa fa-check" aria-hidden="true"></i></span>
-       </div>
-   </div>
-   <!-- <div class="row plr-15 mt-3" [@afrfirst]="rentalGrowthEscalation!=''?'visible':'hide'">
-       <div class="col-md-5 pl0">
-           <h5><b class="questyle">Capital Growth p.a?</b></h5>
-       </div>
-       <div class="col-md-7 pr0">
-           <input type="text" id="capitalgrowth" (keyup)="capitalgrowth=validation.appendPercent($event,capitalgrowth)"  (keypress)="validation.DesimalOnly($event,capitalgrowth)" placeholder="Capital growth (3%)" [(ngModel)]="capitalgrowth" class="">
-           <span *ngIf="capitalgrowth!=''" class="tick-g"><i class="fa fa-check" aria-hidden="true"></i></span>
-       </div>
-   </div>  -->
-   <!-- <div class="row plr-15 mt-3" [@aftfirst]="capitalgrowth!=''?'visible':'hide'">
-       <div class="col-md-5 pl0">
-           <h5><b class="questyle"> FX growth p.a?</b></h5>
-       </div>
-       <div class="col-md-7 pr0">
-           <input type="text" id="fxgrowth" (keyup)="fxgrowth=validation.appendPercent($event,fxgrowth)"  (keypress)="validation.DesimalOnly($event,fxgrowth)" placeholder="FX growth (4.25%)" [(ngModel)]="fxgrowth" class="">
-           <span *ngIf="fxgrowth!=''" class="tick-g"><i class="fa fa-check" aria-hidden="true"></i></span>
-   
-       </div>
-   </div> -->
-   <div class="row plr-15 pt-5" id="FourthMain">
-      
-       
-       <div class="col-md-12 pr0 mobile-center" style="text-align: right;">
-           <button *ngIf="rentalGrowthEscalation!=''" class="btn btn-defaultNext" type="button" (click)="next()">Next</button>
-         </div>
-         <div class="col-md-9">
-           <app-calculatordetails [coldesign]="6"></app-calculatordetails>
-       </div>
-   </div>
-     <!-- Fourth -->
-     </div>
+  </div>
+
+  <!-- RIGHT PANEL -->
+  <div class="panel-right">
+    <div class="panel-right-inner">
+
+      <!-- Top bar -->
+      <div class="topbar">
+        <button class="btn-back-circle" [routerLink]="['/cashflow/step2']">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <div class="location-pill">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          {{calcData?.City || 'United Kingdom'}}
+        </div>
+      </div>
+
+      <!-- Progress bar -->
+      <div class="progress-wrap">
+        <progress-bar
+          [progress]="65+(mortgageInterestRate!=''?5:0)+(loanOriginationFee!=''?5:0)+(stampDutyLandTax!=''?5:0)+(letteingManagFee!=''?5:0)+(groundRent!=''?5:0)+(serviceCharges!=''?5:0)"
+          [color]="'#22c55e'">
+        </progress-bar>
+        <span class="progress-label">
+          {{65+(mortgageInterestRate!=''?5:0)+(loanOriginationFee!=''?5:0)+(stampDutyLandTax!=''?5:0)+(letteingManagFee!=''?5:0)+(groundRent!=''?5:0)+(serviceCharges!=''?5:0) | number:'1.0-0'}}% data received
+        </span>
+      </div>
+
+      <!-- Heading -->
+      <h2 class="section-title">Costs &amp; Expenses</h2>
+      <p class="section-sub">Stamp duty is auto-calculated from your property value.</p>
+
+      <!-- Upfront costs section -->
+      <div class="section-label">Upfront Costs (One-Time)</div>
+
+      <!-- Loan Origination Fee -->
+      <div class="field">
+        <div class="field-label-row">
+          <span class="field-label">Loan Origination Fee</span>
+          <span class="field-hint">% of loan amount</span>
+        </div>
+        <div class="input-wrap">
+          <input class="inp" type="text" id="loanOriginationFee" autocomplete="off"
+            (keyup)="loanOriginationFee=validation.appendPercent($event,loanOriginationFee); updatePreview()"
+            (keypress)="validation.DesimalOnly($event,loanOriginationFee)"
+            [(ngModel)]="loanOriginationFee"
+            placeholder="e.g. 1">
+          <span class="input-suf">%</span>
+        </div>
+      </div>
+
+      <!-- SDLT Banner -->
+      <div class="sdlt-banner" *ngIf="stampDutyLandTax!=''">
+        <div class="sdlt-banner-left">
+          <h4>Stamp Duty &amp; Land Tax</h4>
+          <p>{{foreignbuyer==='1' ? 'Incl. 2% foreign buyer surcharge' : 'Standard investment rates · Auto-calculated'}}</p>
+        </div>
+        <div class="sdlt-banner-val">£{{stampDutyLandTax}}</div>
+      </div>
+
+      <!-- Tax alert for foreign buyer -->
+      <div class="tax-alert" *ngIf="foreignbuyer==='1'">
+        <h5>Tax Alert</h5>
+        <p>Non-UK residents are subject to a 2% SDLT surcharge. This has been factored into your stamp duty estimate.</p>
+      </div>
+
+      <!-- Annual recurring costs -->
+      <div class="section-label">Annual Recurring Costs</div>
+
+      <div class="fields-row3">
+        <div class="field">
+          <div class="field-label-row">
+            <span class="field-label">Letting Management</span>
+          </div>
+          <div class="input-wrap">
+            <input class="inp" type="text" id="letteingManagFee" autocomplete="off"
+              (keyup)="letteingManagFee=validation.appendPercent($event,letteingManagFee); updatePreview()"
+              (keypress)="validation.DesimalOnly($event,letteingManagFee)"
+              [(ngModel)]="letteingManagFee"
+              placeholder="e.g. {{PropertyLondon == 1 ? '12' : '10'}}">
+            <span class="input-suf">%</span>
+          </div>
+          <div class="field-sublabel">% of gross rent</div>
+        </div>
+        <div class="field">
+          <div class="field-label">Ground Rent p.a.</div>
+          <div class="input-wrap">
+            <span class="input-pre">£</span>
+            <input class="inp" type="text" id="groundRent" autocomplete="off"
+              [(ngModel)]="groundRent"
+              (keyup)="groundRent=validation.amountWithComma(groundRent); updatePreview()"
+              (keypress)="validation.numberOnly($event)"
+              placeholder="e.g. {{PropertyLondon == 1 ? '500' : '350'}}">
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-label">Service Charges p.a.</div>
+          <div class="input-wrap">
+            <span class="input-pre">£</span>
+            <input class="inp" type="text" id="serviceCharges" autocomplete="off"
+              [(ngModel)]="serviceCharges"
+              (keyup)="serviceCharges=validation.amountWithComma(serviceCharges); updatePreview()"
+              (keypress)="validation.numberOnly($event)"
+              placeholder="e.g. {{PropertyLondon == 1 ? '3,000' : '1,000'}}">
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-label">Other Expenses p.a.</div>
+        <div class="input-wrap">
+          <span class="input-pre">£</span>
+          <input class="inp" type="text" id="miscelleneousExpense" autocomplete="off"
+            [(ngModel)]="miscelleneousExpense"
+            (keyup)="miscelleneousExpense=validation.amountWithComma(miscelleneousExpense); updatePreview()"
+            (keypress)="validation.numberOnly($event)"
+            placeholder="e.g. 1,000">
+        </div>
+      </div>
+
+      <!-- Mortgage interest rate -->
+      <div class="field">
+        <div class="field-label-row">
+          <span class="field-label">Mortgage Interest Rate</span>
+          <span class="field-hint">Avg BTL 4.7%</span>
+        </div>
+        <div class="input-wrap">
+          <input class="inp" type="text" id="mortgageInterestRate" autocomplete="off"
+            (keyup)="mortgageInterestRate=validation.appendPercent($event,mortgageInterestRate); updatePreview()"
+            (keypress)="validation.DesimalOnly($event,mortgageInterestRate)"
+            [(ngModel)]="mortgageInterestRate"
+            placeholder="e.g. 4.7">
+          <span class="input-suf">%</span>
+        </div>
+      </div>
+
+      <!-- Nav buttons -->
+      <div class="panel-actions">
+        <button class="btn-back" [routerLink]="['/cashflow/step2']">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back
+        </button>
+        <button class="btn-calculate" type="button" (click)="next()">
+          Calculate Returns
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

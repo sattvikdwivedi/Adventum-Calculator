@@ -33,6 +33,7 @@ import { Cashflowstep2Component } from './cashflowstep2/cashflowstep2.component'
 import { Cashflowstep3Component } from './cashflowstep3/cashflowstep3.component';
 import { Cashflowstep4Component } from './cashflowstep4/cashflowstep4.component';
 import { CashflowresultComponent } from './cashflowresult/cashflowresult.component';
+import { CashflowStep1Component } from './cashflowstep1/cashflowstep1.component';
 import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.component';
 import { Atedstep2Component } from './atedstep2/atedstep2.component';
 import { AtedresultComponent } from './atedresult/atedresult.component';
@@ -68,6 +69,7 @@ import { CircleProgressComponent } from './shared/circle-progress/circle-progres
     StampDutyQueComponent,
     StampDutyResultComponent,
     AboutComponent,
+    CashflowStep1Component,
     Cashflowstep2Component,
     Cashflowstep3Component,
     Cashflowstep4Component,

@@ -1,381 +1,335 @@
-<div class="container" id="contentToConvert" style="margin-top: 100px;">
-    <div class="row mt-30" style="margin-top: 60px">
-        <div class="col-md-6 col-6">
-            <img src="assets/cashflow-breadcrumb.svg" class="wd125">
-        </div>
-        <div class="col-md-6 col-12 bread-p text-right">
-            <p class="mb-1">Cashflow Calculator</p>
-            <p class="mb-0">{{validation.getCurrentDateWithSpecificFormat()}}</p>
-        </div>
-    </div>
-    <div class="row mt-3 plr-1 noprint" id="secondMain">
-        <div class="mapcontainer">
-            <app-googlemap [MapClassLoad]="MapLoad" [latitude]="lat" [longitude]="long"></app-googlemap>
-        </div>
-    </div>
-    <div class="row mt-30" >
-        <div class="col-md-12 col-lg-12">
-            <app-calculatordetails [coldesign]="6"></app-calculatordetails>
-            <div class="row noprint" style="justify-content: center;">
-                <div class="col-md-6 text-center">
-                    <!-- <button type="submit" class="btn btn-default submit-btn text-right"><img src="assets/img/save-report1.svg"> Save Reports</button> -->
-                    <button type="submit" class="btn btn-default submit-btn" (click)="startagain()"> <img
-                            src="./assets/recalculate1.svg"> Recalculate</button>
-                </div>
-            </div>
-        </div>
-        <!-- <div class="col-md-6 col-lg-6" > -->
-            <!-- <h4 class="hidden-lg graph-head" >Here's Your IRR <span>(Internal Rate of Return)</span></h4> -->
-            <!-- <div class="progress-box piediagram">
-                <h4>Here's Your IRR <span>(Internal Rate of Return)</span></h4>
-                <div class="row">
-                <div class="col-md-6 col-6">
-                    <circle-progress [percent]="IrrInGBP" [backgroundStrokeWidth]="0" [backgroundPadding]="-50"
-                        [radius]="50" [space]="-12" [unitsFontSize]="20" [unitsFontWeight]="400"
-                        [unitsColor]="'#444854'" [outerStrokeWidth]="12" [outerStrokeGradient]="true"
-                        [outerStrokeColor]="'#e3e0ff'" [outerStrokeGradientStopColor]="'#1d1751'"
-                        [outerStrokeLinecap]="'round'" [innerStrokeColor]="'#ffffff'" [innerStrokeWidth]="12"
-                        [title]="IrrInGBP" [titleColor]="'#444854'" [titleFontSize]="20" [titleFontWeight]="400"
-                        [subtitleColor]="'#000000'" [subtitleFontWeight]="400" [imageHeight]="20" [imageWidth]="20"
-                        [animation]="true" [animateTitle]="false" [animationDuration]="1000" [showTitle]="true"
-                        [showUnits]="true" [showSubtitle]="false" [showBackground]="false" [responsive]="true"
-                        [showZeroOuterStroke]="false">
-                    </circle-progress>
-                    <h5 class="text-center">GBP -->
-                        <!-- <span class="curr-text">British Pound</span> -->
-                    <!-- </h5>
-                </div>
-                <div class="col-md-6 col-6">
-                    <circle-progress [percent]="IrrInHomeCurrency" [backgroundStrokeWidth]="0" [backgroundPadding]="-50"
-                        [radius]="50" [space]="-12" [unitsFontSize]="20" [unitsFontWeight]="400"
-                        [unitsColor]="'#444854'" [outerStrokeWidth]="12" [outerStrokeGradient]="true"
-                        [outerStrokeColor]="'#e0ffeb'" [outerStrokeGradientStopColor]="'#1aaf4b'"
-                        [outerStrokeLinecap]="'round'" [innerStrokeColor]="'#ffffff'" [innerStrokeWidth]="12"
-                        [title]="IrrInHomeCurrency" [titleColor]="'#444854'" [titleFontSize]="20"
-                        [titleFontWeight]="400" [subtitleColor]="'#000000'" [subtitleFontWeight]="400"
-                        [imageHeight]="20" [imageWidth]="20" [animation]="true" [animateTitle]="false"
-                        [animationDuration]="1000" [showTitle]="true" [showUnits]="true" [showSubtitle]="false"
-                        [showBackground]="false" [responsive]="true" [showZeroOuterStroke]="false">
-                    </circle-progress>
-                    <h5 class="text-center">{{homecurrencyText}} -->
-                        <!-- <span class="curr-text nat-rup" style="left: 12%;">Indian National Rupee</span> -->
-                    <!-- </h5>
-                </div>
-            </div>
-            </div>
-        </div> -->
-    </div>
-    <!-- <div class="row mt-30 mb-15">
-        <div class="col-md-12"> -->
-            <!-- <h4 class="hidden-lg graph-head">Yearly IRR <span>(Internal Rate of Return)</span></h4> -->
-            <!-- <div class="progress-box m-box">
-                <h4 class="hidden-xs text-center" style="margin-bottom: 30px;">Yearly IRR <span>(Internal Rate of
-                        Return)</span></h4>
-                <div style="width:100%;">
-                    <div class="chartjs-size-monitor">
-                        <div class="chartjs-size-monitor-expand">
-                            <div class=""></div>
-                        </div>
-                        <div class="chartjs-size-monitor-shrink">
-                            <div class=""></div>
-                        </div>
-                    </div>
-                    <canvas id="canvas" class="chartjs-render-monitor printimportant"></canvas>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- <div class="row mt-30">
-        <div class="col-md-6 col-lg-6">
-            <div class="progress-box m-box" style="position: relative;background-color: transparent;">
-                <h4 class="hidden-lg text-center">% Contribution to your IRR</h4>
-                <h4 class="mgb-45 hidden-xs text-center printheadfont">% Contribution to your IRR</h4>
-                <div class="green-graph hidden-xs"><span class="per-pos"><span
-                            class=value-txt>{{((TotalReturnOfInvestment-capitalAppreciation-RentalIncome)/makePositive(TotalReturnOfInvestment))*100|number:'1.0-0'}}
-                            %&nbsp;</span> FX Growth</span></div>
-                <div class="blue-graph hidden-xs"><span class="per-pos"><span
-                            class=value-txt>{{(RentalIncome/makePositive(TotalReturnOfInvestment))*100|number:'1.0-0'}} %&nbsp;</span>
-                        Rental Income</span></div>
-                <div class="lightblue-graph hidden-xs"><span class="per-pos"><span
-                            class=value-txt>{{(capitalAppreciation/makePositive(TotalReturnOfInvestment))*100|number:'1.0-0'}}
-                            %&nbsp;</span> Capital Growth</span></div>
-                <span class="bottomborder1 hidden-xs"></span>
-            </div>
-        </div>
-        <div class="col-md-6 col-lg-6">
-            <div class="progress-box piediagram" style="position: relative;background-color: #fff;">
-                <h4 class="mgb-45 mob-hed" style="visibility: hidden;">Dummy Copy <span>(Dummy Copy)</span></h4>
-                <canvas id="can"></canvas>
-                <h5 class="left-pie"><span
-                        class=value-txt>{{(capitalAppreciation/makePositive(TotalReturnOfInvestment))*100|number:'1.0-0'}} %
-                    </span><br /> Capital Growth</h5>
-                <h5 class="right-pie"><span
-                        class=value-txt>{{((TotalReturnOfInvestment-capitalAppreciation-RentalIncome)/makePositive(TotalReturnOfInvestment))*100|number:'1.0-0'}}
-                        %</span> <br /> FX Growth</h5>
-                <h5 class="top-pie"><span class=value-txt>{{(RentalIncome/makePositive(TotalReturnOfInvestment))*100|number:'1.0-0'}}
-                        %</span><br /> Net Rental Income</h5>
+<div class="rp-page" id="contentToConvert">
 
-            </div>
-        </div>
+  <!-- ═══════════════════════════════════════════
+       HEADER
+  ═══════════════════════════════════════════ -->
+  <header class="rp-header">
 
-        <div class="col-md-12 col-lg-6 hidden-lg">
-            <div class="progress-box m-box" style="position: relative;background-color: transparent;">
-                <div class="green-graph"><span class="per-pos"><span
-                            class=value-txt>{{((TotalReturnOfInvestment-capitalAppreciation-RentalIncome)/makePositive(TotalReturnOfInvestment))*100|number:'1.0-0'}}
-                            %&nbsp;</span> FX Growth</span></div>
-                <div class="blue-graph"><span class="per-pos"><span
-                            class=value-txt>{{(RentalIncome/makePositive(TotalReturnOfInvestment))*100|number:'1.0-0'}} %&nbsp;</span>
-                        Rental Income</span></div>
-                <div class="lightblue-graph"><span class="per-pos"><span
-                            class=value-txt>{{(capitalAppreciation/makePositive(TotalReturnOfInvestment))*100|number:'1.0-0'}}
-                            %&nbsp;</span> Capital Growth</span></div>
-                <span class="bottomborder1"></span>
-            </div>
+    <!-- Title row -->
+    <div class="rp-header__top">
+      <div class="rp-header__title-group">
+        <span class="rp-accent-bar"></span>
+        <div>
+          <h1 class="rp-title">Results</h1>
+          <p class="rp-subtitle">The results calculated according to the values entered.</p>
         </div>
-    </div> -->
-    <!-- <div class="row mt-15 mb-15">
-        <div class="col-md-12">
-            <div class="progress-box m-box">
-                <h4 class="hidden-xs" style="margin-bottom: 30px;">Your Investment Performance</h4>
-                <div style="width:100%;">
-                    <div class="chartjs-size-monitor">
-                        <div class="chartjs-size-monitor-expand">
-                            <div class=""></div>
-                        </div>
-                        <div class="chartjs-size-monitor-shrink">
-                            <div class=""></div>
-                        </div>
-                    </div>
-                    <canvas id="canvas2" style="display: block; width: 1379px; height: 689px;" width="1379" height="689" class="chartjs-render-monitor"></canvas>
-                </div>
-            </div>
-        </div>
-    </div> -->
-    <!-- <div class="row mt-15 mb-15">
-        <div class="col-md-12">
-            <h4 class="graph-head hidden-lg text-center">Your Investment Performance</h4>
-            <div class="progress-box m-box new-box" style="background: transparent;">
-                <h4 class="hidden-xs heading text-center" style="margin-bottom: 30px;">Your Investment Performance</h4>
-                <div class="green-graph1">
-                    <span class="per-pos1 hidden-xs">Value at Exit</span>
-                    <span class="per-pos">
-                        <span class=value-txt *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(TotalReturnOfInvestment-graphInitialInvestmentInHomeCurrency |number:'1.0-0')}}&nbsp;</span>
-                        <span class=value-txt *ngIf="homecurrencyText!='INR'">{{TotalReturnOfInvestment-graphInitialInvestmentInHomeCurrency |currency:homecurrencyText:'symbol':'1.0-0'}}&nbsp;</span>
-                        <span class="hidden-lg">Value at Exit</span>
-                    </span>
-                </div>
-                <div class="blue-graph1">
-                    <span class="per-pos1 hidden-xs">Total Profit</span>
-                    <span class="per-pos">
-                        <span class=value-txt *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(TotalReturnOfInvestment |number:'1.0-0')}}&nbsp;</span>
-                        <span class=value-txt *ngIf="homecurrencyText!='INR'">{{TotalReturnOfInvestment |currency:homecurrencyText:'symbol':'1.0-0'}}&nbsp;</span>
-                        <span class="hidden-lg">Total Profit</span>
-                    </span>
-                </div>
-                <div class="lightblue-graph1">
-                    <span class="per-pos1 hidden-xs">FX Growth</span>
-                    <span class="per-pos">
-                        <span class=value-txt *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(TotalReturnOfInvestment-capitalAppreciation-RentalIncome |number:'1.0-0')}}&nbsp;</span>
-                        <span class=value-txt *ngIf="homecurrencyText!='INR'">{{TotalReturnOfInvestment-capitalAppreciation-RentalIncome |currency:homecurrencyText:'symbol':'1.0-0'}}&nbsp;</span>
-                        <span class="hidden-lg">FX Growth</span>
-                    </span>
-                </div>
-                <div class="yellow-graph1">
-                    <span class="per-pos1 hidden-xs">Capital Growth</span>
-                    <span class="per-pos">
-                        <span class=value-txt *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(capitalAppreciation |number:'1.0-0')}}&nbsp;</span>
-                        <span class=value-txt *ngIf="homecurrencyText!='INR'">{{capitalAppreciation |currency:homecurrencyText:'symbol':'1.0-0'}}&nbsp;</span>
-                        <span class="hidden-lg">Capital Growth</span>
-                    </span>
-                </div>
-                <div class="red-graph1">
-                    <span class="per-pos1 hidden-xs">Net Rental Income</span>
-                    <span class="per-pos">
-                        <span class=value-txt *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(RentalIncome |number:'1.0-0')}}&nbsp;</span>
-                        <span class=value-txt *ngIf="homecurrencyText!='INR'">{{RentalIncome |currency:homecurrencyText:'symbol':'1.0-0'}}&nbsp;</span>
-                        <span class="hidden-lg">Rental Income</span>
-                    </span>
-                </div>
-                <div class="bottom-graph1">
-                    <span class="per-pos1 hidden-xs">Initial Investment</span>
-                    <span class="per-pos">
-                        <span class=value-txt *ngIf="homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(-graphInitialInvestmentInHomeCurrency |number:'1.0-0')}}&nbsp;</span>
-                        <span class=value-txt *ngIf="homecurrencyText!='INR'">{{-graphInitialInvestmentInHomeCurrency |currency:homecurrencyText:'symbol':'1.0-0'}}&nbsp;</span>
-                        <span class="hidden-lg">Initial Investment</span>
-                    </span>
-                </div>
-                <span class="bottomborder2"></span>
-            </div>
-        </div>
-    </div> -->
-    </div>
-    <div class="container" style="max-width: 94%;">
-    <div class="row mt-15 mb-15 noprint">
-       
-        <div class="col-md-12">
-            <h4 class="hidden-lg text-center cashflowheading">Cashflow in GBP</h4>
-            <h4 class="hidden-xs text-left printheadfont cashflowheading">Cashflow in GBP</h4>
-            <div class="progress-box m-box ">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="cashflowtable">
-                        <tr class="text-left" >
-                            <th>Set Up Cost:</th>
-                            <th class="text-center">Year 0</th>
-                            <th *ngFor = "let cashflow of cashflowdata;let i = index" class="text-center">Year {{i + 1}}</th>
-                            <!-- <th>Year11</th>
-                            <th>Year12</th>
-                            <th>Year13</th>
-                            <th>Year14</th>
-                            <th>Year15</th>
-                            -->
-                          
-                        </tr>
-                    <tbody class="text-center cashflowtablebody" >
-                            <tr >
-                                <td class="text-left">SDLT</td>
-                                <td class="text-right">-{{calcData.stampDutyLandTax | currency:'GBP':'symbol':'1.0-0'}}</td>
-                                <td *ngFor="let cashflow of cashflowdata"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Loan Origination Fee</td>
-                                <td class="text-right">-{{loanoriginationfee | currency:'GBP':'symbol':'1.0-0'}}</td>
-                                <td *ngFor="let cashflow of cashflowdata"></td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">Property Value</td>
-                                <td class="text-right">-{{calcData.PropertyValue | currency:'GBP':'symbol':'1.0-0'}}</td>
-                                <td *ngFor="let cashflow of cashflowdata" class="text-right"></td>
-                            </tr>
-                            <tr >
-                                <td class="text-left"> Gross Rent</td>
-                                <td></td>
-                                <td *ngFor="let cashflow of cashflowdata" class="text-right">&#163;{{cashflow.GrossRent | number : '1.0-0'}}</td>
-                            </tr>
-                            
-                            <!-- <tr>
-                                <td class="text-left">EMI</td>
-                                <td></td>
-                                <td *ngFor="let cashflow of cashflowdata"class="text-right">-&#163;{{cashflow.EMI | number : '1.2-2'}}</td>
-                            </tr> -->
-                            <tr>
-                                <td class="text-left">Mortgage interest</td>
-                                <td></td>
-                                <td *ngFor="let cashflow of cashflowdata"class="text-right">-{{cashflow.Interest | currency:'GBP':'symbol':'1.0-0'}}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-left"> Principal repayment </td>
-                                <td ></td>
-                                <td *ngFor="let cashflow of cashflowdata"class="text-right">-{{cashflow.PrincipleRepayment | currency:'GBP':'symbol':'1.0-0'}}</td>
-                            </tr>
-                    
-                            <tr>
-                                <td class="text-left">  Letting Management Fee </td>
-                                <td ></td>
-                                <td *ngFor="let cashflow of cashflowdata"class="text-right">-{{cashflow.LettingFee | currency:'GBP':'symbol':'1.0-0'}}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">   Service Charge  </td>
-                                <td></td>
-                                <td *ngFor="let cashflow of cashflowdata"class="text-right">-{{cashflow.ServiceCharges | currency:'GBP':'symbol':'1.0-0'}}</td>
-                            </tr>
-                            <tr>
-                                <td class="text-left">  Ground rent </td>
-                                <td></td>
-                                <td *ngFor="let cashflow of cashflowdata" class="text-right">-{{cashflow.GroundRent | currency:'GBP':'symbol':'1.0-0'}}</td>
-                            </tr>
-                          
-                            <tr >
-                                <td class="text-left">Miscellaneous Expenses</td>
-                                <td></td>
-                                <td *ngFor="let cashflow of cashflowdata"class="text-right">-{{cashflow.MiscelleneousExpense | currency:'GBP':'symbol':'1.0-0'}}</td>
-                            </tr>
-
-                            <tr>
-                                <td class="text-left">   Loan outstanding </td>
-                                <td></td>
-                                <td *ngFor="let cashflow of cashflowdata" class="text-right">{{cashflow.loanOutstanding | currency:'GBP':'symbol' : '1.0-0'}}</td>
-
-                            </tr>
-                            <tr style="font-weight:bold;">
-                                <td class="text-left"> Cashflow</td>
-                                <td class="text-right" *ngFor = "let cashflow of allCahsflow">{{cashflow | currency:'GBP':'symbol' : '1.0-0'}}</td>
-                            </tr>
-                            <tr style="font-weight:bold;">
-                                <td class="text-left"> Net Yield</td>
-                                <td></td>
-                                <td class="text-right" *ngFor = "let netyield of netYield">{{netyield | number : '1.2'}}%</td>
-                            </tr>
-                            <tr style="font-weight:bold;">
-                                <td class="text-left"> Avg Net Yield</td>
-                                <td class="text-right">{{avgnetYield | number : '1.2'}}%</td>
-                                <td class="text-right" *ngFor = "let netyield of netYield"></td>
-                            </tr>
-                            <tr style="font-weight:bold;">
-                                <td class="text-left"> Total Cashflow</td>
-                                <td class="text-right">{{totalCashFlow | currency:'GBP':'symbol' : '1.0-0'}}</td>
-                                <td class="text-right" *ngFor = "let netyield of netYield"></td>
-                            </tr>
-                            
-                          
-                    </tbody>
-                </table>
-                </div>
-          
-            </div>
-        </div>
-    </div>
-    <div class="row noprint" id="buttonsrow">
-        <div class="col-md-6 col-lg-3 mob-center text-right" style="display: none;">
-            <button *ngIf="loadingPrintbtn" type="submit" class="btn btn-default report-btn text-right"><i class="fa fa-spin fa-spinner"></i>
-                Please Wait...</button>
-            <button *ngIf="!loadingPrintbtn" type="submit" class="btn btn-default report-btn text-right" (click)="printScreen()"><img src="./assets/save-report1.svg">
-                Print Report</button>
-        </div>
-        <div class="col-md-7 col-lg-3 mob-center text-right" id="downloadreportdiv">
-            <button *ngIf="loadingDownloadbtn" type="submit" class="btn btn-default report-btn text-right"><i class="fa fa-spin fa-spinner"></i>
-                Please Wait...</button>
-            <button *ngIf="!loadingDownloadbtn" type="submit" class="btn btn-default report-btn text-right" (click)="exportexcel()"><img
-                    src="./assets/download-cursor1.svg"> Download Report</button>
-        </div>
-        <div class="col-md-6 col-lg-3 mob-center text-left">
-            <button *ngIf="loadingSharebtn" type="submit" class="btn btn-default report-btn text-right"><i class="fa fa-spin fa-spinner"></i>
-                Please Wait...</button>
-            <button *ngIf="!loadingSharebtn" type="submit" class="btn btn-default report-btn text-right" (click)="emailpopup()"><img
-                    src="./assets/share-report1.svg">Share Report</button>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade noprint" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content" style="top: 100px;">
-  
-        <!-- Modal Header -->
-        <div class="modal-header" style="border-bottom:0px;padding-bottom:0px">
-          <h5 class="modal-title" style="color:#1d1751;padding-left:12px;">Share Report</h5>
-          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-        </div>
-  
-        <!-- Modal body -->
-        <div class="modal-body" style="padding-top: 20px;padding-bottom:5px;">
-            <div class="form-group col-md-12">
-                <label style="color:#444854;font-size:14px;">Enter email ids of recipients</label>
-                <input type="email" class="form-control" id="email" placeholder="example : joe@gmail.com,mark@gmail.com" name="email" [(ngModel)]="Email" autocomplete="off"  style="height:45px !important;">
-            </div>
-        </div>
-  
-        <!-- Modal footer -->
-        <div class="modal-footer" style="border-top: 0px;padding-top: 0px;padding-bottom: 8px;">
-            <div  style="width:100%;display:flex;justify-content:center;">
-               
-                <button *ngIf="loadingSharebtn" type="submit" class="btn modal-btn"><i class="fa fa-spin fa-spinner"></i>
-                    Please Wait...</button>
-                <button *ngIf="!loadingSharebtn" type="submit" class="btn modal-btn" (click)="sendexcel()">Send</button>
-                <button type="button" class="btn modal-cancel-btn" id="cancelbtn" (click)="cancel()">Cancel</button>
-            </div>
-        
-        </div>
-  
+      </div>
+      <div class="rp-header__actions">
+        <button class="rp-btn rp-btn--ghost" (click)="startagain()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+          Back
+        </button>
+        <button class="rp-btn rp-btn--outline" (click)="shareReport()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          Share
+        </button>
+        <button class="rp-btn rp-btn--primary" (click)="startagain()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.98"/></svg>
+          Recalculate
+        </button>
       </div>
     </div>
+
+    <!-- KPI cards row -->
+    <div class="rp-kpi-grid">
+
+      <!-- KPI 1: Total Net Cashflow (featured) -->
+      <div class="rp-kpi rp-kpi--featured">
+        <div class="rp-kpi__label">Total Net Cashflow</div>
+        <div class="rp-kpi__icon" style="background:rgba(59,130,246,0.15)">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+            <path d="M7 16L3 12l4-4" stroke="#6b9fd4" stroke-width="2" stroke-linecap="round"/>
+            <path d="M17 8l4 4-4 4" stroke="#22c55e" stroke-width="2" stroke-linecap="round"/>
+            <path d="M3 12h18" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="rp-kpi__value">£{{totalCashFlow | number:'1.0-0'}}</div>
+        <div class="rp-kpi__note">Over investment period</div>
+      </div>
+
+      <!-- KPI 2: Initial Outlay -->
+      <div class="rp-kpi">
+        <div class="rp-kpi__label">Initial Outlay</div>
+        <div class="rp-kpi__icon" style="background:rgba(34,197,94,0.12)">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="6" width="20" height="12" rx="2" stroke="#22c55e" stroke-width="1.8"/>
+            <circle cx="12" cy="12" r="3" stroke="#22c55e" stroke-width="1.8"/>
+            <path d="M6 12h.01M18 12h.01" stroke="#22c55e" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="rp-kpi__value">£{{initialOutlay | number:'1.0-0'}}</div>
+        <div class="rp-kpi__note">Deposit + SDLT + Fees</div>
+      </div>
+
+      <!-- KPI 3: Year 1 Net Cashflow -->
+      <div class="rp-kpi">
+        <div class="rp-kpi__label">Year 1 Net Cashflow</div>
+        <div class="rp-kpi__icon" style="background:rgba(59,130,246,0.12)">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+            <path d="M5 17L3 15l2-2" stroke="#6b9fd4" stroke-width="2" stroke-linecap="round"/>
+            <path d="M19 7l2 2-2 2" stroke="#22c55e" stroke-width="2" stroke-linecap="round"/>
+            <path d="M3 15l18-8" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="rp-kpi__value">£{{cashflowdata[0]?.CashFlow | number:'1.0-0'}}</div>
+        <div class="rp-kpi__note">Net after all costs</div>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ═══════════════════════════════════════════
+       SCROLLABLE BODY
+  ═══════════════════════════════════════════ -->
+  <main class="rp-body">
+
+    <!-- Card 1: Your Assumptions -->
+    <div class="rp-card">
+      <h2 class="rp-card__heading">Your Assumptions</h2>
+      <div class="rp-assumptions">
+
+        <div class="rp-assumption-row">
+          <span class="rp-assumption-row__label">City</span>
+          <span class="rp-assumption-row__value">{{calcData.City}}</span>
+        </div>
+        <div class="rp-assumption-row">
+          <span class="rp-assumption-row__label">Property Value</span>
+          <span class="rp-assumption-row__value">£{{calcData.PropertyValue | number:'1.0-0'}}</span>
+        </div>
+        <div class="rp-assumption-row">
+          <span class="rp-assumption-row__label">LTV</span>
+          <span class="rp-assumption-row__value">{{calcData.loanAmount}}%</span>
+        </div>
+        <div class="rp-assumption-row">
+          <span class="rp-assumption-row__label">Buyer Type</span>
+          <span class="rp-assumption-row__value">{{calcData.ForeignBuyer === '1' ? 'Foreign Buyer' : 'UK Resident'}}</span>
+        </div>
+        <div class="rp-assumption-row">
+          <span class="rp-assumption-row__label">Investment Period</span>
+          <span class="rp-assumption-row__value">{{investedTenure}} years</span>
+        </div>
+        <div class="rp-assumption-row">
+          <span class="rp-assumption-row__label">Rental Yield</span>
+          <span class="rp-assumption-row__value">{{calcData.rentalYeild | number:'1.2-2'}}%</span>
+        </div>
+        <div class="rp-assumption-row">
+          <span class="rp-assumption-row__label">Rental Growth p.a.</span>
+          <span class="rp-assumption-row__value">{{calcData.rentalGrowthEscalation | number:'1.2-2'}}%</span>
+        </div>
+        <div class="rp-assumption-row">
+          <span class="rp-assumption-row__label">Mortgage Rate</span>
+          <span class="rp-assumption-row__value">{{calcData.mortgageInterestRate | number:'1.2-2'}}%</span>
+        </div>
+        <div class="rp-assumption-row">
+          <span class="rp-assumption-row__label">Stamp Duty</span>
+          <span class="rp-assumption-row__value">£{{calcData.stampDutyLandTax | number:'1.0-0'}}</span>
+        </div>
+        <div class="rp-assumption-row">
+          <span class="rp-assumption-row__label">Loan Origination Fee</span>
+          <span class="rp-assumption-row__value">£{{loanoriginationfee | number:'1.0-0'}}</span>
+        </div>
+        <div class="rp-assumption-row">
+          <span class="rp-assumption-row__label">Letting Fee</span>
+          <span class="rp-assumption-row__value">{{calcData.letteingManagFee | number:'1.2-2'}}%</span>
+        </div>
+        <div class="rp-assumption-row">
+          <span class="rp-assumption-row__label">Ground Rent</span>
+          <span class="rp-assumption-row__value">£{{calcData.groundRent | number:'1.0-0'}}</span>
+        </div>
+        <div class="rp-assumption-row">
+          <span class="rp-assumption-row__label">Service Charges</span>
+          <span class="rp-assumption-row__value">£{{calcData.serviceCharges | number:'1.0-0'}}</span>
+        </div>
+        <div class="rp-assumption-row rp-assumption-row--last">
+          <span class="rp-assumption-row__label">Other Expenses</span>
+          <span class="rp-assumption-row__value">£{{calcData.miscelleneousExpense | number:'1.0-0'}}</span>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Card 2: Annual Net Cashflow chart -->
+    <div class="rp-card">
+      <h2 class="rp-card__heading rp-card__heading--no-border">Annual Net Cashflow</h2>
+      <p class="rp-card__sub">Net income per year after all expenses and mortgage payments</p>
+      <div class="rp-chart-wrapper">
+        <canvas #cfBarChart id="cfBarChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Card 3: Year-by-Year Breakdown -->
+    <div class="rp-card">
+      <h2 class="rp-card__heading">Year-by-Year Breakdown</h2>
+      <div class="rp-table-wrapper">
+        <table class="rp-table">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Gross Rent</th>
+              <th>Mortgage Interest</th>
+              <th>Letting Fee</th>
+              <th>Other Costs</th>
+              <th>Net Cashflow</th>
+              <th>Net Yield %</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let row of cashflowdata; let i = index">
+              <td class="rp-table__year">Year {{i + 1}}</td>
+              <td>£{{row.GrossRent | number:'1.0-0'}}</td>
+              <td>£{{row.Interest | number:'1.0-0'}}</td>
+              <td>£{{row.LettingFee | number:'1.0-0'}}</td>
+              <td>£{{(row.GroundRent + row.ServiceCharges + row.MiscelleneousExpense) | number:'1.0-0'}}</td>
+              <td [ngClass]="row.CashFlow >= 0 ? 'rp-table__pos' : 'rp-table__neg'">
+                £{{row.CashFlow | number:'1.0-0'}}
+              </td>
+              <td class="rp-table__yield">{{netYield[i]}}%</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ═══════════════════════════════════════════
+       HIDDEN EXCEL TABLE (kept for exportexcel())
+  ═══════════════════════════════════════════ -->
+  <div style="display:none;">
+    <table id="cashflowtable">
+      <tr class="text-left">
+        <th>Set Up Cost:</th>
+        <th class="text-center">Year 0</th>
+        <th *ngFor="let cashflow of cashflowdata; let i = index" class="text-center">Year {{i + 1}}</th>
+      </tr>
+      <tbody class="text-center cashflowtablebody">
+        <tr>
+          <td class="text-left">SDLT</td>
+          <td class="text-right">-{{calcData.stampDutyLandTax | currency:'GBP':'symbol':'1.0-0'}}</td>
+          <td *ngFor="let cashflow of cashflowdata"></td>
+        </tr>
+        <tr>
+          <td class="text-left">Loan Origination Fee</td>
+          <td class="text-right">-{{loanoriginationfee | currency:'GBP':'symbol':'1.0-0'}}</td>
+          <td *ngFor="let cashflow of cashflowdata"></td>
+        </tr>
+        <tr>
+          <td class="text-left">Property Value</td>
+          <td class="text-right">-{{calcData.PropertyValue | currency:'GBP':'symbol':'1.0-0'}}</td>
+          <td *ngFor="let cashflow of cashflowdata" class="text-right"></td>
+        </tr>
+        <tr>
+          <td class="text-left">Gross Rent</td>
+          <td></td>
+          <td *ngFor="let cashflow of cashflowdata" class="text-right">&#163;{{cashflow.GrossRent | number:'1.0-0'}}</td>
+        </tr>
+        <tr>
+          <td class="text-left">Mortgage interest</td>
+          <td></td>
+          <td *ngFor="let cashflow of cashflowdata" class="text-right">-{{cashflow.Interest | currency:'GBP':'symbol':'1.0-0'}}</td>
+        </tr>
+        <tr>
+          <td class="text-left">Principal repayment</td>
+          <td></td>
+          <td *ngFor="let cashflow of cashflowdata" class="text-right">-{{cashflow.PrincipleRepayment | currency:'GBP':'symbol':'1.0-0'}}</td>
+        </tr>
+        <tr>
+          <td class="text-left">Letting Management Fee</td>
+          <td></td>
+          <td *ngFor="let cashflow of cashflowdata" class="text-right">-{{cashflow.LettingFee | currency:'GBP':'symbol':'1.0-0'}}</td>
+        </tr>
+        <tr>
+          <td class="text-left">Service Charge</td>
+          <td></td>
+          <td *ngFor="let cashflow of cashflowdata" class="text-right">-{{cashflow.ServiceCharges | currency:'GBP':'symbol':'1.0-0'}}</td>
+        </tr>
+        <tr>
+          <td class="text-left">Ground rent</td>
+          <td></td>
+          <td *ngFor="let cashflow of cashflowdata" class="text-right">-{{cashflow.GroundRent | currency:'GBP':'symbol':'1.0-0'}}</td>
+        </tr>
+        <tr>
+          <td class="text-left">Miscellaneous Expenses</td>
+          <td></td>
+          <td *ngFor="let cashflow of cashflowdata" class="text-right">-{{cashflow.MiscelleneousExpense | currency:'GBP':'symbol':'1.0-0'}}</td>
+        </tr>
+        <tr>
+          <td class="text-left">Loan outstanding</td>
+          <td></td>
+          <td *ngFor="let cashflow of cashflowdata" class="text-right">{{cashflow.loanOutstanding | currency:'GBP':'symbol':'1.0-0'}}</td>
+        </tr>
+        <tr style="font-weight:bold;">
+          <td class="text-left">Cashflow</td>
+          <td class="text-right" *ngFor="let cashflow of allCahsflow">{{cashflow | currency:'GBP':'symbol':'1.0-0'}}</td>
+        </tr>
+        <tr style="font-weight:bold;">
+          <td class="text-left">Net Yield</td>
+          <td></td>
+          <td class="text-right" *ngFor="let netyield of netYield">{{netyield | number:'1.2'}}%</td>
+        </tr>
+        <tr style="font-weight:bold;">
+          <td class="text-left">Avg Net Yield</td>
+          <td class="text-right">{{avgnetYield | number:'1.2'}}%</td>
+          <td class="text-right" *ngFor="let netyield of netYield"></td>
+        </tr>
+        <tr style="font-weight:bold;">
+          <td class="text-left">Total Cashflow</td>
+          <td class="text-right">{{totalCashFlow | currency:'GBP':'symbol':'1.0-0'}}</td>
+          <td class="text-right" *ngFor="let netyield of netYield"></td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════
+     STICKY FOOTER
+═══════════════════════════════════════════ -->
+<footer class="rp-footer">
+  <button class="rp-btn rp-btn--ghost" (click)="startagain()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+    Back
+  </button>
+  <button class="rp-btn rp-btn--outline" (click)="emailpopup()">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+    Share Report
+  </button>
+  <button class="rp-btn rp-btn--primary" [disabled]="loadingDownloadbtn" (click)="exportexcel()">
+    <svg *ngIf="!loadingDownloadbtn" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    <i *ngIf="loadingDownloadbtn" class="fa fa-spin fa-spinner"></i>
+    Download Excel
+  </button>
+</footer>
+
+<!-- ═══════════════════════════════════════════
+     EMAIL SHARE MODAL
+═══════════════════════════════════════════ -->
+<div class="modal fade noprint" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content rp-modal">
+
+      <div class="modal-header rp-modal__header">
+        <h5 class="rp-modal__title">Share Report</h5>
+      </div>
+
+      <div class="modal-body rp-modal__body">
+        <div class="form-group">
+          <label class="rp-modal__label">Enter email ids of recipients</label>
+          <input type="email" class="form-control rp-modal__input" id="email"
+            placeholder="example: joe@gmail.com,mark@gmail.com"
+            name="email" [(ngModel)]="Email" autocomplete="off">
+        </div>
+      </div>
+
+      <div class="modal-footer rp-modal__footer">
+        <button *ngIf="loadingSharebtn" type="submit" class="rp-btn rp-btn--primary rp-modal__send">
+          <i class="fa fa-spin fa-spinner"></i> Please Wait...
+        </button>
+        <button *ngIf="!loadingSharebtn" type="submit" class="rp-btn rp-btn--primary rp-modal__send" (click)="sendexcel()">Send</button>
+        <button type="button" class="rp-btn rp-btn--ghost" id="cancelbtn" (click)="cancel()">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+</div>

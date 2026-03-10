@@ -1,198 +1,93 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
-import { trigger,state,style,animate,transition } from '@angular/animations';
 import { ValidationService } from '../validation.service';
 
 @Component({
   selector: 'app-cashflowstep2',
   templateUrl: './cashflowstep2.component.html',
-  styleUrls: ['./cashflowstep2.component.css'],
-  animations: [
-    trigger('otpmort',[
-      state(
-        'visible',
-        style({
-          opacity:'1'
-         })
-        ),state(
-          'hide',
-          style({
-            opacity:'0',
-            height:'0px'
-           })
-          ),
-        transition('* => visible', [animate('1500ms ease-out')])
-    ]),
-    trigger('affirst',[
-      state(
-        'visible',
-        style({
-          opacity:'1'
-         })
-        ),state(
-          'hide',
-          style({
-            opacity:'0',
-            height:'0px'
-           })
-          ),
-        transition('* => visible', [animate('1500ms ease-out')])
-    ]),
-    trigger('asfirst',[
-      state(
-        'visible',
-        style({
-          opacity:'1'
-         })
-        ),state(
-          'hide',
-          style({
-            opacity:'0',
-            height:'0px'
-           })
-          ),
-        transition('* => visible', [animate('1500ms ease-out')])
-    ]),
-    trigger('atfirst',[
-      state(
-        'visible',
-        style({
-          opacity:'1'
-         })
-        ),state(
-          'hide',
-          style({
-            opacity:'0',
-            height:'0px'
-           })
-          ),
-        transition('* => visible', [animate('1500ms ease-out')])
-    ]),
-    trigger('afrfirst',[
-      state(
-        'visible',
-        style({
-          opacity:'1'
-         })
-        ),state(
-          'hide',
-          style({
-            opacity:'0',
-            height:'0px'
-           })
-          ),
-        transition('* => visible', [animate('1500ms ease-out')])
-    ])
-  ]
+  styleUrls: ['./cashflowstep2.component.css']
 })
 export class Cashflowstep2Component implements OnInit {
-  percentInput: ElementRef;
-  PropertyValue:string="";
-  optmortgage:string="";
-  mortgageType:string="1";
-  loanAmount:string="";
-  mortgageInterestRate:string="";
-  mortgageTenure:string="";
-  calcData:any;
-  MapLoad=true;
-  
-  lat :number;
-  long :number;
+  investedTenure: string = '';
+  rentalYeild: string = '';
+  rentalGrowthEscalation: string = '';
+  calcData: any;
+
+  // Preview values
+  grossAnnual: number = 0;
+  netAnnual: number = 0;
+  netYield: number = 0;
+
+  // These will come from step1 via calcData
+  propertyValue: number = 0;
+  loanAmount: number = 75;
 
   constructor(
-    private router:Router,
+    private router: Router,
     private dataService: DataService,
-    public validation:ValidationService) {
-    this.calcData=JSON.parse(localStorage.getItem("calcData"));
-   
-    if(!this.dataService.EmptyNullOrUndefined(this.calcData.PropertyValue)){
-      this.PropertyValue=this.validation.amountWithComma(this.calcData.PropertyValue);
+    public validation: ValidationService
+  ) {
+    this.calcData = JSON.parse(localStorage.getItem('calcData')) || {};
+    if (!this.dataService.EmptyNullOrUndefined(this.calcData.investedTenure)) {
+      this.investedTenure = this.calcData.investedTenure;
     }
-  if(!this.dataService.EmptyNullOrUndefined(this.calcData.optmortgage)){
-    this.optmortgage=this.calcData.optmortgage;
+    if (!this.dataService.EmptyNullOrUndefined(this.calcData.rentalYeild)) {
+      this.rentalYeild = this.calcData.rentalYeild + '%';
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.calcData.rentalGrowthEscalation)) {
+      this.rentalGrowthEscalation = this.calcData.rentalGrowthEscalation + '%';
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.calcData.PropertyValue)) {
+      this.propertyValue = parseFloat(this.calcData.PropertyValue.toString().replace(/,/g, '')) || 0;
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.calcData.loanAmount)) {
+      this.loanAmount = parseFloat(this.calcData.loanAmount) || 75;
+    }
   }
-  if(!this.dataService.EmptyNullOrUndefined(this.calcData.mortgageType)){
-    this.mortgageType=this.calcData.mortgageType; 
-  }
-  if(!this.dataService.EmptyNullOrUndefined(this.calcData.loanAmount)){
-    this.loanAmount=this.calcData.loanAmount; 
-  }
-  if(!this.dataService.EmptyNullOrUndefined(this.calcData.mortgageInterestRate)){
-    this.mortgageInterestRate=this.calcData.mortgageInterestRate+"%"; 
-  }
-  if(!this.dataService.EmptyNullOrUndefined(this.calcData.mortgageTenure)){
-    this.mortgageTenure=this.calcData.mortgageTenure; 
-  } 
-  if(!this.dataService.EmptyNullOrUndefined(this.calcData.lat)){
-    this.lat=this.calcData.lat; 
-  } 
-  if(!this.dataService.EmptyNullOrUndefined(this.calcData.long)){
-    this.long=this.calcData.long; 
-  } 
- 
-}
+
   ngOnInit(): void {
-  // $(document).ready(function(){
-  //   $(".percent").on('input', function() {
-  //     $(this).val(function(i, v) {
-  //      return v.replace('%','') + '%';  });
-  //   });
-  // });
+    this.updatePreview();
   }
 
-  next(){
-    let flag=true;
-    if(!this.dataService.EmptyNullOrUndefined(this.optmortgage)){
-        this.calcData.optmortgage=this.optmortgage;
-        if(!this.dataService.EmptyNullOrUndefined(this.PropertyValue)){
-          this.calcData.PropertyValue=this.PropertyValue.replace(/,/g,'');
-        }else{
-          let element=document.getElementById("propertyValue");
-          element.classList.add("error-input");
-          flag=false;
-        }
-        if(this.optmortgage=="1"){
-          if(!this.dataService.EmptyNullOrUndefined(this.mortgageType)){
-            this.calcData.mortgageType=this.mortgageType;
-          }else{
-            let element=document.getElementById("mortgageType");
-            element.classList.add("error-input");
-            flag=false;
-          }
-          if(!this.dataService.EmptyNullOrUndefined(this.loanAmount)){
-            this.calcData.loanAmount=this.loanAmount.replace("%",'');
-          }else{
-            let element=document.getElementById("loanAmount");
-            element.classList.add("error-input");
-            flag=false;
-          }
-          if(!this.dataService.EmptyNullOrUndefined(this.mortgageInterestRate)){
-            this.calcData.mortgageInterestRate=this.mortgageInterestRate.replace("%",'');;
-          }else{
-            let element=document.getElementById("mortgageInterestRate");
-            element.classList.add("error-input");
-            flag=false;
-          }
-          if(!this.dataService.EmptyNullOrUndefined(this.mortgageTenure)){
-            this.calcData.mortgageTenure=this.mortgageTenure;
-          }else{
-            let element=document.getElementById("mortgageTenure");
-            element.classList.add("error-input");
-            flag=false;
-          }
-        }
-      }else{
-        let element=document.getElementById("optmortgage");
-        element.classList.add("error-input");
-        flag=false;
-      }
-    
-   if(flag){
-    this.calcData.reportSavedOnServer=false;
-    localStorage.setItem("calcData",JSON.stringify(this.calcData));
-    this.router.navigate(['/cashflow/step3']);
-   }
+  updatePreview() {
+    const yld = parseFloat((this.rentalYeild || '').replace('%', '')) || 0;
+    const mortgageRate = 4.7; // default estimate for preview
+    const loan = this.propertyValue * (this.loanAmount / 100);
+    this.grossAnnual = this.propertyValue * (yld / 100);
+    const mortgageInt = loan * (mortgageRate / 100);
+    const expenses = 4500; // default estimate for preview
+    this.netAnnual = this.grossAnnual - (this.grossAnnual * 0.12) - expenses - mortgageInt;
+    this.netYield = this.propertyValue > 0 ? (this.netAnnual / this.propertyValue) * 100 : 0;
   }
 
+  next() {
+    let flag = true;
+    if (!this.dataService.EmptyNullOrUndefined(this.investedTenure)) {
+      this.calcData.investedTenure = this.investedTenure;
+    } else {
+      let element = document.getElementById('investedTenure');
+      if (element) element.classList.add('error-input');
+      flag = false;
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.rentalYeild)) {
+      this.calcData.rentalYeild = this.rentalYeild.replace('%', '');
+    } else {
+      let element = document.getElementById('rentalYeild');
+      if (element) element.classList.add('error-input');
+      flag = false;
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.rentalGrowthEscalation)) {
+      this.calcData.rentalGrowthEscalation = this.rentalGrowthEscalation.replace('%', '');
+    } else {
+      let element = document.getElementById('rentalGrowthEscalation');
+      if (element) element.classList.add('error-input');
+      flag = false;
+    }
+    if (flag) {
+      this.calcData.reportSavedOnServer = false;
+      localStorage.setItem('calcData', JSON.stringify(this.calcData));
+      this.router.navigate(['/cashflow/step3']);
+    }
+  }
 }

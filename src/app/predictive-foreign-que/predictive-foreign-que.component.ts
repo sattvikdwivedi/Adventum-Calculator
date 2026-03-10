@@ -97,7 +97,7 @@ this.calcData = JSON.parse(localStorage.getItem('calcData'));
       this.calcData.homecurrencyText=this.PreHomeCurrency.toUpperCase();
       var FinalRate=0;
       let Currpromise = new Promise((res, rej) => {
-        this.dataService.GetRequest1('http://data.fixer.io/api/latest?access_key='+environment.CurrencyAPIKey+'&format=1').subscribe(data => {
+        this.dataService.GetRequest1('https://data.fixer.io/api/latest?access_key='+environment.CurrencyAPIKey+'&format=1').subscribe(data => {
           try {
             let res1 = data;
             if(res1.success==true){
@@ -133,7 +133,7 @@ this.calcData = JSON.parse(localStorage.getItem('calcData'));
       // this.calcData.homecurrencyText = this.PreHomeCurrency.toUpperCase();
       // var FinalRate=0;
       // let Currpromise = new Promise((res, rej) => {
-      //   this.dataService.GetRequest1('http://data.fixer.io/api/latest?access_key='+environment.CurrencyAPIKey+'&format=1').subscribe(data => {
+      //   this.dataService.GetRequest1('https://data.fixer.io/api/latest?access_key='+environment.CurrencyAPIKey+'&format=1').subscribe(data => {
       //     try {
       //       let res1 = data;
       //       if(res1.success==true){

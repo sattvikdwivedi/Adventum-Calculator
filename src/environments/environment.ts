@@ -3,6 +3,6 @@ export const environment = {
   production: false,
   webAPIKey: 'ek0RLNtEeUawzwtTXRC1HieJESxEzwYI',
    //serverUrl: 'http://localhost:51594/api/',
-  serverUrl:'http://adventumcalapi.onerooftechnologies.com/api/',
+  serverUrl:'https://adventumcalapi.onerooftechnologies.com/api/',
   PropertyDataKey:"ZZZ0Z1MM80"
 };

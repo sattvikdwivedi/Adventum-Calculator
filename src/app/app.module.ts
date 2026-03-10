@@ -7,14 +7,12 @@ import { NavigationComponent } from './navigation/navigation.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeComponent } from './home/home.component';
 import { FooterComponent } from './footer/footer.component';
-import {ProgressBarModule} from "angular-progress-bar";
 import { Step1Component } from './step1/step1.component';
 import { Step2Component } from './step2/step2.component';
 import { Step3Component } from './step3/step3.component';
 import { Step4Component } from './step4/step4.component';
 import { Step5Component } from './step5/step5.component';
 import { CalculatedirrComponent } from './calculatedirr/calculatedirr.component';
-import { NgCircleProgressModule } from 'ng-circle-progress';
 import { ChartsModule } from 'ng2-charts';
 import { AgmCoreModule } from '@agm/core';
 import { GooglemapComponent } from './googlemap/googlemap.component';
@@ -39,6 +37,8 @@ import { ForgotpasswordComponent } from './forgotpassword/forgotpassword.compone
 import { Atedstep2Component } from './atedstep2/atedstep2.component';
 import { AtedresultComponent } from './atedresult/atedresult.component';
 import { StartComponent } from './start/start.component';
+import { ProgressBarComponent } from './shared/progress-bar/progress-bar.component';
+import { CircleProgressComponent } from './shared/circle-progress/circle-progress.component';
 
 
 
@@ -76,17 +76,17 @@ import { StartComponent } from './start/start.component';
     Atedstep2Component,
     AtedresultComponent,
     StartComponent,
+    ProgressBarComponent,
+    CircleProgressComponent,
 
     
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ProgressBarModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    NgCircleProgressModule.forRoot({}),
     ChartsModule,
     AgmCoreModule.forRoot({
       apiKey:'AIzaSyCzLa8uvrYvNVkr-CO3fT7pfcK_8zD7K08'// 'AIzaSyC2zWldQ_NGnWDRwCbd0X9UKXL1SbbZ45E'

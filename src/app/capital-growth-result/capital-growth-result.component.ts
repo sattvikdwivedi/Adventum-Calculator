@@ -58,270 +58,63 @@ export class CapitalGrowthResultComponent implements OnInit,AfterViewInit {
     this.yearArray.push(this.yearArray.length+1);
   }
   ngAfterViewInit(): void {
-    const ctx = $('#canvas')[0].getContext('2d');
-      const gradientStroke = ctx.createLinearGradient(500, 0, 100, 0);
-		  gradientStroke.addColorStop(0, '#1d1751');
-		  gradientStroke.addColorStop(1, '#f7f7f7');
-		  const gradientStroke1 = ctx.createLinearGradient(500, 0, 100, 0);
-		  gradientStroke1.addColorStop(0, '#1aaf4b');
-      gradientStroke1.addColorStop(1, '#f7f7f7');
-      if ($(window).width() > 960) {
-        var myChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: this.yearArray,
-            datasets: [{
-              label: 'GBP',
-              borderColor: gradientStroke,
-              pointBorderColor: gradientStroke,
-              pointBackgroundColor: gradientStroke,
-              pointHoverBackgroundColor: gradientStroke,
-              pointHoverBorderColor: gradientStroke,
-              pointRadius: 0,
-              fill: false,
-              borderWidth: 9,
-              borderCapStyle: 'round',
-              data: this.calculatedCapitalGrowtharray,
-            }, {
-              label: 'INR',
-              borderColor: gradientStroke1,
-              pointBorderColor: gradientStroke1,
-              pointBackgroundColor: gradientStroke1,
-              pointHoverBackgroundColor: gradientStroke1,
-              pointHoverBorderColor: gradientStroke1,
-              pointRadius: 0,
-              fill: false,
-              borderWidth: 9,
-              borderCapStyle: 'round',
-              data: this.CaptitalGrowthinHomeCurrencyArray,
-            }]
-          },
-          options: {
-            legend: {
-              display: true
-            },
-            responsive: true,
-            title: {
-              display: false,
-              text: 'Yearly IRR (Internal Rate of Return)'
-            },
-            scales: {
-              xAxes: [{
-                display: true,
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Year',
-                  fontSize: 9
-                },
-                ticks: {
-                  fontSize: 14,
-                }
-              }],
-              yAxes: [{
-                display: true,
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Percentage'
-                },
-                ticks: {
-                  fontSize: 9
-                }
-              }]
+    const canvasEl = document.getElementById('canvas') as HTMLCanvasElement;
+    if (!canvasEl) return;
+    const ctx = canvasEl.getContext('2d');
+      const labels = this.yearArray.slice(0, this.calculatedCapitalGrowtharray.length).map((y: any) => 'Yr ' + y);
+      new (Chart as any)(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'GBP Growth',
+            borderColor: 'rgba(229,231,235,0.7)',
+            backgroundColor: 'transparent',
+            pointBackgroundColor: 'rgba(229,231,235,0.7)',
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            borderWidth: 2,
+            fill: false,
+            data: this.calculatedCapitalGrowtharray,
+          }, {
+            label: (this.calcData?.homecurrencyText || 'FX') + ' Growth',
+            borderColor: '#22c55e',
+            backgroundColor: 'transparent',
+            pointBackgroundColor: '#22c55e',
+            pointRadius: 4,
+            pointHoverRadius: 6,
+            borderWidth: 2,
+            fill: false,
+            data: this.CaptitalGrowthinHomeCurrencyArray,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          legend: { display: false },
+          tooltips: {
+            backgroundColor: 'rgba(26,45,79,0.95)',
+            cornerRadius: 8,
+            callbacks: {
+              label: (item: any, data: any) => data.datasets[item.datasetIndex].label + ': ' + item.yLabel.toFixed(1) + '%'
             }
-          }
-        });
-      }else{
-        var myChart = new Chart(ctx, {
-          type: 'line',
-          data: {
-            labels: this.yearArray,
-            datasets: [{
-              label: 'GBP',
-              borderColor: gradientStroke,
-              pointBorderColor: gradientStroke,
-              pointBackgroundColor: gradientStroke,
-              pointHoverBackgroundColor: gradientStroke,
-              pointHoverBorderColor: gradientStroke,
-              pointRadius: 0,
-              fill: false,
-              borderWidth: 3,
-              borderCapStyle: 'round',
-              data: this.calculatedCapitalGrowtharray,
-            }, {
-              label: 'INR',
-              borderColor: gradientStroke1,
-              pointBorderColor: gradientStroke1,
-              pointBackgroundColor: gradientStroke1,
-              pointHoverBackgroundColor: gradientStroke1,
-              pointHoverBorderColor: gradientStroke1,
-              pointRadius: 0,
-              fill: false,
-              borderWidth: 3,
-              borderCapStyle: 'round',
-              data: this.CaptitalGrowthinHomeCurrencyArray,
-            }]
           },
-          options: {
-            legend: {
-              display: true,
-              labels:{
-                fontSize: 7,
-                boxWidth:10
+          scales: {
+            xAxes: [{
+              gridLines: { color: 'rgba(255,255,255,0.05)' },
+              ticks: { fontColor: 'rgba(255,255,255,0.4)', fontFamily: 'Inter', fontSize: 11 }
+            }],
+            yAxes: [{
+              gridLines: { color: 'rgba(255,255,255,0.06)' },
+              ticks: {
+                fontColor: 'rgba(255,255,255,0.4)', fontFamily: 'Inter', fontSize: 11,
+                callback: (value: any) => value + '%'
               }
-            },
-            responsive: true,
-            title: {
-              display: false,
-              text: 'Yearly IRR (Internal Rate of Return)'
-            },
-            scales: {
-              xAxes: [{
-                display: true,
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Year',
-                  fontSize: 9,
-                },
-                ticks: {
-                  fontSize: 7.5,
-                }
-              }],
-              yAxes: [{
-                display: true,
-                scaleLabel: {
-                  display: true,
-                  labelString: 'Percentage',
-                  fontSize: 8,
-                },
-                ticks: {
-                  fontSize: 8,
-                }
-              }]
-            }
+            }]
           }
-        });
-      }
-     
-    
+        }
+      });
 
-
-	  // const ctx2 = $('#canvas2')[0].getContext('2d');
-    //   const gradientStroke2 = ctx2.createLinearGradient(500, 0, 100, 0);
-		//   gradientStroke2.addColorStop(0, '#1d1751');
-		//   gradientStroke2.addColorStop(1, '#f7f7f7');
-		//   const gradientStroke3 = ctx2.createLinearGradient(500, 0, 100, 0);
-		//   gradientStroke3.addColorStop(0, '#1aaf4b');
-    //   gradientStroke3.addColorStop(1, '#f7f7f7');
-    //   var myChart = new Chart(ctx2, {
-    //     type: 'line',
-    //     data: {
-    //       labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12', '13', '14', '15'],
-    //       datasets: [{
-    //         label: 'GBP',
-    //         borderColor: gradientStroke,
-    //         pointBorderColor: gradientStroke,
-    //         pointBackgroundColor: gradientStroke,
-    //         pointHoverBackgroundColor: gradientStroke,
-    //         pointHoverBorderColor: gradientStroke,
-    //         pointRadius: 0,
-    //         fill: false,
-    //         borderWidth: 9,
-    //         borderCapStyle: 'round',
-    //         data: [
-		// 		9,
-		// 		9,
-		// 		11,
-		// 		13,
-		// 		13,
-		// 		13,
-		// 		12,
-		// 		12,
-		// 		12,
-		// 		13
-
-		//    /*randomScalingFactor(),
-		//    randomScalingFactor(),
-		//    randomScalingFactor(),
-		//    randomScalingFactor(),
-		//    randomScalingFactor(),
-		//    randomScalingFactor(),
-		//    randomScalingFactor()*/
-		//    ],
-    //       }, {
-    //         label: 'INR ($)',
-    //         borderColor: gradientStroke1,
-    //         pointBorderColor: gradientStroke1,
-    //         pointBackgroundColor: gradientStroke1,
-    //         pointHoverBackgroundColor: gradientStroke1,
-    //         pointHoverBorderColor: gradientStroke1,
-    //         pointRadius: 0,
-    //         fill: false,
-    //         borderWidth: 9,
-    //         borderCapStyle: 'round',
-    //         data: [
-		// 		3,
-		// 		3,
-		// 		5,
-		// 		5,
-		// 		5,
-		// 		6,
-		// 		6,
-		// 		8,
-		// 		8,
-		// 		8
-
-
-		// 		],
-
-    //       }]
-    //     },
-    //     options: {
-    //       legend: {
-    //         display: true
-    //       },
-    //       responsive: true,
-    //       title: {
-    //         display: false,
-    //         text: 'Yearly IRR (Internal Rate of Return)'
-    //       },
-    //       scales: {
-    //         xAxes: [{
-    //           display: true,
-    //           scaleLabel: {
-    //             display: true,
-    //             labelString: 'Year'
-    //           },
-    //         }],
-    //         yAxes: [{
-    //           display: true,
-    //           scaleLabel: {
-    //           display: true,
-    //           labelString: 'Percentage'
-    //         }
-    //         }]
-    //       }
-    //     }
-    //   });
-    // Donut chart for return breakdown
-    const ctxDonut = $('#can')[0].getContext('2d');
-    const capitalGrowthPct = this.calculatedCapitalGrowtharray[this.calculatedCapitalGrowtharray.length - 1] || 0;
-    const fxGrowthPct = this.CaptitalGrowthinHomeCurrencyArray[this.CaptitalGrowthinHomeCurrencyArray.length - 1] - capitalGrowthPct;
-    new Chart(ctxDonut, {
-      type: 'doughnut',
-      data: {
-        labels: ['Capital Growth', 'FX Appreciation'],
-        datasets: [{
-          data: [Math.max(capitalGrowthPct, 0), Math.max(fxGrowthPct, 0)],
-          backgroundColor: ['#4f6ef7', '#22c55e'],
-          borderWidth: 0
-        }]
-      },
-      options: {
-        responsive: true,
-        legend: { display: false },
-        cutoutPercentage: 65
-      }
-    });
 
     if(!this.calcData.reportSavedOnServer && !this.validation.isNullEmptyUndefined(sessionStorage.getItem('UserId'))){
       this.reportSaveToServer();

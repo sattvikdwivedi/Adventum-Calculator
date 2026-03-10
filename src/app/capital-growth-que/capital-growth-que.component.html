@@ -1,310 +1,194 @@
-<!-- Capital Growth Calculator - New UI -->
-<div class="sc-page">
-  <!-- Left Hero Panel -->
-  <div class="sc-hero">
-    <div class="sc-hero-inner">
-      <img src="./assets/capital-breadcrumb.svg" alt="Capital Growth" class="sc-logo">
-      <div class="sc-badge">Capital Growth Calculator</div>
-      <h1 class="sc-title">Grow Your <br><span class="sc-accent">Capital</span></h1>
-      <p class="sc-sub">See how your UK property investment grows in your home currency over time.</p>
-      <div class="sc-preview-grid" *ngIf="PropertyValue!='' || capitalgrowth!='' || investedTenure!='' || homecurrencyText!=''">
-        <div class="sc-preview-item" *ngIf="PropertyValue!=''">
-          <span class="sc-preview-label">Property Value</span>
-          <span class="sc-preview-val">£{{PropertyValue}}</span>
+<div class="cg-page">
+
+  <!-- ══ LEFT PANEL ══ -->
+  <div class="cg-panel-left">
+    <div class="cg-panel-left-bg"></div>
+    <div class="cg-panel-left-inner">
+
+      <!-- Logo -->
+      <div class="cg-logo-wrap">
+        <div class="cg-logo-mark">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
+            <path d="M16 4L28 26H4L16 4Z" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" fill="none"/>
+            <path d="M16 13L21 22H11L16 13Z" fill="rgba(34,197,94,0.9)"/>
+          </svg>
+          AD<span class="cg-logo-green">V</span>ENTUM
         </div>
-        <div class="sc-preview-item" *ngIf="capitalgrowth!=''">
-          <span class="sc-preview-label">Capital Growth</span>
-          <span class="sc-preview-val">{{capitalgrowth}}</span>
-        </div>
-        <div class="sc-preview-item" *ngIf="FXGrowthPA!=''">
-          <span class="sc-preview-label">FX Growth p.a.</span>
-          <span class="sc-preview-val">{{FXGrowthPA}}</span>
-        </div>
-        <div class="sc-preview-item" *ngIf="investedTenure!=''">
-          <span class="sc-preview-label">Investment Period</span>
-          <span class="sc-preview-val">{{investedTenure}} yrs</span>
-        </div>
-        <div class="sc-preview-item" *ngIf="homecurrencyText!=''">
-          <span class="sc-preview-label">Home Currency</span>
-          <span class="sc-preview-val">{{homecurrencyText}}</span>
-        </div>
-        <div class="sc-preview-item" *ngIf="homecurrency!=''">
-          <span class="sc-preview-label">Exchange Rate</span>
-          <span class="sc-preview-val">{{homecurrency}}</span>
+        <span class="cg-logo-sub">Calculators</span>
+      </div>
+
+      <!-- Growth preview card -->
+      <div class="cg-preview-card">
+        <h3 class="cg-preview-title">Project Your <strong>Growth</strong></h3>
+        <p class="cg-preview-sub">Live preview updates as you fill in the form.</p>
+        <div class="cg-preview-grid">
+          <div class="cg-preview-item">
+            <div class="cg-preview-lbl">Current Value</div>
+            <div class="cg-preview-val">{{previewCurrentGBP ? ('£' + (previewCurrentGBP | number:'1.0-0')) : '—'}}</div>
+            <div class="cg-preview-note">{{previewCurrentHome ? previewCurrentHomeCr : ''}}</div>
+          </div>
+          <div class="cg-preview-item cg-preview-accent">
+            <div class="cg-preview-lbl">Exit Value ({{investedTenure || '?'}}yr)</div>
+            <div class="cg-preview-val">{{previewExitGBP ? ('£' + (previewExitGBP | number:'1.0-0')) : '—'}}</div>
+            <div class="cg-preview-note">{{previewExitHome ? previewExitHomeCr : ''}}</div>
+          </div>
+          <div class="cg-preview-item">
+            <div class="cg-preview-lbl">GBP Growth p.a.</div>
+            <div class="cg-preview-val">{{capitalgrowth || '—'}}</div>
+          </div>
+          <div class="cg-preview-item cg-preview-accent">
+            <div class="cg-preview-lbl">Total {{homecurrencyText || 'Home'}} Return</div>
+            <div class="cg-preview-val">{{previewTotalReturn ? (previewTotalReturn + '%') : '—'}}</div>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 
-  <!-- Right Form Panel -->
-  <div class="sc-form-panel">
-    <div class="sc-form-inner">
-      <!-- Header row -->
-      <div class="sc-form-header">
-        <a [routerLink]="['/capital-growth-calculator/step1']" class="sc-back">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
-          Back
+  <!-- ══ RIGHT PANEL ══ -->
+  <div class="cg-panel-right">
+    <div class="cg-panel-right-inner">
+
+      <!-- Topbar -->
+      <div class="cg-topbar">
+        <a [routerLink]="['/capital-growth-calculator/step1']" class="cg-back-circle">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         </a>
-        <span class="sc-date">{{validation.getCurrentDateWithSpecificFormat()}}</span>
+        <div class="cg-location-pill">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          {{calcData?.City || 'United Kingdom'}}
+        </div>
       </div>
 
-      <!-- Progress bar -->
-      <div class="sc-progress-wrap">
-        <progress-bar [progress]="10+(PropertyValue!=''?20:0)+(capitalgrowth!=''?20:0)+(FXGrowthPA!=''?20:0)+(investedTenure!=''?10:0)+(homecurrencyText!=''?20:0)" [color]="'#3b82f6'"></progress-bar>
-        <span class="sc-progress-pct">{{10+(PropertyValue!=''?20:0)+(capitalgrowth!=''?20:0)+(FXGrowthPA!=''?20:0)+(investedTenure!=''?10:0)+(homecurrencyText!=''?20:0)|number:'1.0-0'}}% complete</span>
+      <!-- Heading -->
+      <div class="cg-heading">
+        <h1 class="cg-title">Capital Growth Inputs</h1>
+        <p class="cg-subtitle">Estimate long-term property value growth in GBP and your home currency.</p>
       </div>
-
-      <h2 class="sc-form-title">Enter Your Details</h2>
 
       <!-- Property Value -->
-      <div class="sc-field-group">
-        <label class="sc-label">Property Value <span class="sc-req">*</span></label>
-        <div class="sc-input-wrap sc-gbp">
-          <input type="text" id="propertyValue" autocomplete="off"
+      <div class="cg-field">
+        <div class="cg-label">
+          Property Value
+          <span class="cg-hint">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            UK avg: £280k
+          </span>
+        </div>
+        <div class="cg-input-wrap">
+          <span class="cg-input-pre">£</span>
+          <input class="cg-inp" type="text" id="propertyValue" autocomplete="off"
+            placeholder="e.g. 280,000"
             (keyup)="PropertyValue=validation.amountWithComma(PropertyValue)"
             (keypress)="validation.numberOnly($event)"
-            placeholder="Enter property value"
             [(ngModel)]="PropertyValue">
-          <span class="sc-tick" *ngIf="PropertyValue!=''">&#10003;</span>
         </div>
       </div>
 
-      <!-- Capital Growth -->
-      <div class="sc-field-group" [@pv]="PropertyValue!=''?'visible':'hide'">
-        <label class="sc-label">Capital Growth p.a. <span class="sc-req">*</span></label>
-        <div class="sc-input-wrap sc-pct">
-          <input type="text" id="capitalgrowth" autocomplete="off"
+      <!-- Annual Capital Growth -->
+      <div class="cg-field">
+        <div class="cg-label">
+          Annual Capital Growth
+          <span class="cg-hint">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            10yr UK avg: 4.8%
+          </span>
+        </div>
+        <div class="cg-input-wrap">
+          <input class="cg-inp" type="text" id="capitalgrowth" autocomplete="off"
+            placeholder="e.g. 4%"
             (keyup)="capitalgrowth=validation.appendPercent($event,capitalgrowth)"
             (keypress)="validation.DesimalOnly($event,capitalgrowth)"
-            placeholder="e.g. {{PropertyLondon == 1 ? '4%' : '5%'}}"
             [(ngModel)]="capitalgrowth">
-          <span class="sc-tick" *ngIf="capitalgrowth!=''">&#10003;</span>
+          <span class="cg-input-suf">% p.a.</span>
         </div>
       </div>
 
-      <!-- FX Growth -->
-      <div class="sc-field-group" [@cg]="capitalgrowth!=''?'visible':'hide'">
-        <label class="sc-label">FX Growth p.a. <span class="sc-req">*</span></label>
-        <div class="sc-input-wrap sc-pct">
-          <input type="text" id="FXGrowthPA" autocomplete="off"
-            (keyup)="FXGrowthPA=validation.appendPercent($event,FXGrowthPA)"
+      <!-- FX Appreciation -->
+      <div class="cg-field">
+        <div class="cg-label">
+          FX Appreciation
+          <span class="cg-hint">
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            GBP vs home currency
+          </span>
+        </div>
+        <div class="cg-input-wrap">
+          <input class="cg-inp" type="text" id="FXGrowthPA" autocomplete="off"
             placeholder="e.g. 3%"
+            (keyup)="FXGrowthPA=validation.appendPercent($event,FXGrowthPA)"
+            (keypress)="validation.DesimalOnly($event,FXGrowthPA)"
             [(ngModel)]="FXGrowthPA">
-          <span class="sc-tick" *ngIf="FXGrowthPA!=''">&#10003;</span>
+          <span class="cg-input-suf">% p.a.</span>
         </div>
       </div>
 
       <!-- Investment Period -->
-      <div class="sc-field-group" [@FXG]="FXGrowthPA!=''?'visible':'hide'">
-        <label class="sc-label">Investment Period <span class="sc-req">*</span></label>
-        <div class="sc-select-wrap">
-          <select id="investedTenure" [(ngModel)]="investedTenure" class="sc-select">
-            <option value="">Select period</option>
-            <option value="5">5 years</option>
-            <option value="10">10 years</option>
-            <option value="15">15 years</option>
-          </select>
+      <div class="cg-field">
+        <div class="cg-label">Investment Period</div>
+        <div class="cg-pill-row">
+          <button class="cg-pill" [class.cg-pill--active]="investedTenure==='5'"  (click)="investedTenure='5'">5 Yrs</button>
+          <button class="cg-pill" [class.cg-pill--active]="investedTenure==='10'" (click)="investedTenure='10'">10 Yrs</button>
+          <button class="cg-pill" [class.cg-pill--active]="investedTenure==='15'" (click)="investedTenure='15'">15 Yrs</button>
         </div>
       </div>
 
       <!-- Home Currency -->
-      <div class="sc-field-group" [@IT]="investedTenure!=''?'visible':'hide'">
-        <label class="sc-label">Home Currency <span class="sc-req">*</span></label>
-        <div class="sc-select-wrap">
-          <select id="homecurrencyText" [(ngModel)]="homecurrencyText" (change)="homecurrencyChange()" class="sc-select">
-            <option value="">Select currency</option>
-            <option value='INR'>INR</option>
-            <option value='AED'>AED</option>
-            <option value='AFN'>AFN</option>
-            <option value='ALL'>ALL</option>
-            <option value='AMD'>AMD</option>
-            <option value='ANG'>ANG</option>
-            <option value='AOA'>AOA</option>
-            <option value='ARS'>ARS</option>
-            <option value='AUD'>AUD</option>
-            <option value='AWG'>AWG</option>
-            <option value='AZN'>AZN</option>
-            <option value='BAM'>BAM</option>
-            <option value='BBD'>BBD</option>
-            <option value='BDT'>BDT</option>
-            <option value='BGN'>BGN</option>
-            <option value='BHD'>BHD</option>
-            <option value='BIF'>BIF</option>
-            <option value='BMD'>BMD</option>
-            <option value='BND'>BND</option>
-            <option value='BOB'>BOB</option>
-            <option value='BRL'>BRL</option>
-            <option value='BSD'>BSD</option>
-            <option value='BTC'>BTC</option>
-            <option value='BTN'>BTN</option>
-            <option value='BWP'>BWP</option>
-            <option value='BYR'>BYR</option>
-            <option value='BYN'>BYN</option>
-            <option value='BZD'>BZD</option>
-            <option value='CAD'>CAD</option>
-            <option value='CDF'>CDF</option>
-            <option value='CHF'>CHF</option>
-            <option value='CLF'>CLF</option>
-            <option value='CLP'>CLP</option>
-            <option value='CNY'>CNY</option>
-            <option value='COP'>COP</option>
-            <option value='CRC'>CRC</option>
-            <option value='CUC'>CUC</option>
-            <option value='CUP'>CUP</option>
-            <option value='CVE'>CVE</option>
-            <option value='CZK'>CZK</option>
-            <option value='DJF'>DJF</option>
-            <option value='DKK'>DKK</option>
-            <option value='DOP'>DOP</option>
-            <option value='DZD'>DZD</option>
-            <option value='EGP'>EGP</option>
-            <option value='ERN'>ERN</option>
-            <option value='ETB'>ETB</option>
-            <option value='EUR'>EUR</option>
-            <option value='FJD'>FJD</option>
-            <option value='FKP'>FKP</option>
-            <option value='GBP'>GBP</option>
-            <option value='GEL'>GEL</option>
-            <option value='GGP'>GGP</option>
-            <option value='GHS'>GHS</option>
-            <option value='GIP'>GIP</option>
-            <option value='GMD'>GMD</option>
-            <option value='GNF'>GNF</option>
-            <option value='GTQ'>GTQ</option>
-            <option value='GYD'>GYD</option>
-            <option value='HKD'>HKD</option>
-            <option value='HNL'>HNL</option>
-            <option value='HRK'>HRK</option>
-            <option value='HTG'>HTG</option>
-            <option value='HUF'>HUF</option>
-            <option value='IDR'>IDR</option>
-            <option value='ILS'>ILS</option>
-            <option value='IMP'>IMP</option>
-            <option value='IQD'>IQD</option>
-            <option value='IRR'>IRR</option>
-            <option value='ISK'>ISK</option>
-            <option value='JEP'>JEP</option>
-            <option value='JMD'>JMD</option>
-            <option value='JOD'>JOD</option>
-            <option value='JPY'>JPY</option>
-            <option value='KES'>KES</option>
-            <option value='KGS'>KGS</option>
-            <option value='KHR'>KHR</option>
-            <option value='KMF'>KMF</option>
-            <option value='KPW'>KPW</option>
-            <option value='KRW'>KRW</option>
-            <option value='KWD'>KWD</option>
-            <option value='KYD'>KYD</option>
-            <option value='KZT'>KZT</option>
-            <option value='LAK'>LAK</option>
-            <option value='LBP'>LBP</option>
-            <option value='LKR'>LKR</option>
-            <option value='LRD'>LRD</option>
-            <option value='LSL'>LSL</option>
-            <option value='LTL'>LTL</option>
-            <option value='LVL'>LVL</option>
-            <option value='LYD'>LYD</option>
-            <option value='MAD'>MAD</option>
-            <option value='MDL'>MDL</option>
-            <option value='MGA'>MGA</option>
-            <option value='MKD'>MKD</option>
-            <option value='MMK'>MMK</option>
-            <option value='MNT'>MNT</option>
-            <option value='MOP'>MOP</option>
-            <option value='MRO'>MRO</option>
-            <option value='MUR'>MUR</option>
-            <option value='MVR'>MVR</option>
-            <option value='MWK'>MWK</option>
-            <option value='MXN'>MXN</option>
-            <option value='MYR'>MYR</option>
-            <option value='MZN'>MZN</option>
-            <option value='NAD'>NAD</option>
-            <option value='NGN'>NGN</option>
-            <option value='NIO'>NIO</option>
-            <option value='NOK'>NOK</option>
-            <option value='NPR'>NPR</option>
-            <option value='NZD'>NZD</option>
-            <option value='OMR'>OMR</option>
-            <option value='PAB'>PAB</option>
-            <option value='PEN'>PEN</option>
-            <option value='PGK'>PGK</option>
-            <option value='PHP'>PHP</option>
-            <option value='PKR'>PKR</option>
-            <option value='PLN'>PLN</option>
-            <option value='PYG'>PYG</option>
-            <option value='QAR'>QAR</option>
-            <option value='RON'>RON</option>
-            <option value='RSD'>RSD</option>
-            <option value='RUB'>RUB</option>
-            <option value='RWF'>RWF</option>
-            <option value='SAR'>SAR</option>
-            <option value='SBD'>SBD</option>
-            <option value='SCR'>SCR</option>
-            <option value='SDG'>SDG</option>
-            <option value='SEK'>SEK</option>
-            <option value='SGD'>SGD</option>
-            <option value='SHP'>SHP</option>
-            <option value='SLL'>SLL</option>
-            <option value='SOS'>SOS</option>
-            <option value='SRD'>SRD</option>
-            <option value='STD'>STD</option>
-            <option value='SVC'>SVC</option>
-            <option value='SYP'>SYP</option>
-            <option value='SZL'>SZL</option>
-            <option value='THB'>THB</option>
-            <option value='TJS'>TJS</option>
-            <option value='TMT'>TMT</option>
-            <option value='TND'>TND</option>
-            <option value='TOP'>TOP</option>
-            <option value='TRY'>TRY</option>
-            <option value='TTD'>TTD</option>
-            <option value='TWD'>TWD</option>
-            <option value='TZS'>TZS</option>
-            <option value='UAH'>UAH</option>
-            <option value='UGX'>UGX</option>
-            <option value='USD'>USD</option>
-            <option value='UYU'>UYU</option>
-            <option value='UZS'>UZS</option>
-            <option value='VEF'>VEF</option>
-            <option value='VND'>VND</option>
-            <option value='VUV'>VUV</option>
-            <option value='WST'>WST</option>
-            <option value='XAF'>XAF</option>
-            <option value='XAG'>XAG</option>
-            <option value='XAU'>XAU</option>
-            <option value='XCD'>XCD</option>
-            <option value='XDR'>XDR</option>
-            <option value='XOF'>XOF</option>
-            <option value='XPF'>XPF</option>
-            <option value='YER'>YER</option>
-            <option value='ZAR'>ZAR</option>
-            <option value='ZMK'>ZMK</option>
-            <option value='ZMW'>ZMW</option>
-            <option value='ZWL'>ZWL</option>
-          </select>
+      <div class="cg-field">
+        <div class="cg-label">Home Currency</div>
+        <div class="cg-custom-select" [class.cg-custom-select--open]="currencyDropdownOpen">
+          <div class="cg-custom-trigger" (click)="currencyDropdownOpen=!currencyDropdownOpen">
+            <span [class.cg-custom-placeholder]="!homecurrencyText">{{selectedCurrencyName}}</span>
+            <svg class="cg-custom-arrow" width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="cg-custom-dropdown" *ngIf="currencyDropdownOpen">
+            <div class="cg-custom-search-wrap">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              <input class="cg-custom-search" type="text" placeholder="Search currency..." [(ngModel)]="currencySearch" (click)="$event.stopPropagation()" autocomplete="off">
+            </div>
+            <div class="cg-custom-list">
+              <div *ngFor="let c of filteredCurrencies"
+                class="cg-custom-option"
+                [class.cg-custom-option--selected]="c.code===homecurrencyText"
+                (click)="selectCurrency(c.code)">
+                {{c.name}}
+              </div>
+              <div *ngIf="filteredCurrencies.length===0" class="cg-custom-empty">No results</div>
+            </div>
+          </div>
         </div>
       </div>
 
-      <!-- Home Currency Value (shown when currency selected) -->
-      <div class="sc-field-group" *ngIf="homecurrencyText!==''">
-        <label class="sc-label">Exchange Rate ({{homecurrencyText}} per £1) <span class="sc-req">*</span></label>
-        <div class="sc-input-wrap">
-          <input type="text" id="homecurrencyvalue" autocomplete="off"
-            (keypress)="validation.DesimalOnly($event,homecurrency)"
-            placeholder="Home currency value"
-            [(ngModel)]="homecurrency">
-          <span class="sc-tick" *ngIf="homecurrency!=''">&#10003;</span>
+
+      <!-- Live Summary Cards -->
+      <div class="cg-summary-row" *ngIf="previewExitGBP">
+        <div class="cg-summary-card">
+          <div class="cg-summary-lbl">Current Value</div>
+          <div class="cg-summary-val">£ {{previewCurrentGBP | number:'1.0-0'}}</div>
+          <div class="cg-summary-sub">{{previewCurrentHomeCr}}</div>
+        </div>
+        <div class="cg-summary-card">
+          <div class="cg-summary-lbl">Exit Value ({{investedTenure}}yr)</div>
+          <div class="cg-summary-val">£ {{previewExitGBP | number:'1.0-0'}}</div>
+          <div class="cg-summary-sub">{{previewExitHomeCr}}</div>
+        </div>
+        <div class="cg-summary-card">
+          <div class="cg-summary-lbl">Total {{homecurrencyText}} Growth</div>
+          <div class="cg-summary-val cg-summary-val--green">{{previewTotalReturn}}%</div>
         </div>
       </div>
 
-      <!-- Calculate button -->
-      <div class="sc-actions" *ngIf="homecurrencyText!==''">
-        <button class="sc-calc-btn" type="button" (click)="next()">
-          Calculate
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-        </button>
+      <!-- Actions -->
+      <div class="cg-actions">
+        <a [routerLink]="['/capital-growth-calculator/step1']" class="cg-btn-back">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back
+        </a>
+        <button class="cg-btn-continue" (click)="next()">Calculate Returns</button>
       </div>
 
     </div>
   </div>
+
 </div>

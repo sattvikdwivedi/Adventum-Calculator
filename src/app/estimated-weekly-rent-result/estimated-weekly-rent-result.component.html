@@ -1,234 +1,203 @@
-<div class="container" id="contentToConvert" style="margin-top: 100px;"> 
-<div class="row mt-30">
-    <div class="col-md-6 col-6">
-        <img src="./assets/estimated-breadcrumb.svg" class="wd125">
-    </div>
-    <div class="col-md-6 col-6 bread-p text-right">
-        <p class="mb-1">Estimated Weekly Rent</p>
-        <p class="mb-0">{{validation.getCurrentDateWithSpecificFormat()}}</p>
-    </div> 
-</div>
-<div class="row mt-3 plr-1"  id="secondMain">
-    <div class="mapcontainer">
-        <app-googlemap [MapClassLoad]="MapLoad" [latitude]="lat" [longitude]="long"></app-googlemap>
-    </div>
-  </div>
-<div class="row mt-30">
-    <div class="col-md-6 col-lg-6">
-        
-        <app-calculatordetails [coldesign]="12"></app-calculatordetails>
+<div class="ewr-results" id="contentToConvert">
 
-    <div class="row text-right noprint">
-        <div class="col-md-12">
-        <!-- 	<button type="submit" class="btn btn-default submit-btn text-right"><img src="assets/img/save-report1.svg"> Save Reports</button> -->
-            <button type="submit" class="btn btn-default submit-btn text-right" (click)="startagain()"> <img src="./assets/recalculate1.svg">  Recalculate</button>
+  <!-- ══ HEADER ══ -->
+  <div class="ewr-rp-header">
+    <div class="ewr-rp-header-top">
+      <div class="ewr-rp-title-row">
+        <div class="ewr-rp-bar"></div>
+        <div>
+          <h1 class="ewr-rp-title">Results</h1>
+          <p class="ewr-rp-sub">The results calculated according to the values entered.</p>
         </div>
-    </div>
-</div>
-<div class="col-md-6 col-lg-6">
-    <div class="progress-box">
-        <h4>Estimated Weekly Rent</h4>
-        <p>Targeted Weekly Rent : {{calculatedWeeklyRent|currency:"GBP": 'symbol' : '1.0-0'}} 
-            (<span *ngIf="calcData.homecurrencyText=='INR'">&nbsp;₹{{validation.amountWithLakhComma(HomeCurrency |number:'1.0-0')}}</span>
-			<span *ngIf="calcData.homecurrencyText!='INR'">&nbsp;{{HomeCurrency |currency:calcData.homecurrencyText: 'symbol' : '1.0-0' }}</span>)
-        </p>
-        <p>Targeted Annual Rent : {{calculatedWeeklyRent*52|currency:"GBP": 'symbol' : '1.0-0'}}
-            (<span *ngIf="calcData.homecurrencyText=='INR'">&nbsp;₹{{validation.amountWithLakhComma(HomeCurrency*52 |number:'1.0-0')}}</span>
-			<span *ngIf="calcData.homecurrencyText!='INR'">&nbsp;{{HomeCurrency*52 |currency:calcData.homecurrencyText: 'symbol' : '1.0-0' }}</span>)
-        </p>
-        <!-- <p>For rental yield of {{RentalYieldValue}}% per annum</p>
-
-        <p>you must achieve {{calculatedWeeklyRent|currency:"GBP": 'symbol' : '1.0-0'}} per week equating to {{calculatedWeeklyRent*52|currency:"GBP": 'symbol' : '1.0-0'}} per annum</p>
-
-        <p>you must achieve 
-            <span *ngIf="calcData.homecurrencyText=='INR'">&nbsp;₹{{validation.amountWithLakhComma(HomeCurrency |number:'1.0-0')}}</span>
-			<span *ngIf="calcData.homecurrencyText!='INR'">&nbsp;{{HomeCurrency |currency:calcData.homecurrencyText: 'symbol' : '1.0-0' }}</span>
-             per week equating to 
-             <span *ngIf="calcData.homecurrencyText=='INR'">&nbsp;₹{{validation.amountWithLakhComma(HomeCurrency*52 |number:'1.0-0')}}</span>
-			<span *ngIf="calcData.homecurrencyText!='INR'">&nbsp;{{HomeCurrency*52 |currency:calcData.homecurrencyText: 'symbol' : '1.0-0' }}</span>
-             per annum
-        </p> -->
-
-        <!-- <p>you must achieve 
-            <span class="thm-black-bold-text">{{calculatedWeeklyRent|currency:"GBP": 'symbol' : '1.0-0'}}</span>
-            <span class="thm-black-bold-text" *ngIf="calcData.homecurrencyText=='INR'">&nbsp;(₹{{validation.amountWithLakhComma(HomeCurrency |number:'1.0-0')}})</span>
-			<span class="thm-black-bold-text" *ngIf="calcData.homecurrencyText!='INR'">&nbsp;({{HomeCurrency |currency:calcData.homecurrencyText: 'symbol' : '1.0-0' }})</span>
-            per week
-        </p>
-        <p>equating to 
-            <span class="thm-black-bold-text">{{calculatedWeeklyRent*52|currency:"GBP": 'symbol' : '1.0-0'}}</span>
-            <span class="thm-black-bold-text" *ngIf="calcData.homecurrencyText=='INR'">&nbsp;(₹{{validation.amountWithLakhComma(HomeCurrency*52 |number:'1.0-0')}})</span>
-			<span class="thm-black-bold-text" *ngIf="calcData.homecurrencyText!='INR'">&nbsp;({{HomeCurrency*52 |currency:calcData.homecurrencyText: 'symbol' : '1.0-0' }})</span>
-            per annum
-        </p> -->
-        <!-- <p>Weekly rent for your investment of {{GBPValue|currency:"GBP"}} with {{RentalYieldValue}}% Rental Yield is </p>
-        <h4>{{calculatedWeeklyRent|currency:"GBP"}}</h4>
-        <h4 *ngIf="calcData.homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(HomeCurrency |number:'1.0-2')}}</h4>
-        <h4 *ngIf="calcData.homecurrencyText!='INR'">{{HomeCurrency |currency:calcData.homecurrencyText}}</h4> -->
-    </div>
-</div>
-
-</div>
-<!-- <div class="row mt-15 mb-15">
-    <div class="col-md-12">
-           
-        <div class="progress-box m-box">
-            <h4 class="hidden-xs" style="margin-bottom: 30px;">Estimated Weekly Rent</h4>
-            <div style="width:100%;">
-                <div class="chartjs-size-monitor">
-                    <div class="chartjs-size-monitor-expand">
-                        <div class=""></div>
-                    </div>
-                    <div class="chartjs-size-monitor-shrink">
-                        <div class=""></div>
-                    </div>
-                </div>
-                <canvas id="canvas" style="display: block; width: 1379px; height: 689px;" width="1379" height="689" class="chartjs-render-monitor"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row mt-30">
-    <div class="col-md-12 col-lg-6">
-           
-        <div class="progress-box  only-title  hidden-xs" style="background-color: transparent;">
-            <h4  class="hidden-xs">Here's Your IRR <span>(Internal Rate of Return)</span></h4>
-        </div>
-    </div>
-    <div class="col-md-12 col-lg-6">
-        <div class="progress-box piediagram" style="background-color: transparent; padding-top: 10px; padding-bottom: 10px;">
-           
-            <div class="demo">
-                <svg class="progress" width="200" height="200" viewBox="0 0 200 200">
-                    <defs>
-                        <linearGradient id="linearColors" x1="1" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stop-color="#fff"></stop>
-                            <stop offset="25%" stop-color="#f7f7f7"></stop>
-                            <stop offset="40%" stop-color="#b3b9e2"></stop>
-                            <stop offset="60%" stop-color="#b3b9e2"></stop>
-                            <stop offset="80%" stop-color="#5a52a5"></stop>
-                            <stop offset="100%" stop-color="#5a52a5"></stop>
-                        </linearGradient>
-                    </defs>
-                    <circle class="progress__meter" cx="100" cy="100" r="84" stroke-width="15" />
-                    <circle class="progress__value" cx="100" cy="100" r="84" stroke-width="15" stroke="url(#linearColors)" />
-                </svg>
-                <h2 class="display-value">60% <span class="prg">Progress</span></h2>
-                <input id="control" type="range" value="60" style="visibility: hidden;" />
-                <h5>GBP ($) <span class="curr-text">British Pound</span></h5>
-            </div>
-
-            <div class="demo">
-                <svg class="progress" width="200" height="200" viewBox="0 0 200 200">
-                    <defs>
-                        <linearGradient id="linearColors1" x1="1" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stop-color="#fff"></stop>
-                            <stop offset="25%" stop-color="#f7f7f7"></stop>
-                            <stop offset="40%" stop-color="#bcf3cf"></stop>
-                            <stop offset="60%" stop-color="#bcf3cf"></stop>
-                            <stop offset="80%" stop-color="#2bba5a"></stop>
-                            <stop offset="100%" stop-color="#2bba5a"></stop>
-                        </linearGradient>
-                    </defs>
-                    <circle class="progress__meter1" cx="100" cy="100" r="84" stroke-width="15" />
-                    <circle class="progress__value1" cx="100" cy="100" r="84" stroke-width="15" stroke="url(#linearColors1)" />
-                </svg>
-                <h2 class="display-value">60% <span class="prg">Progress</span></h2>
-                <input id="control1" class="input2" type="range" value="60" style="visibility: hidden;" />
-                <h5>INR (₹) <span class="curr-text nat-rup" style="left: 12%;">Indian National Rupee</span></h5>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row mt-30 mb-15">
-    <div class="col-md-12">
-           
-        <div class="progress-box m-box">
-            <h4 class="hidden-xs" style="margin-bottom: 30px;">Yearly IRR <span>(Internal Rate of Return)</span></h4>
-            <div style="width:100%;">
-                <div class="chartjs-size-monitor">
-                    <div class="chartjs-size-monitor-expand">
-                        <div class=""></div>
-                    </div>
-                    <div class="chartjs-size-monitor-shrink">
-                        <div class=""></div>
-                    </div>
-                </div>
-                <canvas id="canvas2" style="display: block; width: 1379px; height: 689px;" width="1379" height="689" class="chartjs-render-monitor"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-12 col-lg-3 offset-lg-2 mob-center text-center">
-            <button type="submit" class="btn btn-default report-btn text-right"><img src="./assets/save-report1.svg"> Save Report</button>
-            
-        </div>
-        <div class="col-md-7 col-lg-3 mob-center text-center">
-            <button type="submit" class="btn btn-default report-btn text-right"><img src="./assets/download-cursor1.svg"> Download Report</button>
-           
-        </div>
-        <div class="col-md-5 col-lg-3 mob-center text-center">
-       
-            <button type="submit" class="btn btn-default report-btn text-right"><img src="./assets/share-report1.svg">Share Report</button>
-        </div>
-
-
-
-</div> -->
-<div class="row noprint" id="buttonsrow" style="justify-content:center;padding-top:30px;">
-    <div class="col-md-6 col-lg-3 mob-center text-right">
-        <button *ngIf="loadingPrintbtn" type="submit" class="btn btn-default report-btn text-right"><i class="fa fa-spin fa-spinner"></i>
-            Please Wait...</button>
-        <button *ngIf="!loadingPrintbtn" type="submit" class="btn btn-default report-btn text-right" (click)="printScreen()"><img src="./assets/save-report1.svg">
-            Print Report</button>
-    </div>
-    <div class="col-md-7 col-lg-3 mob-center text-center" id="downloadreportdiv" style="display:none;">
-        <button *ngIf="loadingDownloadbtn" type="submit" class="btn btn-default report-btn text-right"><i class="fa fa-spin fa-spinner"></i>
-            Please Wait...</button>
-        <button *ngIf="!loadingDownloadbtn" type="submit" class="btn btn-default report-btn text-right" (click)="convetToPDF()"><img
-                src="./assets/download-cursor1.svg"> Download Report</button>
-    </div>
-    <div class="col-md-6 col-lg-3 mob-center text-left">
-        <button *ngIf="loadingSharebtn" type="submit" class="btn btn-default report-btn text-right"><i class="fa fa-spin fa-spinner"></i>
-            Please Wait...</button>
-        <button *ngIf="!loadingSharebtn" type="submit" class="btn btn-default report-btn text-right" (click)="emailpopup()"><img
-                src="./assets/share-report1.svg">Share Report</button>
-    </div>
-</div>
-</div>
-
-
-<div class="modal fade noprint" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content" style="top: 100px;">
-  
-        <!-- Modal Header -->
-        <div class="modal-header" style="border-bottom:0px;padding-bottom:0px">
-          <h5 class="modal-title" style="color:#1d1751;padding-left:12px;">Share Report</h5>
-          <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-        </div>
-  
-        <!-- Modal body -->
-        <div class="modal-body" style="padding-top: 20px;padding-bottom:5px;">
-            <div class="form-group col-md-12">
-                <label style="color:#444854;font-size:14px;">Enter email ids of recipients</label>
-                <input type="email" class="form-control" id="email" placeholder="example : joe@gmail.com,mark@gmail.com" name="email" [(ngModel)]="Email" autocomplete="off"  style="height:45px !important;">
-            </div>
-        </div>
-  
-        <!-- Modal footer -->
-        <div class="modal-footer" style="border-top: 0px;padding-top: 0px;padding-bottom: 8px;">
-            <div  style="width:100%;display:flex;justify-content:center;">
-               
-                <button *ngIf="loadingSharebtn" type="submit" class="btn modal-btn"><i class="fa fa-spin fa-spinner"></i>
-                    Please Wait...</button>
-                <button *ngIf="!loadingSharebtn" type="submit" class="btn modal-btn" (click)=" shareReport()">Send</button>
-                <button type="button" class="btn modal-cancel-btn" id="cancelbtn" (click)="cancel()">Cancel</button>
-            </div>
-        
-        </div>
-  
+      </div>
+      <div class="ewr-rp-btns noprint">
+        <a [routerLink]="['/estimated-weekly-rent-calculator/question']" class="ewr-rp-btn-sm">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back
+        </a>
+        <button class="ewr-rp-btn-sm" (click)="emailpopup()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          Share
+        </button>
+        <button class="ewr-rp-btn-green" (click)="startagain()">Recalculate</button>
       </div>
     </div>
   </div>
+
+  <!-- ══ KPI CARDS — 3 columns ══ -->
+  <div class="ewr-rp-kpi-row">
+
+    <!-- Annual Rent -->
+    <div class="ewr-rp-kpi ewr-rp-kpi--feat">
+      <div class="ewr-rp-kpi-lbl">Annual Rent</div>
+      <div class="ewr-rp-kpi-icon" style="background:rgba(59,130,246,0.15)">
+        <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+          <rect x="6"  y="28" width="8" height="14" rx="2" fill="#4a85c8" opacity="0.6"/>
+          <rect x="20" y="18" width="8" height="24" rx="2" fill="#5a95d8" opacity="0.75"/>
+          <rect x="34" y="10" width="8" height="32" rx="2" fill="#6ba5e8"/>
+        </svg>
+      </div>
+      <div class="ewr-rp-kpi-val">£{{annualGBP | number:'1.0-0'}}</div>
+      <div class="ewr-rp-kpi-note">
+        <span *ngIf="homeCurrencyCode==='INR'">₹{{annualHomeFmt}}</span>
+        <span *ngIf="homeCurrencyCode && homeCurrencyCode!=='INR'">{{homeCurrencyCode}} {{annualHome | number:'1.0-0'}}</span>
+      </div>
+    </div>
+
+    <!-- Weekly Rent -->
+    <div class="ewr-rp-kpi">
+      <div class="ewr-rp-kpi-lbl">Weekly Rent</div>
+      <div class="ewr-rp-kpi-icon" style="background:rgba(34,197,94,0.1)">
+        <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+          <path d="M8 22L24 8l16 14v20H8V22z" stroke="#22c55e" stroke-width="2.5" fill="rgba(34,197,94,0.15)" stroke-linejoin="round"/>
+          <path d="M18 42V30h12v12" stroke="#22c55e" stroke-width="2.5" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="ewr-rp-kpi-val">£{{weeklyGBP | number:'1.0-0'}}</div>
+      <div class="ewr-rp-kpi-note">
+        <span *ngIf="homeCurrencyCode==='INR'">₹{{weeklyHomeFmt}}</span>
+        <span *ngIf="homeCurrencyCode && homeCurrencyCode!=='INR'">{{homeCurrencyCode}} {{weeklyHome | number:'1.0-0'}}</span>
+      </div>
+    </div>
+
+    <!-- Monthly Rent -->
+    <div class="ewr-rp-kpi">
+      <div class="ewr-rp-kpi-lbl">Monthly Rent</div>
+      <div class="ewr-rp-kpi-icon" style="background:rgba(34,197,94,0.1)">
+        <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+          <path d="M8 20L24 6l16 14v22H8V20z" stroke="#22c55e" stroke-width="2.5" fill="rgba(34,197,94,0.15)" stroke-linejoin="round"/>
+          <rect x="16" y="28" width="6" height="6" rx="1" fill="#22c55e" opacity="0.6"/>
+          <rect x="26" y="28" width="6" height="6" rx="1" fill="#22c55e" opacity="0.6"/>
+        </svg>
+      </div>
+      <div class="ewr-rp-kpi-val">£{{monthlyGBP | number:'1.0-0'}}</div>
+      <div class="ewr-rp-kpi-note">
+        <span *ngIf="homeCurrencyCode==='INR'">₹{{monthlyHomeFmt}}</span>
+        <span *ngIf="homeCurrencyCode && homeCurrencyCode!=='INR'">{{homeCurrencyCode}} {{monthlyHome | number:'1.0-0'}}</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ BODY ══ -->
+  <div class="ewr-rp-body">
+
+    <!-- Assumptions -->
+    <div class="ewr-rp-card">
+      <div class="ewr-rp-card-title">Your Assumptions</div>
+      <div class="ewr-rp-card-sub">All assumptions used in this calculation</div>
+      <div class="ewr-arow">
+        <span class="ewr-arow-lbl">Property Value</span>
+        <span class="ewr-arow-val">£{{calcData?.PropertyValue | number:'1.0-0'}}</span>
+      </div>
+      <div class="ewr-arow">
+        <span class="ewr-arow-lbl">Home Currency</span>
+        <span class="ewr-arow-val">{{calcData?.homecurrencyText || '—'}}</span>
+      </div>
+      <div class="ewr-arow">
+        <span class="ewr-arow-lbl">Rental Yield</span>
+        <span class="ewr-arow-val">{{calcData?.rentalYeild | number:'1.2-2'}}%</span>
+      </div>
+      <div class="ewr-arow">
+        <span class="ewr-arow-lbl">FX Rate (1 GBP)</span>
+        <span class="ewr-arow-val">{{calcData?.homecurrency || '—'}} {{calcData?.homecurrencyText}}</span>
+      </div>
+    </div>
+
+    <!-- Breakdown: GBP + Home Currency side by side -->
+    <div class="ewr-rp-card">
+      <div class="ewr-rp-card-title">Breakdown</div>
+      <div class="ewr-breakdown-grid">
+        <!-- GBP column -->
+        <div class="ewr-breakdown-col">
+          <div class="ewr-breakdown-col-header">GBP</div>
+          <div class="ewr-brow">
+            <span class="ewr-brow-lbl">Annual Rent</span>
+            <span class="ewr-brow-val">£{{annualGBP | number:'1.0-0'}}</span>
+          </div>
+          <div class="ewr-brow">
+            <span class="ewr-brow-lbl">Monthly Rent</span>
+            <span class="ewr-brow-val">£{{monthlyGBP | number:'1.0-0'}}</span>
+          </div>
+          <div class="ewr-brow">
+            <span class="ewr-brow-lbl">Weekly Rent</span>
+            <span class="ewr-brow-val">£{{weeklyGBP | number:'1.0-0'}}</span>
+          </div>
+          <div class="ewr-brow">
+            <span class="ewr-brow-lbl">Gross Yield</span>
+            <span class="ewr-brow-val">{{grossYield | number:'1.2-2'}}%</span>
+          </div>
+        </div>
+        <!-- Home currency column -->
+        <div class="ewr-breakdown-col" *ngIf="homeCurrencyCode">
+          <div class="ewr-breakdown-col-header">{{homeCurrencyCode}}</div>
+          <div class="ewr-brow">
+            <span class="ewr-brow-lbl">Annual Rent</span>
+            <span class="ewr-brow-val">
+              <span *ngIf="homeCurrencyCode==='INR'">₹{{annualHomeFmt}}</span>
+              <span *ngIf="homeCurrencyCode!=='INR'">{{annualHome | number:'1.0-0'}}</span>
+            </span>
+          </div>
+          <div class="ewr-brow">
+            <span class="ewr-brow-lbl">Monthly Rent</span>
+            <span class="ewr-brow-val">
+              <span *ngIf="homeCurrencyCode==='INR'">₹{{monthlyHomeFmt}}</span>
+              <span *ngIf="homeCurrencyCode!=='INR'">{{monthlyHome | number:'1.0-0'}}</span>
+            </span>
+          </div>
+          <div class="ewr-brow">
+            <span class="ewr-brow-lbl">Weekly Rent</span>
+            <span class="ewr-brow-val">
+              <span *ngIf="homeCurrencyCode==='INR'">₹{{weeklyHomeFmt}}</span>
+              <span *ngIf="homeCurrencyCode!=='INR'">{{weeklyHome | number:'1.0-0'}}</span>
+            </span>
+          </div>
+          <div class="ewr-brow">
+            <span class="ewr-brow-lbl">FX Rate</span>
+            <span class="ewr-brow-val">1 GBP = {{calcData?.homecurrency}} {{homeCurrencyCode}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ══ STICKY FOOTER ══ -->
+  <div class="ewr-rp-footer noprint">
+    <a [routerLink]="['/estimated-weekly-rent-calculator/question']" class="ewr-rfb ewr-rfb--back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back
+    </a>
+    <button class="ewr-rfb ewr-rfb--share" (click)="emailpopup()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+      Share
+    </button>
+    <button class="ewr-rfb ewr-rfb--recalc" (click)="startagain()">Recalculate</button>
+  </div>
+
+</div>
+
+
+<!-- Share Modal -->
+<div class="modal fade noprint" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content" style="top:100px;">
+      <div class="modal-header" style="border-bottom:0;padding-bottom:0">
+        <h5 class="modal-title" style="color:#1d1751;padding-left:12px;">Share Report</h5>
+      </div>
+      <div class="modal-body" style="padding-top:20px;padding-bottom:5px;">
+        <div class="form-group col-md-12">
+          <label style="color:#444854;font-size:14px;">Enter email ids of recipients</label>
+          <input type="email" class="form-control" id="email" placeholder="example: joe@gmail.com,mark@gmail.com" name="email" [(ngModel)]="Email" autocomplete="off" style="height:45px !important;">
+        </div>
+      </div>
+      <div class="modal-footer" style="border-top:0;padding-top:0;padding-bottom:8px;">
+        <div style="width:100%;display:flex;justify-content:center;">
+          <button *ngIf="loadingSharebtn" type="submit" class="btn modal-btn"><i class="fa fa-spin fa-spinner"></i> Please Wait...</button>
+          <button *ngIf="!loadingSharebtn" type="submit" class="btn modal-btn" (click)="shareReport()">Send</button>
+          <button type="button" class="btn modal-cancel-btn" id="cancelbtn" (click)="cancel()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

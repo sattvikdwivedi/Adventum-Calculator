@@ -19,6 +19,29 @@ export class EstimatedWeeklyRentResultComponent implements OnInit,AfterViewInit 
   long :number=0;
   calcData: any;
   GBPValue='';
+
+  // Computed display values
+  get weeklyGBP(): number { return this.calculatedWeeklyRent || 0; }
+  get monthlyGBP(): number { return parseFloat((this.weeklyGBP * 52 / 12).toFixed(0)); }
+  get annualGBP(): number { return parseFloat((this.weeklyGBP * 52).toFixed(0)); }
+  get grossYield(): number {
+    const pv = parseFloat(this.calcData?.PropertyValue);
+    if (!pv || !this.annualGBP) return 0;
+    return parseFloat(((this.annualGBP / pv) * 100).toFixed(2));
+  }
+  get homeCurrencyCode(): string { return this.calcData?.homecurrencyText || ''; }
+  get fxRate(): number { return parseFloat(this.calcData?.homecurrency) || 0; }
+  get weeklyHome(): number { return Math.round(this.weeklyGBP * this.fxRate); }
+  get monthlyHome(): number { return Math.round(this.monthlyGBP * this.fxRate); }
+  get annualHome(): number { return Math.round(this.annualGBP * this.fxRate); }
+  private fmtINR(v: number): string {
+    if (v >= 10000000) return (v / 10000000).toFixed(2) + ' Cr';
+    if (v >= 100000)   return (v / 100000).toFixed(2) + ' L';
+    return this.validation.amountWithLakhComma(v.toString());
+  }
+  get weeklyHomeFmt(): string { return this.fmtINR(this.weeklyHome); }
+  get monthlyHomeFmt(): string { return this.fmtINR(this.monthlyHome); }
+  get annualHomeFmt(): string { return this.fmtINR(this.annualHome); }
   HomeCurrency:number=0;
   RentalYieldValue='';
   loadingPrintbtn=false;
@@ -29,6 +52,7 @@ export class EstimatedWeeklyRentResultComponent implements OnInit,AfterViewInit 
               public validation: ValidationService) { }
 
   ngOnInit(): void {
+    window.scrollTo(0, 0);
     this.calcData = JSON.parse(localStorage.getItem('calcData'));
     this.GBPValue=this.calcData.PropertyValue;
     this.RentalYieldValue=this.calcData.rentalYeild;

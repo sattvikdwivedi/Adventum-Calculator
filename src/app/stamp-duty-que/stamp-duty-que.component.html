@@ -1,96 +1,141 @@
-<!-- Stamp Duty Calculator - New UI -->
-<div class="sc-page">
-  <!-- Left Hero Panel -->
-  <div class="sc-hero">
-    <div class="sc-hero-inner">
-      <img src="./assets/stamp-breadcrumb.svg" alt="Stamp Duty" class="sc-logo">
-      <div class="sc-badge">Stamp Duty Calculator</div>
-      <h1 class="sc-title">Calculate Your <br><span class="sc-accent">Stamp Duty</span></h1>
-      <p class="sc-sub">Instantly calculate SDLT based on your property type, residency status, and purchase price.</p>
-      <div class="sc-preview-grid" *ngIf="PropertyValue!='' || PurchaseType!='' || foreignbuyer!=''">
-        <div class="sc-preview-item" *ngIf="PropertyValue!=''">
-          <span class="sc-preview-label">Property Value</span>
-          <span class="sc-preview-val">£{{PropertyValue}}</span>
+<!-- Stamp Duty Calculator -->
+<div class="sdlt-page">
+
+  <!-- ══ LEFT PANEL ══ -->
+  <div class="sdlt-panel-left">
+    <div class="sdlt-panel-left-photo"></div>
+    <div class="sdlt-panel-left-overlay"></div>
+    <div class="sdlt-panel-left-inner">
+
+      <div class="sdlt-logo-wrap">
+        <div class="sdlt-logo-mark">
+          <svg width="24" height="24" viewBox="0 0 32 32" fill="none">
+            <path d="M16 4L28 26H4L16 4Z" stroke="rgba(255,255,255,0.9)" stroke-width="1.5" fill="none"/>
+            <path d="M16 13L21 22H11L16 13Z" fill="rgba(59,130,246,0.9)"/>
+          </svg>
+          AD<span class="sdlt-logo-blue">V</span>ENTUM
         </div>
-        <div class="sc-preview-item" *ngIf="PurchaseType!=''">
-          <span class="sc-preview-label">Purchase Type</span>
-          <span class="sc-preview-val">{{PurchaseType | titlecase}}</span>
-        </div>
-        <div class="sc-preview-item" *ngIf="foreignbuyer!=''">
-          <span class="sc-preview-label">Foreign Buyer</span>
-          <span class="sc-preview-val">{{foreignbuyer=='1'?'Yes':'No'}}</span>
+        <span class="sdlt-logo-sub">Calculators</span>
+      </div>
+
+      <!-- Live SDLT card -->
+      <div class="sdlt-card">
+        <h3 class="sdlt-card-title"><strong>Stamp Duty</strong> Estimate</h3>
+        <p class="sdlt-card-sub">Live SDLT calculation as you enter details.</p>
+        <div class="sdlt-stats">
+          <div class="sdlt-stat">
+            <div class="sdlt-stat-lbl">Property Price</div>
+            <div class="sdlt-stat-val">£{{PropertyValue || '0'}}</div>
+          </div>
+          <div class="sdlt-stat sdlt-stat--green">
+            <div class="sdlt-stat-lbl">Total SDLT</div>
+            <div class="sdlt-stat-val">£{{liveSdlt | number:'1.0-0'}}</div>
+          </div>
+          <div class="sdlt-stat">
+            <div class="sdlt-stat-lbl">Effective Rate</div>
+            <div class="sdlt-stat-val">{{liveRate | number:'1.2-2'}}%</div>
+          </div>
+          <div class="sdlt-stat sdlt-stat--green">
+            <div class="sdlt-stat-lbl">Foreign Surcharge</div>
+            <div class="sdlt-stat-val">£{{liveForeignSurcharge | number:'1.0-0'}}</div>
+          </div>
         </div>
       </div>
+
     </div>
   </div>
 
-  <!-- Right Form Panel -->
-  <div class="sc-form-panel">
-    <div class="sc-form-inner">
-      <!-- Header -->
-      <div class="sc-form-header">
-        <a [routerLink]="['/step1']" class="sc-back">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
-          Back
+  <!-- ══ RIGHT PANEL ══ -->
+  <div class="sdlt-panel-right">
+    <div class="sdlt-panel-right-inner">
+
+      <!-- Topbar -->
+      <div class="sdlt-topbar">
+        <a [routerLink]="['/stamp-duty-calculator/step1']" class="sdlt-back-circle">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         </a>
-        <span class="sc-date">{{validation.getCurrentDateWithSpecificFormat()}}</span>
+        <div class="sdlt-location-pill">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          {{locationName}}
+        </div>
       </div>
 
-      <!-- Progress -->
-      <div class="sc-progress-wrap">
-        <progress-bar [progress]="20+(PropertyValue!=''?40:0)+(PurchaseType!=''?20:0)+(foreignbuyer!=''?20:0)" [color]="'#3b82f6'"></progress-bar>
-        <span class="sc-progress-pct">{{20+(PropertyValue!=''?40:0)+(PurchaseType!=''?20:0)+(foreignbuyer!=''?20:0)|number:'1.0-0'}}% complete</span>
-      </div>
+      <!-- Heading -->
+      <h1 class="sdlt-title">Stamp Duty Calculator</h1>
+      <p class="sdlt-subtitle">Calculate UK SDLT based on property value, purchase type, and residency status.</p>
 
-      <h2 class="sc-form-title">Property Details</h2>
+      <div class="sdlt-sec-label">Your Situation</div>
 
       <!-- Property Value -->
-      <div class="sc-field-group">
-        <label class="sc-label">Property Value <span class="sc-req">*</span></label>
-        <div class="sc-input-wrap sc-gbp">
-          <input type="text" id="PropertyValue" autocomplete="off"
-            (keyup)="PropertyValue=validation.amountWithComma(PropertyValue)"
+      <div class="sdlt-field">
+        <div class="sdlt-label-row">
+          <div class="sdlt-label">Property Value</div>
+          <div class="sdlt-market-badge">&#9733; UK market average: £280k</div>
+        </div>
+        <div class="sdlt-input-wrap">
+          <span class="sdlt-input-pre">£</span>
+          <input class="sdlt-inp" type="text" id="PropertyValue" autocomplete="off"
+            placeholder="e.g. 400,000"
+            (keyup)="PropertyValue=validation.amountWithComma(PropertyValue); calcLive()"
             (keypress)="validation.numberOnly($event)"
-            placeholder="Enter property value"
             [(ngModel)]="PropertyValue">
-          <span class="sc-tick" *ngIf="PropertyValue!=''">&#10003;</span>
         </div>
       </div>
 
       <!-- Purchase Type -->
-      <div class="sc-field-group" [@pv]="PropertyValue!=''?'visible':'hide'">
-        <label class="sc-label">Purchase Type <span class="sc-req">*</span></label>
-        <div class="sc-select-wrap">
-          <select id="PurchaseType" [(ngModel)]="PurchaseType" class="sc-select">
-            <option value="">Select purchase type</option>
-            <option value="investment">Investment property</option>
-            <option value="primary">Primary residence</option>
-            <option value="first_time">First-time buyer</option>
-            <option value="non_resi">Non-residential</option>
-          </select>
+      <div class="sdlt-field">
+        <div class="sdlt-label">Purchase Type</div>
+        <div class="sdlt-custom-select" [class.sdlt-custom-select--open]="purchaseDropdownOpen">
+          <div class="sdlt-custom-trigger" (click)="purchaseDropdownOpen=!purchaseDropdownOpen">
+            <span [class.sdlt-custom-placeholder]="!PurchaseType">{{selectedPurchaseName}}</span>
+            <svg class="sdlt-custom-arrow" width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round"/></svg>
+          </div>
+          <div class="sdlt-custom-dropdown" *ngIf="purchaseDropdownOpen">
+            <div class="sdlt-custom-list">
+              <div *ngFor="let p of purchaseTypes"
+                class="sdlt-custom-option"
+                [class.sdlt-custom-option--selected]="p.value===PurchaseType"
+                (click)="selectPurchaseType(p.value)">
+                <div class="sdlt-pto-name">{{p.label}}</div>
+                <div class="sdlt-pto-desc">{{p.desc}}</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- Foreign Buyer -->
-      <div class="sc-field-group" [@fb]="PurchaseType!='' && PropertyValue!=''?'visible':'hide'">
-        <label class="sc-label">Are You a Foreign Buyer? <span class="sc-req">*</span></label>
-        <div class="sc-select-wrap">
-          <select id="foreignbuyer" [(ngModel)]="foreignbuyer" class="sc-select">
-            <option value="">Select</option>
-            <option value="1">Yes</option>
-            <option value="0">No</option>
-          </select>
+      <div class="sdlt-field">
+        <div class="sdlt-label">Foreign Buyer ?</div>
+        <div class="sdlt-toggle-row">
+          <button class="sdlt-toggle-btn" [class.sdlt-toggle-btn--active]="foreignbuyer==='1'" (click)="foreignbuyer='1'; calcLive()">Yes</button>
+          <button class="sdlt-toggle-btn" [class.sdlt-toggle-btn--active]="foreignbuyer==='0'" (click)="foreignbuyer='0'; calcLive()">No</button>
         </div>
       </div>
 
-      <!-- Calculate button -->
-      <div class="sc-actions" *ngIf="PurchaseType!=''">
-        <button class="sc-calc-btn" type="button" (click)="next()">
-          Calculate Stamp Duty
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-        </button>
+      <!-- Live Preview -->
+      <div class="sdlt-preview-row" *ngIf="PropertyValue && PurchaseType">
+        <div class="sdlt-preview-box sdlt-preview-box--main">
+          <div class="sdlt-preview-lbl">SDLT Payable</div>
+          <div class="sdlt-preview-val">£{{liveSdlt | number:'1.0-0'}}</div>
+        </div>
+        <div class="sdlt-preview-box">
+          <div class="sdlt-preview-lbl">Effective Rate</div>
+          <div class="sdlt-preview-val">{{liveRate | number:'1.2-2'}}%</div>
+        </div>
       </div>
 
     </div>
+
+    <!-- Actions — sticky at bottom -->
+    <div class="sdlt-actions">
+      <a [routerLink]="['/stamp-duty-calculator/step1']" class="sdlt-btn-back">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        Back
+      </a>
+      <button class="sdlt-btn-continue" (click)="next()">Calculate </button>
+    </div>
+
   </div>
+
 </div>

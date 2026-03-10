@@ -1,216 +1,233 @@
-<div class="container" id="contentToConvert" style="margin-top: 100px;"> 
-<div class="row mt-30">
-    <div class="col-md-6 col-6">
-        <img src="./assets/stamp-breadcrumb.svg" class="wd125">
-    </div>
-    <div class="col-md-6 col-12 bread-p text-right">
-        <p class="mb-1">Stamp Duty Calculator</p>
-        <p class="mb-0">{{validation.getCurrentDateWithSpecificFormat()}}</p>
-    </div> 
-</div>
-<div class="row mt-3 plr-1"  id="secondMain">
-    <div class="mapcontainer">
-        <app-googlemap [MapClassLoad]="MapLoad" [latitude]="lat" [longitude]="long"></app-googlemap>
+<div class="sdlt-results" id="contentToConvert">
+
+  <!-- ══ HEADER ══ -->
+  <div class="sdlt-rp-header">
+    <div class="sdlt-rp-header-top">
+      <div class="sdlt-rp-title-row">
+        <div class="sdlt-rp-bar"></div>
+        <div>
+          <h1 class="sdlt-rp-title">Results</h1>
+          <p class="sdlt-rp-sub">The results calculated according to the values entered.</p>
+        </div>
+      </div>
+      <div class="sdlt-rp-btns noprint">
+        <a [routerLink]="['/stamp-duty-calculator/question']" class="sdlt-rp-btn-sm">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          Back
+        </a>
+        <button class="sdlt-rp-btn-sm" (click)="emailpopup()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          Share
+        </button>
+        <button class="sdlt-rp-btn-green" (click)="startagain()">Recalculate</button>
+      </div>
     </div>
   </div>
-<div class="row mt-30">
-    <div class="col-md-6 col-lg-6">
-        
-       
-        <app-calculatordetails [coldesign]="12"></app-calculatordetails>
 
-        <div class="row text-right noprint">
-            <div class="col-md-12">
-                <!-- <button type="submit" class="btn btn-default submit-btn text-right"><img src="assets/img/save-report1.svg"> Save Reports</button> -->
-                <button type="submit" class="btn btn-default submit-btn text-right" (click)="startagain()"> <img src="./assets/recalculate1.svg">  Recalculate</button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-6 col-lg-6">
-        <div class="progress-box box2">
-            <h4>Stamp Duty </h4>
-            <p>SDLT Payable : {{stampDutyLandTax|currency:"GBP": 'symbol' : '1.0-0'}}</p>
-            <p>Effective Rate : {{effectiveRate}}%</p>
-            <!-- <p>
-                For property investment of {{GBPValue|currency:"GBP": 'symbol' : '1.0-0'}} stamp duty land tax amounts {{stampDutyLandTax|currency:"GBP": 'symbol' : '1.0-0'}} with effective rate {{effectiveRate}}%
-            </p> -->
+  <!-- ══ KPI CARDS ══ -->
+  <div class="sdlt-rp-kpi-row">
 
-
-            <!-- <p>
-                For property investment of {{GBPValue|currency:"GBP": 'symbol' : '1.0-0'}} 
-            </p>
-            <p>stamp duty land tax amounts
-                <span class="thm-black-bold-text">&nbsp;{{stampDutyLandTax|currency:"GBP": 'symbol' : '1.0-0'}}</span>
-            </p>
-            <p>with effective rate <span class="thm-black-bold-text">{{effectiveRate}}%</span></p> -->
-
-            
-            <!-- <h4>{{stampDutyLandTax|currency:"GBP"}}</h4> -->
-            <!-- <h4>12,56,000 INR</h4> -->
-            <!-- <p>Over 20 Years</p> -->
-        </div>
+    <!-- Total SDLT (featured) -->
+    <div class="sdlt-rp-kpi sdlt-rp-kpi--feat">
+      <div class="sdlt-rp-kpi-lbl">Total SDLT Payable</div>
+      <div class="sdlt-rp-kpi-icon" style="background:rgba(59,130,246,0.12)">
+        <svg width="30" height="30" viewBox="0 0 48 48" fill="none">
+          <rect x="8" y="4" width="28" height="36" rx="3" fill="rgba(59,130,246,0.15)" stroke="#6ba5e8" stroke-width="2"/>
+          <path d="M16 16h16M16 22h10" stroke="#6ba5e8" stroke-width="2" stroke-linecap="round"/>
+          <text x="17" y="36" font-size="12" font-weight="700" fill="#6ba5e8" font-family="serif">£</text>
+        </svg>
+      </div>
+      <div class="sdlt-rp-kpi-val">£{{stampDutyLandTax | number:'1.0-0'}}</div>
+      <div class="sdlt-rp-kpi-note">{{purchaseTypeLabel}}</div>
     </div>
 
-</div>
-<!-- <div class="row mt-15 mb-15">
-    <div class="col-md-12">
-       
-        <div class="progress-box m-box">
-            <h4 class="hidden-xs" style="margin-bottom: 30px;">Stamp Duty </h4>
-            <div style="width:100%;">
-                <div class="chartjs-size-monitor">
-                    <div class="chartjs-size-monitor-expand">
-                        <div class=""></div>
-                    </div>
-                    <div class="chartjs-size-monitor-shrink">
-                        <div class=""></div>
-                    </div>
-                </div>
-                <canvas id="canvas" style="display: block; width: 1379px; height: 689px;" width="1379" height="689" class="chartjs-render-monitor"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row mt-30">
-    <div class="col-md-12 col-lg-6">
-       
-        <div class="progress-box  only-title  hidden-xs" style="background-color: transparent;">
-            <h4  class="hidden-xs">Here's Your IRR <span>(Internal Rate of Return)</span></h4>
-        </div>
-    </div>
-    <div class="col-md-12 col-lg-6">
-        <div class="progress-box piediagram" style="background-color: transparent; padding-top: 10px; padding-bottom: 10px;">
-            
-            <div class="demo">
-                <svg class="progress" width="200" height="200" viewBox="0 0 200 200">
-                    <defs>
-                        <linearGradient id="linearColors" x1="1" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stop-color="#fff"></stop>
-                            <stop offset="25%" stop-color="#f7f7f7"></stop>
-                            <stop offset="40%" stop-color="#b3b9e2"></stop>
-                            <stop offset="60%" stop-color="#b3b9e2"></stop>
-                            <stop offset="80%" stop-color="#5a52a5"></stop>
-                            <stop offset="100%" stop-color="#5a52a5"></stop>
-                        </linearGradient>
-                    </defs>
-                    <circle class="progress__meter" cx="100" cy="100" r="84" stroke-width="15" />
-                    <circle class="progress__value" cx="100" cy="100" r="84" stroke-width="15" stroke="url(#linearColors)" />
-                </svg>
-                <h2 class="display-value">60% <span class="prg">Progress</span></h2>
-                <input id="control" type="range" value="60" style="visibility: hidden;" />
-                <h5>GBP ($) <span class="curr-text">British Pound</span></h5>
-            </div>
-
-            <div class="demo">
-                <svg class="progress" width="200" height="200" viewBox="0 0 200 200">
-                    <defs>
-                        <linearGradient id="linearColors1" x1="1" y1="0" x2="0" y2="1">
-                            <stop offset="5%" stop-color="#fff"></stop>
-                            <stop offset="25%" stop-color="#f7f7f7"></stop>
-                            <stop offset="40%" stop-color="#bcf3cf"></stop>
-                            <stop offset="60%" stop-color="#bcf3cf"></stop>
-                            <stop offset="80%" stop-color="#2bba5a"></stop>
-                            <stop offset="100%" stop-color="#2bba5a"></stop>
-                        </linearGradient>
-                    </defs>
-                    <circle class="progress__meter1" cx="100" cy="100" r="84" stroke-width="15" />
-                    <circle class="progress__value1" cx="100" cy="100" r="84" stroke-width="15" stroke="url(#linearColors1)" />
-                </svg>
-                <h2 class="display-value">60% <span class="prg">Progress</span></h2>
-                <input id="control1" class="input2" type="range" value="60" style="visibility: hidden;" />
-                <h5>INR (₹) <span class="curr-text nat-rup" style="left: 12%;">Indian National Rupee</span></h5>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row mt-30 mb-15">
-    <div class="col-md-12">
-       
-        <div class="progress-box m-box">
-            <h4 class="hidden-xs" style="margin-bottom: 30px;">Yearly IRR <span>(Internal Rate of Return)</span></h4>
-            <div style="width:100%;">
-                <div class="chartjs-size-monitor">
-                    <div class="chartjs-size-monitor-expand">
-                        <div class=""></div>
-                    </div>
-                    <div class="chartjs-size-monitor-shrink">
-                        <div class=""></div>
-                    </div>
-                </div>
-                <canvas id="canvas2" style="display: block; width: 1379px; height: 689px;" width="1379" height="689" class="chartjs-render-monitor"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="row">
-	<div class="col-md-12 col-lg-3 offset-lg-2 mob-center text-center">
-				<button type="submit" class="btn btn-default report-btn text-right"><img src="assets/save-report1.svg"> Save Report</button>
-				
-			</div>
-			<div class="col-md-7 col-lg-3 mob-center text-center">
-				<button type="submit" class="btn btn-default report-btn text-right"><img src="./assets/download-cursor1.svg"> Download Report</button>
-				
-			</div>
-			<div class="col-md-5 col-lg-3 mob-center text-center">
-			
-				<button type="submit" class="btn btn-default report-btn text-right"><img src="assets/share-report1.svg">Share Report</button>
-			</div>
- 
-	</div> -->
-
-    <div class="row noprint" id="buttonsrow" style="justify-content:center;padding-top:30px;">
-        <div class="col-md-6 col-lg-3 mob-center text-right">
-            <button *ngIf="loadingPrintbtn" type="submit" class="btn btn-default report-btn text-right"><i class="fa fa-spin fa-spinner"></i>
-                Please Wait...</button>
-            <button *ngIf="!loadingPrintbtn" type="submit" class="btn btn-default report-btn text-right" (click)="printScreen()"><img src="./assets/save-report1.svg">
-                Print Report</button>
-        </div>
-        <div class="col-md-7 col-lg-3 mob-center text-center" id="downloadreportdiv" style="display:none;">
-            <button *ngIf="loadingDownloadbtn" type="submit" class="btn btn-default report-btn text-right"><i class="fa fa-spin fa-spinner"></i>
-                Please Wait...</button>
-            <button *ngIf="!loadingDownloadbtn" type="submit" class="btn btn-default report-btn text-right" (click)="convetToPDF()"><img
-                    src="./assets/download-cursor1.svg"> Download Report</button>
-        </div>
-        <div class="col-md-6 col-lg-3 mob-center text-left">
-            <button *ngIf="loadingSharebtn" type="submit" class="btn btn-default report-btn text-right"><i class="fa fa-spin fa-spinner"></i>
-                Please Wait...</button>
-            <button *ngIf="!loadingSharebtn" type="submit" class="btn btn-default report-btn text-right" (click)="emailpopup()"><img
-                    src="./assets/share-report1.svg">Share Report</button>
-        </div>
-    </div>
-    
+    <!-- Effective Rate -->
+    <div class="sdlt-rp-kpi">
+      <div class="sdlt-rp-kpi-lbl">Effective Rate</div>
+      <div class="sdlt-rp-kpi-icon" style="background:rgba(34,197,94,0.1)">
+        <svg width="30" height="30" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="18" stroke="#22c55e" stroke-width="2" fill="rgba(34,197,94,0.08)"/>
+          <path d="M16 32L32 16M18 18a2 2 0 100-4 2 2 0 000 4zM30 34a2 2 0 100-4 2 2 0 000 4z" stroke="#22c55e" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div class="sdlt-rp-kpi-val">{{effectiveRate}}%</div>
+      <div class="sdlt-rp-kpi-note">Of property value</div>
     </div>
 
-    <div class="modal fade noprint" id="myModal">
-        <div class="modal-dialog">
-          <div class="modal-content" style="top: 100px;">
-      
-            <!-- Modal Header -->
-            <div class="modal-header" style="border-bottom:0px;padding-bottom:0px">
-              <h5 class="modal-title" style="color:#1d1751;padding-left:12px;">Share Report</h5>
-              <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
-            </div>
-      
-            <!-- Modal body -->
-            <div class="modal-body" style="padding-top: 20px;padding-bottom:5px;">
-                <div class="form-group col-md-12">
-                    <label style="color:#444854;font-size:14px;">Enter email ids of recipients</label>
-                    <input type="email" class="form-control" id="email" placeholder="example : joe@gmail.com,mark@gmail.com" name="email" [(ngModel)]="Email" autocomplete="off"  style="height:45px !important;" data-role="tagsinput">
-                </div>
-            </div>
-      
-            <!-- Modal footer -->
-            <div class="modal-footer" style="border-top: 0px;padding-top: 0px;padding-bottom: 8px;">
-                <div  style="width:100%;display:flex;justify-content:center;">
-                   
-                    <button *ngIf="loadingSharebtn" type="submit" class="btn modal-btn"><i class="fa fa-spin fa-spinner"></i>
-                        Please Wait...</button>
-                    <button *ngIf="!loadingSharebtn" type="submit" class="btn modal-btn" (click)=" shareReport()">Send</button>
-                    <button type="button" class="btn modal-cancel-btn" id="cancelbtn" (click)="cancel()">Cancel</button>
-                </div>
-            
-            </div>
-      
+    <!-- Foreign Buyer Surcharge -->
+    <div class="sdlt-rp-kpi">
+      <div class="sdlt-rp-kpi-lbl">Foreign Buyer Surcharge</div>
+      <div class="sdlt-rp-kpi-icon" style="background:rgba(251,191,36,0.1)">
+        <svg width="30" height="30" viewBox="0 0 48 48" fill="none">
+          <path d="M24 8l3.5 9h9.5l-8 5.5 3 9.5-8-5.5-8 5.5 3-9.5-8-5.5h9.5z" stroke="#fbbf24" stroke-width="2" fill="rgba(251,191,36,0.1)" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="sdlt-rp-kpi-val">£{{foreignSurcharge | number:'1.0-0'}}</div>
+      <div class="sdlt-rp-kpi-note">{{calcData?.ForeignBuyer==='1' ? '2% foreign surcharge' : 'Not applicable'}}</div>
+    </div>
+
+  </div>
+
+  <!-- ══ BODY ══ -->
+  <div class="sdlt-rp-body">
+
+    <!-- Your Assumptions -->
+    <div class="sdlt-rp-card">
+      <div class="sdlt-rp-card-title">Your Assumptions</div>
+      <div class="sdlt-rp-card-sub">All assumptions used in this calculation</div>
+      <div class="sdlt-arow">
+        <span class="sdlt-arow-lbl">Property Value</span>
+        <span class="sdlt-arow-val">£{{calcData?.PropertyValue | number:'1.0-0'}}</span>
+      </div>
+      <div class="sdlt-arow">
+        <span class="sdlt-arow-lbl">Purchase Type</span>
+        <span class="sdlt-arow-val">{{purchaseTypeLabel}}</span>
+      </div>
+      <div class="sdlt-arow">
+        <span class="sdlt-arow-lbl">Foreign Buyer</span>
+        <span class="sdlt-arow-val">{{calcData?.ForeignBuyer==='1' ? 'Yes (+2%)' : 'No'}}</span>
+      </div>
+      <div class="sdlt-arow">
+        <span class="sdlt-arow-lbl">Effective Rate</span>
+        <span class="sdlt-arow-val">{{effectiveRate}}%</span>
+      </div>
+    </div>
+
+    <!-- SDLT Band Breakdown -->
+    <div class="sdlt-rp-card">
+      <div class="sdlt-rp-card-title">SDLT Band Breakdown</div>
+      <div class="sdlt-rp-card-sub">How UK Stamp Duty Land Tax is calculated across each band</div>
+      <div class="sdlt-table-wrap">
+        <table class="sdlt-band-tbl">
+          <thead>
+            <tr>
+              <th>Tax Band</th>
+              <th>Rate</th>
+              <th>Taxable Amount</th>
+              <th>Tax Due</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let b of bandBreakdown">
+              <td>{{b.band}}</td>
+              <td>{{b.rate}}%</td>
+              <td>£{{b.taxable | number:'1.0-0'}}</td>
+              <td [class.sdlt-td-green]="b.due > 0" [class.sdlt-td-dim]="b.due === 0">£{{b.due | number:'1.0-0'}}</td>
+            </tr>
+            <tr *ngIf="additionalSurcharge > 0">
+              <td>Additional Dwelling Surcharge</td>
+              <td>5%</td>
+              <td>£{{calcData?.PropertyValue | number:'1.0-0'}}</td>
+              <td class="sdlt-td-green">£{{additionalSurcharge | number:'1.0-0'}}</td>
+            </tr>
+            <tr *ngIf="calcData?.ForeignBuyer==='1' && foreignSurcharge > 0">
+              <td>Foreign Buyer Surcharge</td>
+              <td>2%</td>
+              <td>£{{calcData?.PropertyValue | number:'1.0-0'}}</td>
+              <td class="sdlt-td-green">£{{foreignSurcharge | number:'1.0-0'}}</td>
+            </tr>
+            <tr class="sdlt-tbl-total">
+              <td colspan="3">Total SDLT Payable</td>
+              <td>£{{stampDutyLandTax | number:'1.0-0'}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Full Summary -->
+    <div class="sdlt-rp-card">
+      <div class="sdlt-rp-card-title">Full Summary</div>
+      <div class="sdlt-rp-card-sub">Complete cost breakdown for your purchase</div>
+      <div class="sdlt-summary-grid">
+        <!-- Cost Breakdown -->
+        <div class="sdlt-summary-col">
+          <div class="sdlt-summary-col-header">Cost Breakdown</div>
+          <div class="sdlt-srow">
+            <span class="sdlt-srow-lbl">Property Price</span>
+            <span class="sdlt-srow-val">£{{calcData?.PropertyValue | number:'1.0-0'}}</span>
+          </div>
+          <div class="sdlt-srow">
+            <span class="sdlt-srow-lbl">Standard SDLT</span>
+            <span class="sdlt-srow-val sdlt-srow-val--green">£{{baseSdlt | number:'1.0-0'}}</span>
+          </div>
+          <div class="sdlt-srow" *ngIf="additionalSurcharge > 0">
+            <span class="sdlt-srow-lbl">Additional Surcharge (+5%)</span>
+            <span class="sdlt-srow-val sdlt-srow-val--green">£{{additionalSurcharge | number:'1.0-0'}}</span>
+          </div>
+          <div class="sdlt-srow" *ngIf="calcData?.ForeignBuyer==='1'">
+            <span class="sdlt-srow-lbl">Foreign Surcharge (+2%)</span>
+            <span class="sdlt-srow-val sdlt-srow-val--green">£{{foreignSurcharge | number:'1.0-0'}}</span>
+          </div>
+          <div class="sdlt-srow sdlt-srow--total">
+            <span class="sdlt-srow-lbl sdlt-srow-lbl--total">Total Due</span>
+            <span class="sdlt-srow-val sdlt-srow-val--green sdlt-srow-val--lg">£{{stampDutyLandTax | number:'1.0-0'}}</span>
+          </div>
+        </div>
+        <!-- What's Included -->
+        <div class="sdlt-summary-col">
+          <div class="sdlt-summary-col-header">What's Included</div>
+          <div class="sdlt-srow">
+            <span class="sdlt-srow-lbl">Total Property Cost</span>
+            <span class="sdlt-srow-val">£{{(+calcData?.PropertyValue + stampDutyLandTax) | number:'1.0-0'}}</span>
+          </div>
+          <div class="sdlt-srow">
+            <span class="sdlt-srow-lbl">SDLT as % of Price</span>
+            <span class="sdlt-srow-val">{{effectiveRate}}%</span>
+          </div>
+          <div class="sdlt-srow">
+            <span class="sdlt-srow-lbl">SDLT Due Date</span>
+            <span class="sdlt-srow-val">Within 14 days</span>
+          </div>
+          <div class="sdlt-srow">
+            <span class="sdlt-srow-lbl">Residency Status</span>
+            <span class="sdlt-srow-val">{{calcData?.ForeignBuyer==='1' ? 'Non-UK Resident' : 'UK Resident'}}</span>
+          </div>
+          <div class="sdlt-srow">
+            <span class="sdlt-srow-lbl">Purchase Type</span>
+            <span class="sdlt-srow-val">{{purchaseTypeLabel}}</span>
           </div>
         </div>
       </div>
+    </div>
+
+  </div>
+
+  <!-- ══ STICKY FOOTER ══ -->
+  <div class="sdlt-rp-footer noprint">
+    <a [routerLink]="['/stamp-duty-calculator/question']" class="sdlt-rfb sdlt-rfb--back">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Back
+    </a>
+    <button class="sdlt-rfb sdlt-rfb--share" (click)="emailpopup()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+      Share
+    </button>
+    <button class="sdlt-rfb sdlt-rfb--recalc" (click)="startagain()">Recalculate</button>
+  </div>
+
+</div>
+
+<!-- Share Modal -->
+<div class="modal fade noprint" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content" style="top:100px;">
+      <div class="modal-header" style="border-bottom:0;padding-bottom:0">
+        <h5 class="modal-title" style="color:#1d1751;padding-left:12px;">Share Report</h5>
+      </div>
+      <div class="modal-body" style="padding-top:20px;padding-bottom:5px;">
+        <div class="form-group col-md-12">
+          <label style="color:#444854;font-size:14px;">Enter email ids of recipients</label>
+          <input type="email" class="form-control" id="email" placeholder="example: joe@gmail.com,mark@gmail.com" name="email" [(ngModel)]="Email" autocomplete="off" style="height:45px !important;">
+        </div>
+      </div>
+      <div class="modal-footer" style="border-top:0;padding-top:0;padding-bottom:8px;">
+        <div style="width:100%;display:flex;justify-content:center;">
+          <button *ngIf="loadingSharebtn" type="submit" class="btn modal-btn"><i class="fa fa-spin fa-spinner"></i> Please Wait...</button>
+          <button *ngIf="!loadingSharebtn" type="submit" class="btn modal-btn" (click)="shareReport()">Send</button>
+          <button type="button" class="btn modal-cancel-btn" id="cancelbtn" (click)="cancel()">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

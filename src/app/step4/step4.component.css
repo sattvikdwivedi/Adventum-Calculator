@@ -253,37 +253,46 @@
   line-height: 1.5;
 }
 
-/* SDLT highlight card */
+/* SDLT Banner */
 .sdlt-card {
-  background: linear-gradient(135deg, #132147 0%, #1e3d7a 100%);
-  border-radius: 12px;
-  padding: 20px 22px;
+  background: linear-gradient(315deg, #2D61ED 0%, #10182B 100%);
+  border-radius: 10px;
+  padding: 28px 24px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
+  gap: 16px;
   margin-bottom: 28px;
 }
 
+.sdlt-card-left { display: flex; flex-direction: column; gap: 12px; }
+
 .sdlt-card-name {
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 24px;
+  font-weight: 400;
   color: #ffffff;
 }
 
 .sdlt-card-note {
-  font-size: 12px;
-  color: rgba(255,255,255,0.6);
-  margin-top: 3px;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(255,255,255,0.70);
+  margin-top: 0;
 }
 
 .sdlt-card-val {
-  font-size: 20px;
-  font-weight: 700;
+  font-size: 24px;
+  font-weight: 500;
   color: #ffffff;
-  background: rgba(255,255,255,0.15);
-  border-radius: 8px;
-  padding: 8px 16px;
+  background: linear-gradient(137deg, rgba(185,204,255,0.08) 0%, rgba(255,255,255,0.12) 100%);
+  border-radius: 10px;
+  outline: 1px solid rgba(255,255,255,0.15);
+  outline-offset: -1px;
+  padding: 14px 24px;
   white-space: nowrap;
+  flex-shrink: 0;
+  align-self: center;
+  font-family: 'Inter', sans-serif;
 }
 
 /* Section labels */

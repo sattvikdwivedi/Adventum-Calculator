@@ -20,8 +20,10 @@
 
       <!-- Live preview card -->
       <div class="ewr-rent-card">
-        <h3 class="ewr-rent-title">Your Rental <strong>Income</strong></h3>
-        <p class="ewr-rent-sub">Live estimates update as you enter details.</p>
+        <div class="ewr-rent-heading">
+          <div class="ewr-rent-title"><span class="ewr-rent-title-light">Your Rental </span><span class="ewr-rent-title-bold">Income</span></div>
+          <p class="ewr-rent-sub">Live estimates update as you enter details.</p>
+        </div>
         <div class="ewr-rent-stats">
           <div class="ewr-rs">
             <div class="ewr-rs-lbl">Weekly</div>
@@ -29,11 +31,11 @@
           </div>
           <div class="ewr-rs ewr-rs--accent">
             <div class="ewr-rs-lbl">Monthly</div>
-            <div class="ewr-rs-val">£{{liveMonthly | number:'1.0-0'}}</div>
+            <div class="ewr-rs-val ewr-rs-val--green">£{{liveMonthly | number:'1.0-0'}}</div>
           </div>
           <div class="ewr-rs ewr-rs--accent">
             <div class="ewr-rs-lbl">Annual</div>
-            <div class="ewr-rs-val">£{{liveAnnual | number:'1.0-0'}}</div>
+            <div class="ewr-rs-val ewr-rs-val--green">£{{liveAnnual | number:'1.0-0'}}</div>
           </div>
           <div class="ewr-rs">
             <div class="ewr-rs-lbl">Gross Yield</div>
@@ -79,7 +81,7 @@
           <span class="ewr-input-pre">£</span>
           <input class="ewr-inp" type="text" id="propertyValue" autocomplete="off"
             placeholder="e.g. 400,000"
-            (keyup)="PropertyValue=validation.amountWithComma(PropertyValue); calcLive()"
+            (input)="PropertyValue=validation.amountWithComma(PropertyValue); calcLive()"
             (keypress)="validation.numberOnly($event)"
             [(ngModel)]="PropertyValue">
         </div>
@@ -90,12 +92,12 @@
         <div class="ewr-label">Home Currency</div>
         <div class="ewr-custom-select" [class.ewr-custom-select--open]="currencyDropdownOpen">
           <div class="ewr-custom-trigger" (click)="currencyDropdownOpen=!currencyDropdownOpen">
-            <span [class.ewr-custom-placeholder]="!homecurrencyText">{{selectedCurrencyName}}</span>
-            <svg class="ewr-custom-arrow" width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span [class.ewr-custom-placeholder]="!homecurrencyText">{{homecurrencyText ? selectedCurrencyName + ' (' + homecurrencyText + ')' : 'Select currency'}}</span>
+            <svg class="ewr-custom-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
           </div>
           <div class="ewr-custom-dropdown" *ngIf="currencyDropdownOpen">
             <div class="ewr-custom-search-wrap">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#9ca3af" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
               <input class="ewr-custom-search" type="text" placeholder="Search currency..." [(ngModel)]="currencySearch" (click)="$event.stopPropagation()" autocomplete="off">
             </div>
             <div class="ewr-custom-list">
@@ -103,7 +105,8 @@
                 class="ewr-custom-option"
                 [class.ewr-custom-option--selected]="c.code===homecurrencyText"
                 (click)="selectCurrency(c.code)">
-                {{c.name}}
+                <span class="ewr-cdd-name">{{stripCode(c.name)}}</span>
+                <span class="ewr-cdd-code">{{c.code}}</span>
               </div>
               <div *ngIf="filteredCurrencies.length===0" class="ewr-custom-empty">No results</div>
             </div>
@@ -140,7 +143,7 @@
           <div class="ewr-input-wrap">
             <input class="ewr-inp" type="text" id="rentalYeild" autocomplete="off"
               placeholder="e.g. 5.5%"
-              (keyup)="rentalYeild=validation.appendPercent($event,rentalYeild); calcLive()"
+              (input)="rentalYeild=validation.appendPercent($event,rentalYeild); calcLive()"
               (keypress)="validation.DesimalOnly($event,rentalYeild)"
               [(ngModel)]="rentalYeild">
             <span class="ewr-input-suf">% p.a.</span>
@@ -157,7 +160,7 @@
             <span class="ewr-input-pre">£</span>
             <input class="ewr-inp" type="text" id="weeklyRent" autocomplete="off"
               placeholder="e.g. 500"
-              (keyup)="weeklyRent=validation.amountWithComma(weeklyRent); calcLive()"
+              (input)="weeklyRent=validation.amountWithComma(weeklyRent); calcLive()"
               (keypress)="validation.numberOnly($event)"
               [(ngModel)]="weeklyRent">
             <span class="ewr-input-suf">per week</span>

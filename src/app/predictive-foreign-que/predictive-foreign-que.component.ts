@@ -18,6 +18,8 @@ export class PredictiveForeignQueComponent implements OnInit {
   selectedCurrencyCode = '';
   selectedCurrencyName = '';
   selectedCurrencySymbol = '';
+  currencyDropdownOpen = false;
+  currencySearch = '';
 
   periodOptions = [5, 10, 15, 20, 25];
 
@@ -122,17 +124,36 @@ export class PredictiveForeignQueComponent implements OnInit {
     return sym + val.toLocaleString('en-GB', { maximumFractionDigits: 0 });
   }
 
-  onCurrencySelect(event: Event): void {
-    const val = (event.target as HTMLSelectElement).value;
-    const found = this.currencies.find(c => c.code === val);
+  getCurrencyLabel(code: string): string {
+    const found = this.currencies.find(c => c.code === code);
+    return found ? `${found.name} (${found.code})` : code;
+  }
+
+  getFilteredCurrencies() {
+    const q = (this.currencySearch || '').toLowerCase();
+    if (!q) { return this.currencies; }
+    return this.currencies.filter(c =>
+      c.name.toLowerCase().includes(q) || c.code.toLowerCase().includes(q)
+    );
+  }
+
+  onCurrencySelect2(code: string): void {
+    const found = this.currencies.find(c => c.code === code);
     if (found) {
       this.selectedCurrencyCode = found.code;
       this.selectedCurrencyName = found.name;
       this.selectedCurrencySymbol = found.sym;
       this.homecurrency = found.rate;
+      this.currencyDropdownOpen = false;
+      this.currencySearch = '';
       this.fetchLiveRate(found.code);
       this.calcLive();
     }
+  }
+
+  onCurrencySelect(event: Event): void {
+    const val = (event.target as HTMLSelectElement).value;
+    this.onCurrencySelect2(val);
   }
 
   private fetchLiveRate(code: string): void {

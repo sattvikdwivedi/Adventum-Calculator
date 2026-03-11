@@ -40,6 +40,7 @@ import { AtedresultComponent } from './atedresult/atedresult.component';
 import { StartComponent } from './start/start.component';
 import { ProgressBarComponent } from './shared/progress-bar/progress-bar.component';
 import { CircleProgressComponent } from './shared/circle-progress/circle-progress.component';
+import { CityFilterPipe } from './city-filter.pipe';
 
 
 
@@ -80,8 +81,7 @@ import { CircleProgressComponent } from './shared/circle-progress/circle-progres
     StartComponent,
     ProgressBarComponent,
     CircleProgressComponent,
-
-    
+    CityFilterPipe,
   ],
   imports: [
     BrowserModule,

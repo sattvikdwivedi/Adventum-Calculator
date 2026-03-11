@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, ChangeDetectorRef } from '@angular/core';
 import { ValidationService } from '../validation.service';
 import { DataService } from '../data.service';
 import { Router } from '@angular/router';
@@ -81,7 +81,13 @@ export class EstimatedRentQueComponent implements OnInit {
 
   get selectedCurrencyName(): string {
     const found = this.currencies.find(c => c.code === this.homecurrencyText);
-    return found ? found.name : 'Select currency';
+    if (!found) return 'Select currency';
+    // Strip " (CODE)" suffix so trigger shows "Indian Rupee (INR)" not "Indian Rupee (INR) (INR)"
+    return found.name.replace(/\s*\([^)]*\)\s*$/, '');
+  }
+
+  stripCode(name: string): string {
+    return name.replace(/\s*\([^)]*\)\s*$/, '');
   }
 
   selectCurrency(code: string) {
@@ -134,12 +140,13 @@ export class EstimatedRentQueComponent implements OnInit {
   }
 
   calcLive() {
-    // triggers change detection via getters
+    this.cdr.detectChanges();
   }
 
   constructor(public validation: ValidationService,
               private dataService: DataService,
-              private router: Router) { }
+              private router: Router,
+              private cdr: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.calcData = JSON.parse(localStorage.getItem('calcData'));

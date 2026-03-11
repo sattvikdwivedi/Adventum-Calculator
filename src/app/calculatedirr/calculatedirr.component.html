@@ -13,11 +13,11 @@
       </div>
       <div class="rp-header-actions noprint">
         <button class="rp-btn-sm" (click)="startagain()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.9"/></svg>
+          
           Recalculate
         </button>
         <button *ngIf="!loadingSharebtn" class="rp-btn-sm" (click)="emailpopup()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          <img src="/assets/Icon.svg" width="14" height="14" alt="">
           Share
         </button>
         <button *ngIf="loadingSharebtn" class="rp-btn-sm rp-btn-loading"><i class="fa fa-spin fa-spinner"></i></button>
@@ -644,11 +644,11 @@
   <!-- ── STICKY FOOTER ── -->
   <div class="rp-footer noprint">
     <button class="rp-footer-btn rp-footer-back" [routerLink]="['/step4']">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <img src="/assets/Icon (1).svg" width="8" height="14" alt="">
       Back
     </button>
     <button *ngIf="!loadingSharebtn" class="rp-footer-btn rp-footer-share" (click)="emailpopup()">
-      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      <img src="/assets/Icon.svg" width="15" height="15" alt="">
       Share
     </button>
     <button class="rp-footer-btn rp-footer-recalc" (click)="startagain()">Recalculate</button>

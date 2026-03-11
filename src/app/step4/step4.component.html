@@ -111,13 +111,13 @@
       <h2 class="section-title">Costs &amp; Expenses</h2>
       <p class="section-sub">Define your acquisition costs and expected ongoing expenses.</p>
 
-      <!-- SDLT highlight card -->
+      <!-- SDLT Banner -->
       <div class="sdlt-card">
         <div class="sdlt-card-left">
           <div class="sdlt-card-name">Stamp Duty &amp; Land Tax</div>
-          <div class="sdlt-card-note">{{calcData?.ForeignBuyer=='1' ? '(incl. 2% foreign buyer surcharge)' : 'Auto-calculated · investment rate'}}</div>
+          <div class="sdlt-card-note">{{calcData?.ForeignBuyer=='1' ? '(incl. 2% foreign buyer surcharge)' : 'Standard investment rates'}}</div>
         </div>
-        <div class="sdlt-card-val">£{{stampDutyLandTax || '1'}}</div>
+        <div class="sdlt-card-val">£{{stampDutyLandTax || '0'}}</div>
       </div>
 
       <!-- ACQUISITION COSTS section -->

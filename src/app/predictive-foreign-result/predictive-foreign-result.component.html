@@ -16,7 +16,7 @@
           Back
         </a>
         <button class="pfxr-btn-sm" (click)="emailpopup()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          <img src="/assets/Icon.svg" width="14" height="14" alt="">
           Share
         </button>
         <button class="pfxr-btn-green" (click)="startagain()">Recalculate</button>
@@ -29,39 +29,44 @@
 
     <!-- Exit value (featured) -->
     <div class="pfxr-kpi pfxr-kpi--feat">
-      <div class="pfxr-kpi-lbl">Exit ({{calcData?.homecurrencyText}})</div>
-      <div class="pfxr-kpi-icon" style="background:rgba(59,130,246,0.12)">
-        <svg width="34" height="34" viewBox="0 0 48 48" fill="none">
-          <text x="4" y="36" font-size="36" font-weight="700" fill="#6ba5e8" font-family="serif" opacity="0.9">{{currencySymbol}}</text>
-        </svg>
+      <div class="pfxr-kpi__icon-wrap">
+        <div class="pfxr-icon-blob1"></div>
+        <div class="pfxr-icon-blob2"></div>
+        <img src="/assets/e8b22e177f552a6f434e1c1fec7ee7376aa4fca6.png" alt="Exit Value">
       </div>
-      <div class="pfxr-kpi-val">{{formatHomeCurrency(exitValueHome)}}</div>
-      <div class="pfxr-kpi-note">Projected exit value</div>
+      <div class="pfxr-kpi__inner">
+        <div class="pfxr-kpi-lbl">Exit ({{calcData?.homecurrencyText}})</div>
+        <div class="pfxr-kpi-val">{{formatHomeCurrency(exitValueHome)}}</div>
+        <div class="pfxr-kpi-note">Projected exit value</div>
+      </div>
     </div>
 
     <!-- Initial value -->
     <div class="pfxr-kpi">
-      <div class="pfxr-kpi-lbl">Initial ({{calcData?.homecurrencyText}})</div>
-      <div class="pfxr-kpi-icon" style="background:rgba(34,197,94,0.1)">
-        <svg width="34" height="34" viewBox="0 0 48 48" fill="none">
-          <text x="4" y="36" font-size="36" font-weight="700" fill="#22c55e" font-family="serif" opacity="0.85">{{currencySymbol}}</text>
-        </svg>
+      <div class="pfxr-kpi__icon-wrap">
+        <div class="pfxr-icon-blob1"></div>
+        <div class="pfxr-icon-blob2"></div>
+        <img src="/assets/7aa8dbcb61a7c07c2f2a7ed6c6980b0d7de55599 (1).png" alt="Initial Value">
       </div>
-      <div class="pfxr-kpi-val">{{formatHomeCurrency(initialValueHome)}}</div>
-      <div class="pfxr-kpi-note">Current value in home currency</div>
+      <div class="pfxr-kpi__inner">
+        <div class="pfxr-kpi-lbl">Initial ({{calcData?.homecurrencyText}})</div>
+        <div class="pfxr-kpi-val">{{formatHomeCurrency(initialValueHome)}}</div>
+        <div class="pfxr-kpi-note">Current value in home currency</div>
+      </div>
     </div>
 
     <!-- FX-Only Growth % -->
     <div class="pfxr-kpi">
-      <div class="pfxr-kpi-lbl">FX-Only Growth</div>
-      <div class="pfxr-kpi-icon" style="background:rgba(34,197,94,0.1)">
-        <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
-          <circle cx="24" cy="24" r="18" fill="rgba(34,197,94,0.12)"/>
-          <path d="M16 32L32 16M32 16H20M32 16v12" stroke="#22c55e" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
+      <div class="pfxr-kpi__icon-wrap">
+        <div class="pfxr-icon-blob1"></div>
+        <div class="pfxr-icon-blob2"></div>
+        <img src="/assets/7c9f4b3024f2562f5ca2ecd7ac6e5b00e60e5781.png" alt="FX Growth">
       </div>
-      <div class="pfxr-kpi-val">{{fxOnlyGrowthPct | number:'1.1-1'}}%</div>
-      <div class="pfxr-kpi-note">Over {{calcData?.investedTenure}} Years</div>
+      <div class="pfxr-kpi__inner">
+        <div class="pfxr-kpi-lbl">FX-Only Growth</div>
+        <div class="pfxr-kpi-val">{{fxOnlyGrowthPct | number:'1.1-1'}}%</div>
+        <div class="pfxr-kpi-note">Over {{calcData?.investedTenure}} Years</div>
+      </div>
     </div>
 
   </div>
@@ -128,16 +133,16 @@
   </div>
 
   <!-- ══ STICKY FOOTER ══ -->
-  <div class="pfxr-footer noprint">
-    <a [routerLink]="['/Predictive-Foreign-calculator/question']" class="pfxr-fb pfxr-fb--back">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+  <div class="rp-footer noprint">
+    <a [routerLink]="['/Predictive-Foreign-calculator/question']" class="rp-footer-btn rp-footer-back">
+      <img src="/assets/Icon (1).svg" width="8" height="14" alt="">
       Back
     </a>
-    <button class="pfxr-fb pfxr-fb--share" (click)="emailpopup()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+    <button class="rp-footer-btn rp-footer-share" (click)="emailpopup()">
+      <img src="/assets/Icon.svg" width="15" height="15" alt="">
       Share
     </button>
-    <button class="pfxr-fb pfxr-fb--recalc" (click)="startagain()">Recalculate</button>
+    <button class="rp-footer-btn rp-footer-recalc" (click)="startagain()">Recalculate</button>
   </div>
 
 </div>

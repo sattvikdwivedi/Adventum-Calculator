@@ -1,110 +1,100 @@
 <div class="sdlt-results" id="contentToConvert">
 
   <!-- ══ HEADER ══ -->
-  <div class="sdlt-rp-header">
-    <div class="sdlt-rp-header-top">
-      <div class="sdlt-rp-title-row">
-        <div class="sdlt-rp-bar"></div>
+  <div class="sdlt-header">
+    <div class="sdlt-header-inner">
+      <div class="sdlt-title-row">
+        <div class="sdlt-bar"></div>
         <div>
-          <h1 class="sdlt-rp-title">Results</h1>
-          <p class="sdlt-rp-sub">The results calculated according to the values entered.</p>
+          <h1 class="sdlt-title">Results</h1>
+          <p class="sdlt-sub">The results calculated according to the values entered.</p>
         </div>
       </div>
-      <div class="sdlt-rp-btns noprint">
-        <a [routerLink]="['/stamp-duty-calculator/question']" class="sdlt-rp-btn-sm">
+      <div class="sdlt-header-btns noprint">
+        <a [routerLink]="['/stamp-duty-calculator/question']" class="sdlt-btn-sm">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
           Back
         </a>
-        <button class="sdlt-rp-btn-sm" (click)="emailpopup()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        <button class="sdlt-btn-sm" (click)="emailpopup()">
+          <img src="/assets/Icon.svg" width="14" height="14" alt="">
           Share
         </button>
-        <button class="sdlt-rp-btn-green" (click)="startagain()">Recalculate</button>
+        <button class="sdlt-btn-green" (click)="startagain()">Recalculate</button>
       </div>
     </div>
   </div>
 
-  <!-- ══ KPI CARDS ══ -->
-  <div class="sdlt-rp-kpi-row">
+  <!-- ══ KPI CARDS — 2 columns ══ -->
+  <div class="sdlt-kpi-row">
 
     <!-- Total SDLT (featured) -->
-    <div class="sdlt-rp-kpi sdlt-rp-kpi--feat">
-      <div class="sdlt-rp-kpi-lbl">Total SDLT Payable</div>
-      <div class="sdlt-rp-kpi-icon" style="background:rgba(59,130,246,0.12)">
-        <svg width="30" height="30" viewBox="0 0 48 48" fill="none">
-          <rect x="8" y="4" width="28" height="36" rx="3" fill="rgba(59,130,246,0.15)" stroke="#6ba5e8" stroke-width="2"/>
-          <path d="M16 16h16M16 22h10" stroke="#6ba5e8" stroke-width="2" stroke-linecap="round"/>
-          <text x="17" y="36" font-size="12" font-weight="700" fill="#6ba5e8" font-family="serif">£</text>
-        </svg>
+    <div class="sdlt-kpi sdlt-kpi--feat">
+      <div class="sdlt-kpi-icon">
+        <div class="sdlt-kpi-icon-blob1"></div>
+        <div class="sdlt-kpi-icon-blob2"></div>
+        <img src="/assets/e8b22e177f552a6f434e1c1fec7ee7376aa4fca6.png" alt="Total SDLT">
       </div>
-      <div class="sdlt-rp-kpi-val">£{{stampDutyLandTax | number:'1.0-0'}}</div>
-      <div class="sdlt-rp-kpi-note">{{purchaseTypeLabel}}</div>
+      <div class="sdlt-kpi-inner">
+        <div class="sdlt-kpi-lbl">Total SDLT Payable</div>
+        <div class="sdlt-kpi-val sdlt-kpi-val--blue">£{{stampDutyLandTax | number:'1.0-0'}}</div>
+        <div class="sdlt-kpi-note">{{purchaseTypeLabel}}</div>
+      </div>
     </div>
 
-    <!-- Effective Rate -->
-    <div class="sdlt-rp-kpi">
-      <div class="sdlt-rp-kpi-lbl">Effective Rate</div>
-      <div class="sdlt-rp-kpi-icon" style="background:rgba(34,197,94,0.1)">
-        <svg width="30" height="30" viewBox="0 0 48 48" fill="none">
-          <circle cx="24" cy="24" r="18" stroke="#22c55e" stroke-width="2" fill="rgba(34,197,94,0.08)"/>
-          <path d="M16 32L32 16M18 18a2 2 0 100-4 2 2 0 000 4zM30 34a2 2 0 100-4 2 2 0 000 4z" stroke="#22c55e" stroke-width="2" stroke-linecap="round"/>
-        </svg>
+    <!-- Effective Tax Rate -->
+    <div class="sdlt-kpi">
+      <div class="sdlt-kpi-icon">
+        <div class="sdlt-kpi-icon-blob1"></div>
+        <div class="sdlt-kpi-icon-blob2"></div>
+        <img src="/assets/e05ee0722794d292aa2425d31377ffb8ffad90fe.png" alt="Effective Rate">
       </div>
-      <div class="sdlt-rp-kpi-val">{{effectiveRate}}%</div>
-      <div class="sdlt-rp-kpi-note">Of property value</div>
-    </div>
-
-    <!-- Foreign Buyer Surcharge -->
-    <div class="sdlt-rp-kpi">
-      <div class="sdlt-rp-kpi-lbl">Foreign Buyer Surcharge</div>
-      <div class="sdlt-rp-kpi-icon" style="background:rgba(251,191,36,0.1)">
-        <svg width="30" height="30" viewBox="0 0 48 48" fill="none">
-          <path d="M24 8l3.5 9h9.5l-8 5.5 3 9.5-8-5.5-8 5.5 3-9.5-8-5.5h9.5z" stroke="#fbbf24" stroke-width="2" fill="rgba(251,191,36,0.1)" stroke-linejoin="round"/>
-        </svg>
+      <div class="sdlt-kpi-inner">
+        <div class="sdlt-kpi-lbl">Effective Tax Rate</div>
+        <div class="sdlt-kpi-val">{{effectiveRate}}%</div>
+        <div class="sdlt-kpi-note">On £{{calcData?.PropertyValue | number:'1.0-0'}} property</div>
       </div>
-      <div class="sdlt-rp-kpi-val">£{{foreignSurcharge | number:'1.0-0'}}</div>
-      <div class="sdlt-rp-kpi-note">{{calcData?.ForeignBuyer==='1' ? '2% foreign surcharge' : 'Not applicable'}}</div>
     </div>
 
   </div>
 
   <!-- ══ BODY ══ -->
-  <div class="sdlt-rp-body">
+  <div class="sdlt-body">
 
     <!-- Your Assumptions -->
-    <div class="sdlt-rp-card">
-      <div class="sdlt-rp-card-title">Your Assumptions</div>
-      <div class="sdlt-rp-card-sub">All assumptions used in this calculation</div>
-      <div class="sdlt-arow">
-        <span class="sdlt-arow-lbl">Property Value</span>
-        <span class="sdlt-arow-val">£{{calcData?.PropertyValue | number:'1.0-0'}}</span>
+    <div class="sdlt-card">
+      <div class="sdlt-card-head">
+        <div class="sdlt-card-title">Your Assumptions</div>
+        <div class="sdlt-card-sub">All assumptions used in this calculation</div>
       </div>
-      <div class="sdlt-arow">
-        <span class="sdlt-arow-lbl">Purchase Type</span>
-        <span class="sdlt-arow-val">{{purchaseTypeLabel}}</span>
-      </div>
-      <div class="sdlt-arow">
-        <span class="sdlt-arow-lbl">Foreign Buyer</span>
-        <span class="sdlt-arow-val">{{calcData?.ForeignBuyer==='1' ? 'Yes (+2%)' : 'No'}}</span>
-      </div>
-      <div class="sdlt-arow">
-        <span class="sdlt-arow-lbl">Effective Rate</span>
-        <span class="sdlt-arow-val">{{effectiveRate}}%</span>
+      <div class="sdlt-card-inner">
+        <div class="sdlt-arow">
+          <span class="sdlt-arow-lbl">Property Value</span>
+          <span class="sdlt-arow-val">£{{calcData?.PropertyValue | number:'1.0-0'}}</span>
+        </div>
+        <div class="sdlt-arow">
+          <span class="sdlt-arow-lbl">Type</span>
+          <span class="sdlt-arow-val">{{purchaseTypeLabel}}</span>
+        </div>
+        <div class="sdlt-arow">
+          <span class="sdlt-arow-lbl">Foreign</span>
+          <span class="sdlt-arow-val">{{calcData?.ForeignBuyer==='1' ? 'Yes (+2%)' : 'No'}}</span>
+        </div>
       </div>
     </div>
 
-    <!-- SDLT Band Breakdown -->
-    <div class="sdlt-rp-card">
-      <div class="sdlt-rp-card-title">SDLT Band Breakdown</div>
-      <div class="sdlt-rp-card-sub">How UK Stamp Duty Land Tax is calculated across each band</div>
-      <div class="sdlt-table-wrap">
-        <table class="sdlt-band-tbl">
+    <!-- Band-by-Band Breakdown -->
+    <div class="sdlt-card">
+      <div class="sdlt-card-head">
+        <div class="sdlt-card-title">Band-by-Band Breakdown</div>
+      </div>
+      <div class="sdlt-tbl-wrap">
+        <table class="sdlt-tbl">
           <thead>
             <tr>
-              <th>Tax Band</th>
+              <th>Band</th>
               <th>Rate</th>
               <th>Taxable Amount</th>
-              <th>Tax Due</th>
+              <th>Tax</th>
             </tr>
           </thead>
           <tbody>
@@ -112,7 +102,7 @@
               <td>{{b.band}}</td>
               <td>{{b.rate}}%</td>
               <td>£{{b.taxable | number:'1.0-0'}}</td>
-              <td [class.sdlt-td-green]="b.due > 0" [class.sdlt-td-dim]="b.due === 0">£{{b.due | number:'1.0-0'}}</td>
+              <td class="sdlt-td-green">£{{b.due | number:'1.0-0'}}</td>
             </tr>
             <tr *ngIf="additionalSurcharge > 0">
               <td>Additional Dwelling Surcharge</td>
@@ -126,84 +116,30 @@
               <td>£{{calcData?.PropertyValue | number:'1.0-0'}}</td>
               <td class="sdlt-td-green">£{{foreignSurcharge | number:'1.0-0'}}</td>
             </tr>
+          </tbody>
+          <tfoot>
             <tr class="sdlt-tbl-total">
-              <td colspan="3">Total SDLT Payable</td>
+              <td colspan="3">Total SDLT</td>
               <td>£{{stampDutyLandTax | number:'1.0-0'}}</td>
             </tr>
-          </tbody>
+          </tfoot>
         </table>
-      </div>
-    </div>
-
-    <!-- Full Summary -->
-    <div class="sdlt-rp-card">
-      <div class="sdlt-rp-card-title">Full Summary</div>
-      <div class="sdlt-rp-card-sub">Complete cost breakdown for your purchase</div>
-      <div class="sdlt-summary-grid">
-        <!-- Cost Breakdown -->
-        <div class="sdlt-summary-col">
-          <div class="sdlt-summary-col-header">Cost Breakdown</div>
-          <div class="sdlt-srow">
-            <span class="sdlt-srow-lbl">Property Price</span>
-            <span class="sdlt-srow-val">£{{calcData?.PropertyValue | number:'1.0-0'}}</span>
-          </div>
-          <div class="sdlt-srow">
-            <span class="sdlt-srow-lbl">Standard SDLT</span>
-            <span class="sdlt-srow-val sdlt-srow-val--green">£{{baseSdlt | number:'1.0-0'}}</span>
-          </div>
-          <div class="sdlt-srow" *ngIf="additionalSurcharge > 0">
-            <span class="sdlt-srow-lbl">Additional Surcharge (+5%)</span>
-            <span class="sdlt-srow-val sdlt-srow-val--green">£{{additionalSurcharge | number:'1.0-0'}}</span>
-          </div>
-          <div class="sdlt-srow" *ngIf="calcData?.ForeignBuyer==='1'">
-            <span class="sdlt-srow-lbl">Foreign Surcharge (+2%)</span>
-            <span class="sdlt-srow-val sdlt-srow-val--green">£{{foreignSurcharge | number:'1.0-0'}}</span>
-          </div>
-          <div class="sdlt-srow sdlt-srow--total">
-            <span class="sdlt-srow-lbl sdlt-srow-lbl--total">Total Due</span>
-            <span class="sdlt-srow-val sdlt-srow-val--green sdlt-srow-val--lg">£{{stampDutyLandTax | number:'1.0-0'}}</span>
-          </div>
-        </div>
-        <!-- What's Included -->
-        <div class="sdlt-summary-col">
-          <div class="sdlt-summary-col-header">What's Included</div>
-          <div class="sdlt-srow">
-            <span class="sdlt-srow-lbl">Total Property Cost</span>
-            <span class="sdlt-srow-val">£{{(+calcData?.PropertyValue + stampDutyLandTax) | number:'1.0-0'}}</span>
-          </div>
-          <div class="sdlt-srow">
-            <span class="sdlt-srow-lbl">SDLT as % of Price</span>
-            <span class="sdlt-srow-val">{{effectiveRate}}%</span>
-          </div>
-          <div class="sdlt-srow">
-            <span class="sdlt-srow-lbl">SDLT Due Date</span>
-            <span class="sdlt-srow-val">Within 14 days</span>
-          </div>
-          <div class="sdlt-srow">
-            <span class="sdlt-srow-lbl">Residency Status</span>
-            <span class="sdlt-srow-val">{{calcData?.ForeignBuyer==='1' ? 'Non-UK Resident' : 'UK Resident'}}</span>
-          </div>
-          <div class="sdlt-srow">
-            <span class="sdlt-srow-lbl">Purchase Type</span>
-            <span class="sdlt-srow-val">{{purchaseTypeLabel}}</span>
-          </div>
-        </div>
       </div>
     </div>
 
   </div>
 
   <!-- ══ STICKY FOOTER ══ -->
-  <div class="sdlt-rp-footer noprint">
-    <a [routerLink]="['/stamp-duty-calculator/question']" class="sdlt-rfb sdlt-rfb--back">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+  <div class="rp-footer noprint">
+    <a [routerLink]="['/stamp-duty-calculator/question']" class="rp-footer-btn rp-footer-back">
+      <img src="/assets/Icon (1).svg" width="8" height="14" alt="">
       Back
     </a>
-    <button class="sdlt-rfb sdlt-rfb--share" (click)="emailpopup()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+    <button class="rp-footer-btn rp-footer-share" (click)="emailpopup()">
+      <img src="/assets/Icon.svg" width="15" height="15" alt="">
       Share
     </button>
-    <button class="sdlt-rfb sdlt-rfb--recalc" (click)="startagain()">Recalculate</button>
+    <button class="rp-footer-btn rp-footer-recalc" (click)="startagain()">Recalculate</button>
   </div>
 
 </div>

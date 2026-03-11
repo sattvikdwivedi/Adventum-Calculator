@@ -139,7 +139,7 @@
         <div class="cg-label">Home Currency</div>
         <div class="cg-custom-select" [class.cg-custom-select--open]="currencyDropdownOpen">
           <div class="cg-custom-trigger" (click)="currencyDropdownOpen=!currencyDropdownOpen">
-            <span [class.cg-custom-placeholder]="!homecurrencyText">{{selectedCurrencyName}}</span>
+            <span [class.cg-custom-placeholder]="!homecurrencyText">{{homecurrencyText ? selectedCurrencyName + ' (' + homecurrencyText + ')' : 'Select currency'}}</span>
             <svg class="cg-custom-arrow" width="12" height="8" viewBox="0 0 12 8" fill="none"><path d="M1 1l5 5 5-5" stroke="#9ca3af" stroke-width="1.5" stroke-linecap="round"/></svg>
           </div>
           <div class="cg-custom-dropdown" *ngIf="currencyDropdownOpen">
@@ -152,7 +152,8 @@
                 class="cg-custom-option"
                 [class.cg-custom-option--selected]="c.code===homecurrencyText"
                 (click)="selectCurrency(c.code)">
-                {{c.name}}
+                <span class="cg-cdd-name">{{c.name}}</span>
+                <span class="cg-cdd-code">{{c.code}}</span>
               </div>
               <div *ngIf="filteredCurrencies.length===0" class="cg-custom-empty">No results</div>
             </div>

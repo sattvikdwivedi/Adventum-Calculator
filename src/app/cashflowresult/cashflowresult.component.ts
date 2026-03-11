@@ -527,8 +527,37 @@ export class CashflowresultComponent implements OnInit, AfterViewInit {
     });
   }
 
+  formatCurrency(value: number, currencyCode: string): string {
+    if (value === null || value === undefined || isNaN(value)) return '0';
+    const sym = currencyCode === 'INR' ? '₹' : (currencyCode || '');
+    const abs = Math.abs(value);
+    let formatted: string;
+    if (currencyCode === 'INR') {
+      if (abs >= 1e7) {
+        formatted = (abs / 1e7).toFixed(2).replace(/\.?0+$/, '') + ' Cr';
+      } else if (abs >= 1e5) {
+        formatted = (abs / 1e5).toFixed(2).replace(/\.?0+$/, '') + ' L';
+      } else {
+        formatted = Math.round(abs).toLocaleString('en-IN');
+      }
+    } else if (abs >= 1e9) {
+      formatted = (abs / 1e9).toFixed(2).replace(/\.?0+$/, '') + 'B';
+    } else if (abs >= 1e6) {
+      formatted = (abs / 1e6).toFixed(2).replace(/\.?0+$/, '') + 'M';
+    } else {
+      formatted = Math.round(abs).toLocaleString('en-US');
+    }
+    return (value < 0 ? '-' : '') + sym + formatted;
+  }
+
   makePositive(value){
     return Math.abs(value);
+  }
+
+  getBarHeight(cashFlow: number): number {
+    const maxCashFlow = Math.max(...this.cashflowdata.map((r: any) => Math.abs(r.CashFlow)));
+    if (maxCashFlow === 0) return 4;
+    return Math.max(4, Math.round((Math.abs(cashFlow) / maxCashFlow) * 186));
   }
   ReturnIRR(InitialInvestMent: number, index: number): number {
     let cashFlow = [];

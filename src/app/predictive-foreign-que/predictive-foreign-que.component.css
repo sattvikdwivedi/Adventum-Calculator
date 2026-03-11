@@ -19,14 +19,15 @@
 .pfx-panel-left-photo {
   position: absolute;
   inset: 0;
-  background: url('/assets/Image_calci.png') center/cover no-repeat;
-  background-color: #050e1f;
-  opacity: 0.18;
+  background: url('/assets/Image_calci.png') center top/cover no-repeat;
+  background-color: #000;
 }
 .pfx-panel-left-overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(to top, rgba(5,14,31,0.97) 0%, rgba(10,26,53,0.5) 60%, rgba(5,14,31,0.3) 100%);
+  background:
+    linear-gradient(180deg, rgba(0,24,88,0) 0%, rgba(0,0,0,1) 63%),
+    linear-gradient(180deg, rgba(0,24,88,0.35) 0%, rgba(0,0,0,0.35) 100%);
 }
 .pfx-panel-left-inner {
   position: relative;
@@ -35,7 +36,6 @@
   flex-direction: column;
   height: 100%;
   padding: 36px 40px;
-  background: linear-gradient(160deg, #050e1f 0%, #0a1a35 45%, #0d1f40 100%);
 }
 
 /* Logo */
@@ -270,25 +270,96 @@
 .pfx-inp[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
 .pfx-inp[type="number"] { -moz-appearance: textfield; }
 
-/* Native select */
-.pfx-sel {
+/* Custom Currency Dropdown */
+.pfx-custom-select { position: relative; }
+.pfx-custom-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
-  padding: 13px 40px 13px 16px;
+  padding: 14px 16px;
   border: 1.5px solid #e5e7eb;
   border-radius: 12px;
   font-size: 15px;
   font-weight: 500;
   color: #132147;
   font-family: 'Inter', sans-serif;
-  appearance: none;
-  -webkit-appearance: none;
-  background: #fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%239ca3af' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E") no-repeat right 16px center;
+  background: #fff;
   outline: none;
-  transition: border-color 0.2s;
   cursor: pointer;
-  height: 50px;
+  transition: border-color 0.2s;
+  text-align: left;
 }
-.pfx-sel:focus { border-color: #132147; }
+.pfx-custom-select--open .pfx-custom-trigger,
+.pfx-custom-trigger:hover { border-color: #132147; }
+.pfx-custom-placeholder { color: #9ca3af; font-weight: 400; }
+.pfx-custom-arrow {
+  flex-shrink: 0;
+  color: #9ca3af;
+  margin-left: 8px;
+  transition: transform 0.2s;
+}
+.pfx-custom-select--open .pfx-custom-arrow { transform: rotate(180deg); }
+.pfx-custom-dropdown {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: #fff;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  z-index: 9999;
+  overflow: hidden;
+}
+.pfx-custom-search-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-bottom: 1px solid #f3f4f6;
+  background: #f9fafb;
+  color: #9ca3af;
+}
+.pfx-custom-search-input {
+  flex: 1;
+  border: none;
+  outline: none;
+  background: transparent;
+  font-size: 13px;
+  color: #132147;
+  font-family: 'Inter', sans-serif;
+}
+.pfx-custom-search-input::placeholder { color: #9ca3af; }
+.pfx-custom-list { max-height: 240px; overflow-y: auto; }
+.pfx-custom-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 11px 16px;
+  cursor: pointer;
+  transition: background 0.15s;
+  border-bottom: 1px solid #f9fafb;
+}
+.pfx-custom-item:hover { background: #f3f4f6; }
+.pfx-custom-item--selected { background: #f0fdf4; }
+.pfx-custom-item--selected .pfx-cdd-name { color: #132147; font-weight: 600; }
+.pfx-custom-item--selected .pfx-cdd-code { color: #16a34a; }
+.pfx-cdd-name { font-size: 14px; font-weight: 500; color: #132147; }
+.pfx-cdd-code {
+  font-size: 12px;
+  font-weight: 600;
+  color: #9ca3af;
+  background: #f3f4f6;
+  padding: 2px 8px;
+  border-radius: 50px;
+}
+.pfx-custom-empty {
+  padding: 16px;
+  text-align: center;
+  font-size: 13px;
+  color: #9ca3af;
+}
 
 /* Period pills */
 .pfx-period-row {

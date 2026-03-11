@@ -27,6 +27,8 @@ export class CapitalGrowthResultComponent implements OnInit,AfterViewInit {
   propertyValue=0;
   propertyValueHomeCurrency=0;
   yearArray=[];
+  gbpValuesArray: number[] = [];
+  homeCurrencyValuesArray: number[] = [];
   loadingPrintbtn=false;
   loadingDownloadbtn=false;
   loadingSharebtn=false;
@@ -50,9 +52,11 @@ export class CapitalGrowthResultComponent implements OnInit,AfterViewInit {
     for (let i = 0; i < parseInt(this.calcData.investedTenure); i++){
       this.calculatedCapitalGrowth += parseFloat((this.calculatedCapitalGrowth * parseInt(this.calcData.capitalgrowth) / 100).toFixed(4));
       this.calculatedCapitalGrowtharray.push(parseFloat((((this.calculatedCapitalGrowth-this.propertyValue)/this.propertyValue)*100).toFixed(4)));
+      this.gbpValuesArray.push(parseFloat(this.calculatedCapitalGrowth.toFixed(2)));
       this.homeCurrencyFXGrowth=parseFloat((this.homeCurrencyFXGrowth+(this.homeCurrencyFXGrowth*parseFloat(this.calcData.fxgrowth)/100)).toFixed(4));
       this.CaptitalGrowthinHomeCurrencyArray.push(parseFloat(((((this.calculatedCapitalGrowth*this.homeCurrencyFXGrowth)-this.propertyValueHomeCurrency)/this.propertyValueHomeCurrency)*100).toFixed(4)));
       this.CaptitalGrowthinHomeCurrency=parseFloat((this.calculatedCapitalGrowth*this.homeCurrencyFXGrowth).toFixed(4));
+      this.homeCurrencyValuesArray.push(this.CaptitalGrowthinHomeCurrency);
       this.yearArray.push(i+1);
     }
     this.yearArray.push(this.yearArray.length+1);
@@ -138,6 +142,29 @@ export class CapitalGrowthResultComponent implements OnInit,AfterViewInit {
     else {
       this.router.navigateByUrl('/login?ref=/capital-growth-calculator/result');
     }
+  }
+
+  formatCurrency(value: number, currencyCode: string): string {
+    if (value === null || value === undefined || isNaN(value)) return '0';
+    const sym = currencyCode === 'INR' ? '₹' : (currencyCode || '');
+    const abs = Math.abs(value);
+    let formatted: string;
+    if (currencyCode === 'INR') {
+      if (abs >= 1e7) {
+        formatted = (abs / 1e7).toFixed(2).replace(/\.?0+$/, '') + ' Cr';
+      } else if (abs >= 1e5) {
+        formatted = (abs / 1e5).toFixed(2).replace(/\.?0+$/, '') + ' L';
+      } else {
+        formatted = Math.round(abs).toLocaleString('en-IN');
+      }
+    } else if (abs >= 1e9) {
+      formatted = (abs / 1e9).toFixed(2).replace(/\.?0+$/, '') + 'B';
+    } else if (abs >= 1e6) {
+      formatted = (abs / 1e6).toFixed(2).replace(/\.?0+$/, '') + 'M';
+    } else {
+      formatted = Math.round(abs).toLocaleString('en-US');
+    }
+    return (value < 0 ? '-' : '') + sym + formatted;
   }
 
   convetToPDF() {

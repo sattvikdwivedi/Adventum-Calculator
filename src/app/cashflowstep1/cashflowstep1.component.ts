@@ -11,6 +11,7 @@ import { ValidationService } from '../validation.service';
 export class CashflowStep1Component implements OnInit {
   City: string = '';
   Pincode: string = '';
+  searchQuery: string = '';
   PropertyValue: string = '';
   loanAmount: string = '75';
   foreignbuyer: string = '1';

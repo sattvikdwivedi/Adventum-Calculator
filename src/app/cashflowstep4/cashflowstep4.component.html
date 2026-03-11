@@ -57,142 +57,128 @@
         </div>
       </div>
 
-      <!-- Progress bar -->
-      <div class="progress-wrap">
-        <progress-bar
-          [progress]="75+(foreignbuyer!=''?4.168:0)+(stampDutyLandTax!=''?4.168:0)+(loanOriginationFee!=''?4.168:0)+(letteingManagFee!=''?4.168:0)+(groundRent!=''?4.168:0)+(serviceCharges!=''?4.168:0)"
-          [color]="'#22c55e'">
-        </progress-bar>
-        <span class="progress-label">
-          {{75+(foreignbuyer!=''?4.168:0)+(stampDutyLandTax!=''?4.168:0)+(loanOriginationFee!=''?4.168:0)+(letteingManagFee!=''?4.168:0)+(groundRent!=''?4.168:0)+(serviceCharges!=''?4.168:0)+(miscelleneousExpense!=''?4.168:0) | number:'1.0-0'}}% data received
-        </span>
-      </div>
-
       <!-- Heading -->
-      <h2 class="section-title">Costs &amp; Expenses</h2>
-      <p class="section-sub">Stamp duty is auto-calculated from your property value.</p>
-
-      <!-- Foreign Buyer -->
-      <div class="field">
-        <div class="field-label">Are You a Foreign (Non-UK Resident) Buyer?</div>
-        <div class="toggle-pair">
-          <button class="toggle-opt" [class.active]="foreignbuyer==='1'" (click)="foreignbuyer='1'; calculatestampduty()">Yes</button>
-          <button class="toggle-opt" [class.active]="foreignbuyer==='0'" (click)="foreignbuyer='0'; calculatestampduty()">No</button>
-        </div>
-        <p class="field-sublabel" *ngIf="foreignbuyer==='1'">Non-UK residents are subject to a 2% SDLT surcharge.</p>
+      <div class="section-heading-block">
+        <h2 class="section-title">Costs &amp; Expenses</h2>
+        <p class="section-sub">Stamp duty is auto-calculated from your property value.</p>
       </div>
 
-      <!-- SDLT Banner -->
-      <div class="sdlt-banner" *ngIf="foreignbuyer!='' && stampDutyLandTax!=''">
-        <div class="sdlt-banner-left">
-          <h4>Stamp Duty &amp; Land Tax</h4>
-          <p>{{foreignbuyer==='1' ? 'Incl. 2% foreign buyer surcharge' : 'Standard investment rates'}}</p>
-        </div>
-        <div class="sdlt-banner-val">£{{stampDutyLandTax}}</div>
-      </div>
+      <!-- ── UPFRONT COSTS ── -->
+      <div class="cost-group">
+        <div class="cost-group-label">Upfront Costs (one-time)</div>
 
-      <!-- Stamp Duty editable -->
-      <div class="field" [@asfirst]="foreignbuyer!=''?'visible':'hide'">
-        <div class="field-label-row">
-          <span class="field-label">Stamp Duty &amp; Land Tax</span>
-          <span class="field-hint">Auto-calculated · investment rate</span>
+        <!-- Loan Origination Fee (only if mortgage) -->
+        <div class="fields-row" *ngIf="calcData.optmortgage!='0'">
+          <div class="field-col">
+            <div class="field-lbl">Loan Origination Fee</div>
+            <div class="input-card">
+              <input class="inp-card-val" type="text" id="loanOriginationFee" autocomplete="off"
+                (keyup)="loanOriginationFee=validation.appendPercent($event,loanOriginationFee)"
+                (keypress)="validation.DesimalOnly($event,loanOriginationFee)"
+                [(ngModel)]="loanOriginationFee"
+                placeholder="e.g. 1">
+              <span class="inp-card-unit">%</span>
+            </div>
+            <div class="field-hint-sub">% of loan amount</div>
+          </div>
         </div>
-        <div class="input-wrap">
-          <span class="input-pre">£</span>
-          <input class="inp" type="text" id="stampDutyLandTax" autocomplete="off"
-            (keyup)="stampDutyLandTax=validation.amountWithComma(stampDutyLandTax)"
-            (keypress)="validation.numberOnly($event)"
-            [(ngModel)]="stampDutyLandTax"
-            placeholder="Auto-calculated">
-        </div>
-      </div>
 
-      <!-- Loan Origination Fee (only if mortgage) -->
-      <div class="field" [@afsfirst]="stampDutyLandTax!='' && foreignbuyer!='' && calcData.optmortgage!='0'?'visible':'hide'">
-        <div class="field-label-row">
-          <span class="field-label">Loan Origination Fee</span>
-          <span class="field-hint">% of loan amount</span>
+        <!-- SDLT Banner -->
+        <div class="sdlt-banner" *ngIf="foreignbuyer!='' && stampDutyLandTax!=''">
+          <div class="sdlt-banner-left">
+            <div class="sdlt-banner-title">Stamp Duty &amp; Land Tax</div>
+            <div class="sdlt-banner-sub">{{foreignbuyer==='1' ? '(incl. 2% foreign buyer surcharge)' : 'Standard investment rates'}}</div>
+          </div>
+          <div class="sdlt-banner-val-card">£{{stampDutyLandTax}}</div>
         </div>
-        <div class="input-wrap">
-          <span class="input-pre">%</span>
-          <input class="inp" type="text" id="loanOriginationFee" autocomplete="off"
-            (keyup)="loanOriginationFee=validation.appendPercent($event,loanOriginationFee)"
-            (keypress)="validation.DesimalOnly($event,loanOriginationFee)"
-            [(ngModel)]="loanOriginationFee"
-            placeholder="e.g. 1">
+
+        <!-- Hidden editable SDLT (keeps validation working) -->
+        <input type="hidden" id="stampDutyLandTax" [(ngModel)]="stampDutyLandTax">
+
+        <!-- Foreign Buyer -->
+        <div class="foreign-section">
+          <div class="field-lbl">Foreign Buyer?</div>
+          <div class="toggle-cards-row">
+            <button class="toggle-card" [class.active]="foreignbuyer==='1'" (click)="foreignbuyer='1'; calculatestampduty()">Yes</button>
+            <button class="toggle-card" [class.dim]="foreignbuyer==='0' || foreignbuyer===''" (click)="foreignbuyer='0'; calculatestampduty()">No</button>
+          </div>
+          <div class="tax-alert" *ngIf="foreignbuyer==='1'">
+            <div class="tax-alert-title">Tax Alert</div>
+            <p class="tax-alert-body">Non-UK residents are subject to a 2% SDLT surcharge. This has been factored into your stamp duty estimate.</p>
+          </div>
         </div>
       </div>
 
-      <!-- Lettings Fee -->
-      <div class="field" [@assfirst]="loanOriginationFee!='' && foreignbuyer!=''?'visible':'hide'">
-        <div class="field-label-row">
-          <span class="field-label">Lettings Management Fee p.a.</span>
-          <span class="field-hint">{{PropertyLondon == 1 ? '12% typical' : '10% typical'}}</span>
-        </div>
-        <div class="input-wrap">
-          <span class="input-pre">%</span>
-          <input class="inp" type="text" id="letteingManagFee" autocomplete="off"
-            (keyup)="letteingManagFee=validation.appendPercent($event,letteingManagFee)"
-            (keypress)="validation.DesimalOnly($event,letteingManagFee)"
-            [(ngModel)]="letteingManagFee"
-            placeholder="e.g. {{PropertyLondon == 1 ? '12' : '10'}}">
-        </div>
-      </div>
+      <!-- ── ANNUAL RECURRING COSTS ── -->
+      <div class="cost-group">
+        <div class="cost-group-label">Annual Recurring Costs</div>
 
-      <!-- Ground Rent -->
-      <div class="field" [@affirst]="letteingManagFee!='' && foreignbuyer!=''?'visible':'hide'">
-        <div class="field-label-row">
-          <span class="field-label">Ground Rent p.a.</span>
-          <span class="field-hint">{{PropertyLondon == 1 ? '£500 typical' : '£350 typical'}}</span>
-        </div>
-        <div class="input-wrap">
-          <span class="input-pre">£</span>
-          <input class="inp" type="text" id="groundRent" autocomplete="off"
-            [(ngModel)]="groundRent"
-            (keyup)="groundRent=validation.amountWithComma(groundRent)"
-            (keypress)="validation.numberOnly($event)"
-            placeholder="e.g. {{PropertyLondon == 1 ? '500' : '350'}}">
-        </div>
-      </div>
+        <div class="fields-row">
+          <!-- Letting Management -->
+          <div class="field-col">
+            <div class="field-lbl">Letting Management</div>
+            <div class="input-card">
+              <input class="inp-card-val" type="text" id="letteingManagFee" autocomplete="off"
+                (keyup)="letteingManagFee=validation.appendPercent($event,letteingManagFee)"
+                (keypress)="validation.DesimalOnly($event,letteingManagFee)"
+                [(ngModel)]="letteingManagFee"
+                placeholder="e.g. {{PropertyLondon == 1 ? '12' : '10'}}">
+              <span class="inp-card-unit">%</span>
+            </div>
+            <div class="field-hint-sub">% of gross rent</div>
+          </div>
 
-      <!-- Service Charges -->
-      <div class="field" [@asfirst]="letteingManagFee!='' && foreignbuyer!=''?'visible':'hide'">
-        <div class="field-label-row">
-          <span class="field-label">Service Charges p.a.</span>
-          <span class="field-hint">{{PropertyLondon == 1 ? '£3,000 typical' : '£1,000 typical'}}</span>
-        </div>
-        <div class="input-wrap">
-          <span class="input-pre">£</span>
-          <input class="inp" type="text" id="serviceCharges" autocomplete="off"
-            [(ngModel)]="serviceCharges"
-            (keyup)="serviceCharges=validation.amountWithComma(serviceCharges)"
-            (keypress)="validation.numberOnly($event)"
-            placeholder="e.g. {{PropertyLondon == 1 ? '3,000' : '1,000'}}">
-        </div>
-      </div>
+          <!-- Ground Rent -->
+          <div class="field-col">
+            <div class="field-lbl">Ground Rent p.a.</div>
+            <div class="input-card">
+              <span class="inp-card-prefix">£</span>
+              <input class="inp-card-val" type="text" id="groundRent" autocomplete="off"
+                [(ngModel)]="groundRent"
+                (keyup)="groundRent=validation.amountWithComma(groundRent)"
+                (keypress)="validation.numberOnly($event)"
+                placeholder="e.g. {{PropertyLondon == 1 ? '500' : '350'}}">
+            </div>
+          </div>
 
-      <!-- Other Expenses -->
-      <div class="field" [@atfirst]="letteingManagFee!='' && foreignbuyer!=''?'visible':'hide'">
-        <div class="field-label">Other Expenses p.a.</div>
-        <div class="input-wrap">
-          <span class="input-pre">£</span>
-          <input class="inp" type="text" id="miscelleneousExpense" autocomplete="off"
-            [(ngModel)]="miscelleneousExpense"
-            (keyup)="miscelleneousExpense=validation.amountWithComma(miscelleneousExpense)"
-            (keypress)="validation.numberOnly($event)"
-            placeholder="e.g. 1,000">
+          <!-- Service Charges -->
+          <div class="field-col">
+            <div class="field-lbl">Service Charges p.a.</div>
+            <div class="input-card">
+              <span class="inp-card-prefix">£</span>
+              <input class="inp-card-val" type="text" id="serviceCharges" autocomplete="off"
+                [(ngModel)]="serviceCharges"
+                (keyup)="serviceCharges=validation.amountWithComma(serviceCharges)"
+                (keypress)="validation.numberOnly($event)"
+                placeholder="e.g. {{PropertyLondon == 1 ? '3,000' : '1,000'}}">
+            </div>
+          </div>
+        </div>
+
+        <div class="fields-row fields-row--single">
+          <!-- Other Expenses -->
+          <div class="field-col">
+            <div class="field-lbl">Other Expenses p.a.</div>
+            <div class="input-card">
+              <span class="inp-card-prefix">£</span>
+              <input class="inp-card-val" type="text" id="miscelleneousExpense" autocomplete="off"
+                [(ngModel)]="miscelleneousExpense"
+                (keyup)="miscelleneousExpense=validation.amountWithComma(miscelleneousExpense)"
+                (keypress)="validation.numberOnly($event)"
+                placeholder="e.g. 1,000">
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- Nav buttons -->
       <div class="panel-actions" *ngIf="stampDutyLandTax!=''">
-        <button class="btn-back" [routerLink]="['/cashflow/step3']">
+        <button class="btn-action btn-back-action" [routerLink]="['/cashflow/step3']">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
           Back
         </button>
-        <button class="btn-calculate" type="button" (click)="next()">
+        <button class="btn-action btn-calculate" type="button" (click)="next()">
           Calculate Returns
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>
       </div>
 

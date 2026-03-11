@@ -17,7 +17,7 @@
           Back
         </button>
         <button class="cgr-btn-sm" (click)="emailpopup()">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+          <img src="/assets/Icon.svg" width="14" height="14" alt="">
           Share
         </button>
         <button class="cgr-btn-green" (click)="startagain()">Recalculate</button>
@@ -30,44 +30,43 @@
 
     <!-- KPI 1: Total Return % (featured) -->
     <div class="cgr-kpi cgr-kpi--featured">
-      <div class="cgr-kpi-lbl">Total {{calcData?.homecurrencyText}} Return</div>
-      <div class="cgr-kpi-icon" style="background:rgba(59,130,246,0.15)">
-        <svg width="26" height="26" viewBox="0 0 48 48" fill="none">
-          <path d="M8 40V24l8-8 8 8 8-12 8 8v20H8z" fill="#132147" opacity="0.4"/>
-          <path d="M10 38V26l6-6 8 8 8-12 6 6v16" stroke="#6b9fd4" stroke-width="2.5" fill="none"/>
-          <circle cx="36" cy="16" r="3" fill="#6b9fd4"/>
-        </svg>
+      <div class="cgr-kpi__icon-wrap">
+        <div class="cgr-icon-blob1"></div>
+        <div class="cgr-icon-blob2"></div>
+        <img src="/assets/7c900b49323732ed7b943a957d4c6d2d6807882d.png" alt="">
       </div>
-      <div class="cgr-kpi-val">{{CaptitalGrowthinHomeCurrencyArray[CaptitalGrowthinHomeCurrencyArray.length-1]?.toFixed(1)}}%</div>
-      <div class="cgr-kpi-note">Over {{investedTenure}} Years</div>
+      <div class="cgr-kpi__inner">
+        <div class="cgr-kpi-lbl">Total {{calcData?.homecurrencyText}} Return</div>
+        <div class="cgr-kpi-val">{{CaptitalGrowthinHomeCurrencyArray[CaptitalGrowthinHomeCurrencyArray.length-1]?.toFixed(1)}}%</div>
+        <div class="cgr-kpi-note">Over {{investedTenure}} Years</div>
+      </div>
     </div>
 
     <!-- KPI 2: Initial Investment -->
     <div class="cgr-kpi">
-      <div class="cgr-kpi-lbl">Initial (GBP)</div>
-      <div class="cgr-kpi-icon" style="background:rgba(34,197,94,0.12)">
-        <svg width="30" height="30" viewBox="0 0 24 24" fill="none"><text x="2" y="19" font-size="20" font-weight="700" fill="#22c55e" font-family="serif">£</text></svg>
+      <div class="cgr-kpi__icon-wrap">
+        <div class="cgr-icon-blob1"></div>
+        <div class="cgr-icon-blob2"></div>
+        <img src="/assets/02865e515a68234b6da6ed9c0adb3c6fa9ff612f.png" alt="">
       </div>
-      <div class="cgr-kpi-val">{{propertyValue | currency:'GBP':'symbol':'1.0-0'}}</div>
-      <div class="cgr-kpi-note">
-        <span *ngIf="calcData?.homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(propertyValueHomeCurrency | number:'1.0-0')}}</span>
-        <span *ngIf="calcData?.homecurrencyText!='INR'">{{propertyValueHomeCurrency | currency:calcData?.homecurrencyText:'symbol':'1.0-0'}}</span>
+      <div class="cgr-kpi__inner">
+        <div class="cgr-kpi-lbl">Initial (GBP)</div>
+        <div class="cgr-kpi-val">{{propertyValue | currency:'GBP':'symbol':'1.0-0'}}</div>
+        <div class="cgr-kpi-note">{{formatCurrency(propertyValueHomeCurrency, calcData?.homecurrencyText)}}</div>
       </div>
     </div>
 
     <!-- KPI 3: Exit Value -->
     <div class="cgr-kpi">
-      <div class="cgr-kpi-lbl">Exit (GBP)</div>
-      <div class="cgr-kpi-icon" style="background:rgba(34,197,94,0.12)">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#22c55e" stroke-width="1.8">
-          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
-          <polyline points="17 6 23 6 23 12"/>
-        </svg>
+      <div class="cgr-kpi__icon-wrap">
+        <div class="cgr-icon-blob1"></div>
+        <div class="cgr-icon-blob2"></div>
+        <img src="/assets/02865e515a68234b6da6ed9c0adb3c6fa9ff612f.png" alt="">
       </div>
-      <div class="cgr-kpi-val">{{calculatedCapitalGrowth | currency:'GBP':'symbol':'1.0-0'}}</div>
-      <div class="cgr-kpi-note">
-        <span *ngIf="calcData?.homecurrencyText=='INR'">₹{{validation.amountWithLakhComma(CaptitalGrowthinHomeCurrency | number:'1.0-0')}}</span>
-        <span *ngIf="calcData?.homecurrencyText!='INR'">{{CaptitalGrowthinHomeCurrency | currency:calcData?.homecurrencyText:'symbol':'1.0-0'}}</span>
+      <div class="cgr-kpi__inner">
+        <div class="cgr-kpi-lbl">Exit (GBP)</div>
+        <div class="cgr-kpi-val">{{calculatedCapitalGrowth | currency:'GBP':'symbol':'1.0-0'}}</div>
+        <div class="cgr-kpi-note">{{formatCurrency(CaptitalGrowthinHomeCurrency, calcData?.homecurrencyText)}}</div>
       </div>
     </div>
 
@@ -131,22 +130,25 @@
 
     <!-- Card 3: Year-by-Year table -->
     <div class="cgr-card">
-      <div class="cgr-card-title">Year-by-Year Growth</div>
-      <div class="cgr-card-sub">Cumulative percentage appreciation by year</div>
+      <div class="cgr-card-title">Year-by-Year Values</div>
       <div style="overflow-x:auto">
         <table class="cgr-table">
           <thead>
             <tr>
               <th>Year</th>
-              <th>GBP Cumulative Growth</th>
-              <th>{{calcData?.homecurrencyText}} Cumulative Growth</th>
+              <th>GBP Value</th>
+              <th>{{calcData?.homecurrencyText}} Value</th>
+              <th>GBP Growth</th>
+              <th>{{calcData?.homecurrencyText}} Growth</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let yr of calculatedCapitalGrowtharray; let i=index">
-              <td class="cgr-table-year">Year {{i+1}}</td>
-              <td class="cgr-table-pos">+{{yr}}%</td>
-              <td class="cgr-table-pos">+{{CaptitalGrowthinHomeCurrencyArray[i]}}%</td>
+              <td class="cgr-table-year">{{i+1}}</td>
+              <td class="cgr-table-val">{{gbpValuesArray[i] | currency:'GBP':'symbol':'1.0-0'}}</td>
+              <td class="cgr-table-val">{{formatCurrency(homeCurrencyValuesArray[i], calcData?.homecurrencyText)}}</td>
+              <td class="cgr-table-pos">+{{yr.toFixed(1)}}%</td>
+              <td class="cgr-table-pos">+{{CaptitalGrowthinHomeCurrencyArray[i].toFixed(1)}}%</td>
             </tr>
           </tbody>
         </table>
@@ -156,16 +158,16 @@
   </div>
 
   <!-- ── Sticky footer ── -->
-  <div class="cgr-footer noprint">
-    <button class="cgr-foot-btn cgr-foot-back" (click)="startagain()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+  <div class="rp-footer noprint">
+    <button class="rp-footer-btn rp-footer-back" (click)="startagain()">
+      <img src="/assets/Icon (1).svg" width="8" height="14" alt="">
       Back
     </button>
-    <button class="cgr-foot-btn cgr-foot-share" (click)="emailpopup()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+    <button class="rp-footer-btn rp-footer-share" (click)="emailpopup()">
+      <img src="/assets/Icon.svg" width="15" height="15" alt="">
       Share Report
     </button>
-    <button class="cgr-foot-btn cgr-foot-recalc" (click)="startagain()">Recalculate</button>
+    <button class="rp-footer-btn rp-footer-recalc" (click)="startagain()">Recalculate</button>
   </div>
 
 </div>

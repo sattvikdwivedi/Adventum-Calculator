@@ -1,11 +1,7 @@
 <div class="rp-page" id="contentToConvert">
 
-  <!-- ═══════════════════════════════════════════
-       HEADER
-  ═══════════════════════════════════════════ -->
+  <!-- ═══ HEADER ═══ -->
   <header class="rp-header">
-
-    <!-- Title row -->
     <div class="rp-header__top">
       <div class="rp-header__title-group">
         <span class="rp-accent-bar"></span>
@@ -20,78 +16,72 @@
           Back
         </button>
         <button class="rp-btn rp-btn--outline" (click)="shareReport()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+          <img src="/assets/Icon.svg" width="16" height="16" alt="">
           Share
         </button>
         <button class="rp-btn rp-btn--primary" (click)="startagain()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-4.98"/></svg>
+          
           Recalculate
         </button>
       </div>
     </div>
+  </header>
+
+  <!-- ═══ BODY ═══ -->
+  <main class="rp-body">
 
     <!-- KPI cards row -->
     <div class="rp-kpi-grid">
 
       <!-- KPI 1: Total Net Cashflow (featured) -->
       <div class="rp-kpi rp-kpi--featured">
-        <div class="rp-kpi__label">Total Net Cashflow</div>
-        <div class="rp-kpi__icon" style="background:rgba(59,130,246,0.15)">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-            <path d="M7 16L3 12l4-4" stroke="#6b9fd4" stroke-width="2" stroke-linecap="round"/>
-            <path d="M17 8l4 4-4 4" stroke="#22c55e" stroke-width="2" stroke-linecap="round"/>
-            <path d="M3 12h18" stroke="rgba(255,255,255,0.3)" stroke-width="2"/>
-          </svg>
+        <div class="rp-kpi__icon-wrap">
+          <div class="rp-icon-blob1"></div>
+          <div class="rp-icon-blob2"></div>
+          <img src="/assets/11d9fad285ba06a9681023cec70db1a364815571.png" alt="">
         </div>
-        <div class="rp-kpi__value">£{{totalCashFlow | number:'1.0-0'}}</div>
-        <div class="rp-kpi__note">Over investment period</div>
+        <div class="rp-kpi__inner">
+          <div class="rp-kpi__label">Total Net Cashflow</div>
+          <div class="rp-kpi__value rp-kpi__value--blue">£{{totalCashFlow | number:'1.0-0'}}</div>
+        </div>
       </div>
 
       <!-- KPI 2: Initial Outlay -->
       <div class="rp-kpi">
-        <div class="rp-kpi__label">Initial Outlay</div>
-        <div class="rp-kpi__icon" style="background:rgba(34,197,94,0.12)">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-            <rect x="2" y="6" width="20" height="12" rx="2" stroke="#22c55e" stroke-width="1.8"/>
-            <circle cx="12" cy="12" r="3" stroke="#22c55e" stroke-width="1.8"/>
-            <path d="M6 12h.01M18 12h.01" stroke="#22c55e" stroke-width="2" stroke-linecap="round"/>
-          </svg>
+        <div class="rp-kpi__icon-wrap">
+          <div class="rp-icon-blob1"></div>
+          <div class="rp-icon-blob2"></div>
+          <img src="/assets/831e0c53cafecde3e60b81e4eee36c893080e99b.png" alt="">
         </div>
-        <div class="rp-kpi__value">£{{initialOutlay | number:'1.0-0'}}</div>
-        <div class="rp-kpi__note">Deposit + SDLT + Fees</div>
+        <div class="rp-kpi__inner">
+          <div class="rp-kpi__label">Initial Outlay</div>
+          <div class="rp-kpi__value">£{{initialOutlay | number:'1.0-0'}}</div>
+          <div class="rp-kpi__note">Deposit + SDLT + Fees</div>
+        </div>
       </div>
 
       <!-- KPI 3: Year 1 Net Cashflow -->
       <div class="rp-kpi">
-        <div class="rp-kpi__label">Year 1 Net Cashflow</div>
-        <div class="rp-kpi__icon" style="background:rgba(59,130,246,0.12)">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
-            <path d="M5 17L3 15l2-2" stroke="#6b9fd4" stroke-width="2" stroke-linecap="round"/>
-            <path d="M19 7l2 2-2 2" stroke="#22c55e" stroke-width="2" stroke-linecap="round"/>
-            <path d="M3 15l18-8" stroke="rgba(255,255,255,0.25)" stroke-width="2"/>
-          </svg>
+        <div class="rp-kpi__icon-wrap">
+          <div class="rp-icon-blob1"></div>
+          <div class="rp-icon-blob2"></div>
+          <img src="/assets/303592f2c41b3425bbcee1b6febcb47dde7edad8.png" alt="">
         </div>
-        <div class="rp-kpi__value">£{{cashflowdata[0]?.CashFlow | number:'1.0-0'}}</div>
-        <div class="rp-kpi__note">Net after all costs</div>
+        <div class="rp-kpi__inner">
+          <div class="rp-kpi__label">Year 1 Net Cashflow</div>
+          <div class="rp-kpi__value">£{{cashflowdata[0]?.CashFlow | number:'1.0-0'}}</div>
+        </div>
       </div>
 
     </div>
-  </header>
 
-  <!-- ═══════════════════════════════════════════
-       SCROLLABLE BODY
-  ═══════════════════════════════════════════ -->
-  <main class="rp-body">
-
-    <!-- Card 1: Your Assumptions -->
+    <!-- Assumptions Card -->
     <div class="rp-card">
-      <h2 class="rp-card__heading">Your Assumptions</h2>
-      <div class="rp-assumptions">
-
-        <div class="rp-assumption-row">
-          <span class="rp-assumption-row__label">City</span>
-          <span class="rp-assumption-row__value">{{calcData.City}}</span>
-        </div>
+      <div class="rp-card__heading-block">
+        <h2 class="rp-card__heading">Your Assumptions</h2>
+        <p class="rp-card__sub">All assumptions used in this calculation</p>
+      </div>
+      <div class="rp-assumptions-card">
         <div class="rp-assumption-row">
           <span class="rp-assumption-row__label">Property Value</span>
           <span class="rp-assumption-row__value">£{{calcData.PropertyValue | number:'1.0-0'}}</span>
@@ -101,20 +91,16 @@
           <span class="rp-assumption-row__value">{{calcData.loanAmount}}%</span>
         </div>
         <div class="rp-assumption-row">
-          <span class="rp-assumption-row__label">Buyer Type</span>
-          <span class="rp-assumption-row__value">{{calcData.ForeignBuyer === '1' ? 'Foreign Buyer' : 'UK Resident'}}</span>
-        </div>
-        <div class="rp-assumption-row">
-          <span class="rp-assumption-row__label">Investment Period</span>
+          <span class="rp-assumption-row__label">Period</span>
           <span class="rp-assumption-row__value">{{investedTenure}} years</span>
         </div>
         <div class="rp-assumption-row">
-          <span class="rp-assumption-row__label">Rental Yield</span>
+          <span class="rp-assumption-row__label">Yield</span>
           <span class="rp-assumption-row__value">{{calcData.rentalYeild | number:'1.2-2'}}%</span>
         </div>
         <div class="rp-assumption-row">
-          <span class="rp-assumption-row__label">Rental Growth p.a.</span>
-          <span class="rp-assumption-row__value">{{calcData.rentalGrowthEscalation | number:'1.2-2'}}%</span>
+          <span class="rp-assumption-row__label">Growth</span>
+          <span class="rp-assumption-row__value">{{calcData.rentalGrowthEscalation | number:'1.2-2'}}% p.a.</span>
         </div>
         <div class="rp-assumption-row">
           <span class="rp-assumption-row__label">Mortgage Rate</span>
@@ -144,57 +130,81 @@
           <span class="rp-assumption-row__label">Other Expenses</span>
           <span class="rp-assumption-row__value">£{{calcData.miscelleneousExpense | number:'1.0-0'}}</span>
         </div>
-
       </div>
     </div>
 
-    <!-- Card 2: Annual Net Cashflow chart -->
+    <!-- Annual Net Cashflow Chart -->
     <div class="rp-card">
-      <h2 class="rp-card__heading rp-card__heading--no-border">Annual Net Cashflow</h2>
-      <p class="rp-card__sub">Net income per year after all expenses and mortgage payments</p>
-      <div class="rp-chart-wrapper">
-        <canvas #cfBarChart id="cfBarChart"></canvas>
+      <div class="rp-card__heading-block">
+        <h2 class="rp-card__heading">Annual Net Cashflow</h2>
+      </div>
+      <div class="rp-chart-area">
+        <!-- Y-axis labels -->
+        <div class="rp-y-axis">
+          <span>£25,000</span>
+          <span>£20,000</span>
+          <span>£15,000</span>
+          <span>£10,000</span>
+          <span>£5,000</span>
+          <span>£0</span>
+        </div>
+        <!-- Grid + bars -->
+        <div class="rp-chart-body">
+          <div class="rp-grid-lines">
+            <div class="rp-grid-line"></div>
+            <div class="rp-grid-line"></div>
+            <div class="rp-grid-line"></div>
+            <div class="rp-grid-line"></div>
+            <div class="rp-grid-line"></div>
+            <div class="rp-grid-line"></div>
+          </div>
+          <div class="rp-bars-row">
+            <ng-container *ngFor="let row of cashflowdata; let i = index">
+              <div class="rp-bar-col">
+                <div class="rp-bar-track">
+                  <div class="rp-bar"
+                    [style.height.px]="getBarHeight(row.CashFlow)"
+                    [style.background]="'#506E9C'">
+                  </div>
+                </div>
+                <div class="rp-bar-label">{{i + 1}}</div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- Card 3: Year-by-Year Breakdown -->
+    <!-- Year-by-Year Breakdown -->
     <div class="rp-card">
       <h2 class="rp-card__heading">Year-by-Year Breakdown</h2>
-      <div class="rp-table-wrapper">
-        <table class="rp-table">
-          <thead>
-            <tr>
-              <th>Year</th>
-              <th>Gross Rent</th>
-              <th>Mortgage Interest</th>
-              <th>Letting Fee</th>
-              <th>Other Costs</th>
-              <th>Net Cashflow</th>
-              <th>Net Yield %</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let row of cashflowdata; let i = index">
-              <td class="rp-table__year">Year {{i + 1}}</td>
-              <td>£{{row.GrossRent | number:'1.0-0'}}</td>
-              <td>£{{row.Interest | number:'1.0-0'}}</td>
-              <td>£{{row.LettingFee | number:'1.0-0'}}</td>
-              <td>£{{(row.GroundRent + row.ServiceCharges + row.MiscelleneousExpense) | number:'1.0-0'}}</td>
-              <td [ngClass]="row.CashFlow >= 0 ? 'rp-table__pos' : 'rp-table__neg'">
-                £{{row.CashFlow | number:'1.0-0'}}
-              </td>
-              <td class="rp-table__yield">{{netYield[i]}}%</td>
-            </tr>
-          </tbody>
-        </table>
+      <div class="rp-table-header">
+        <span class="rp-th">Year</span>
+        <span class="rp-th">Gross Rent</span>
+        <span class="rp-th">Lettings</span>
+        <span class="rp-th">Expenses</span>
+        <span class="rp-th">Mortgage</span>
+        <span class="rp-th">Net Cashflow</span>
+        <span class="rp-th">Cumulative</span>
+      </div>
+      <div class="rp-table-body">
+        <div class="rp-table-row" *ngFor="let row of cashflowdata; let i = index">
+          <span class="rp-td rp-td--dim">{{i + 1}}</span>
+          <span class="rp-td">£{{row.GrossRent | number:'1.0-0'}}</span>
+          <span class="rp-td rp-td--neg">-£{{row.LettingFee | number:'1.0-0'}}</span>
+          <span class="rp-td rp-td--neg">-£{{(row.GroundRent + row.ServiceCharges + row.MiscelleneousExpense) | number:'1.0-0'}}</span>
+          <span class="rp-td rp-td--neg">-£{{row.Interest | number:'1.0-0'}}</span>
+          <span class="rp-td" [class.rp-td--pos]="row.CashFlow >= 0" [class.rp-td--neg]="row.CashFlow < 0">
+            {{row.CashFlow >= 0 ? '£' : '-£'}}{{(row.CashFlow < 0 ? -row.CashFlow : row.CashFlow) | number:'1.0-0'}}
+          </span>
+          <span class="rp-td rp-td--dim">{{netYield[i]}}%</span>
+        </div>
       </div>
     </div>
 
   </main>
 
-  <!-- ═══════════════════════════════════════════
-       HIDDEN EXCEL TABLE (kept for exportexcel())
-  ═══════════════════════════════════════════ -->
+  <!-- ═══ HIDDEN EXCEL TABLE ═══ -->
   <div style="display:none;">
     <table id="cashflowtable">
       <tr class="text-left">
@@ -283,36 +293,29 @@
 
 </div>
 
-<!-- ═══════════════════════════════════════════
-     STICKY FOOTER
-═══════════════════════════════════════════ -->
+<!-- ═══ STICKY FOOTER ═══ -->
 <footer class="rp-footer">
-  <button class="rp-btn rp-btn--ghost" (click)="startagain()">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
+  <button class="rp-footer-btn rp-footer-back" (click)="startagain()">
+    <img src="/assets/Icon (1).svg" width="8" height="14" alt="">
     Back
   </button>
-  <button class="rp-btn rp-btn--outline" (click)="emailpopup()">
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+  <button class="rp-footer-btn rp-footer-share" (click)="emailpopup()">
+    <img src="/assets/Icon.svg" width="16" height="16" alt="">
     Share Report
   </button>
-  <button class="rp-btn rp-btn--primary" [disabled]="loadingDownloadbtn" (click)="exportexcel()">
-    <svg *ngIf="!loadingDownloadbtn" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-    <i *ngIf="loadingDownloadbtn" class="fa fa-spin fa-spinner"></i>
-    Download Excel
+  <button class="rp-footer-btn rp-footer-recalc" (click)="startagain()">
+    
+    Recalculate
   </button>
 </footer>
 
-<!-- ═══════════════════════════════════════════
-     EMAIL SHARE MODAL
-═══════════════════════════════════════════ -->
+<!-- ═══ EMAIL MODAL ═══ -->
 <div class="modal fade noprint" id="myModal">
   <div class="modal-dialog">
     <div class="modal-content rp-modal">
-
       <div class="modal-header rp-modal__header">
         <h5 class="rp-modal__title">Share Report</h5>
       </div>
-
       <div class="modal-body rp-modal__body">
         <div class="form-group">
           <label class="rp-modal__label">Enter email ids of recipients</label>
@@ -321,7 +324,6 @@
             name="email" [(ngModel)]="Email" autocomplete="off">
         </div>
       </div>
-
       <div class="modal-footer rp-modal__footer">
         <button *ngIf="loadingSharebtn" type="submit" class="rp-btn rp-btn--primary rp-modal__send">
           <i class="fa fa-spin fa-spinner"></i> Please Wait...
@@ -329,7 +331,6 @@
         <button *ngIf="!loadingSharebtn" type="submit" class="rp-btn rp-btn--primary rp-modal__send" (click)="sendexcel()">Send</button>
         <button type="button" class="rp-btn rp-btn--ghost" id="cancelbtn" (click)="cancel()">Cancel</button>
       </div>
-
     </div>
   </div>
 </div>

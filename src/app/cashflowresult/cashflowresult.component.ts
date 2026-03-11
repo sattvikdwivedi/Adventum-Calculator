@@ -587,10 +587,8 @@ export class CashflowresultComponent implements OnInit, AfterViewInit {
     return finance.IRR.apply(this, cashFlow);
   }
   startagain(): void {
-    this.calcData.reportSavedOnServer = false;
-    localStorage.setItem("calcData", JSON.stringify(this.calcData));
-    // localStorage.clear();
-    this.router.navigate(['/cashflow/step2']);
+    localStorage.removeItem('calcData');
+    this.router.navigate(['/cashflow/step1']);
   }
 
   printScreen() {

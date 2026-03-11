@@ -125,10 +125,8 @@ export class CapitalGrowthResultComponent implements OnInit,AfterViewInit {
     }
 
 }
-  startagain(): void{
-    this.calcData.reportSavedOnServer=false;
-    localStorage.setItem("calcData",JSON.stringify(this.calcData));
-    // localStorage.clear();
+  startagain(): void {
+    localStorage.removeItem('calcData');
     this.router.navigate(['/capital-growth-calculator/question']);
   }
 

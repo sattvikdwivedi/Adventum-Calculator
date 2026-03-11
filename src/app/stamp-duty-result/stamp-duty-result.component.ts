@@ -142,8 +142,7 @@ export class StampDutyResultComponent implements OnInit, AfterViewInit {
   }
 
   startagain(): void {
-    this.calcData.reportSavedOnServer = false;
-    localStorage.setItem('calcData', JSON.stringify(this.calcData));
+    localStorage.removeItem('calcData');
     this.router.navigate(['/stamp-duty-calculator/question']);
   }
 

@@ -172,3 +172,5 @@
   .fields-row3 { grid-template-columns: 1fr; }
   .preview-boxes { grid-template-columns: 1fr; }
 }
+
+.panel-logo-img { height: 48px; width: auto; display: block; }

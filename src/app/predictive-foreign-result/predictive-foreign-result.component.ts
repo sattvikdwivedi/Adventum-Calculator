@@ -151,8 +151,7 @@ export class PredictiveForeignResultComponent implements OnInit, AfterViewInit {
   }
 
   startagain(): void {
-    this.calcData.reportSavedOnServer = false;
-    localStorage.setItem('calcData', JSON.stringify(this.calcData));
+    localStorage.removeItem('calcData');
     this.router.navigate(['/Predictive-Foreign-calculator/question']);
   }
 

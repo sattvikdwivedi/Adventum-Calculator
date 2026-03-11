@@ -427,17 +427,19 @@
 .ewr-btn-continue {
   flex: 2;
   height: 50px;
-  background: #132147;
+  background: linear-gradient(90deg, #24BF6B 0%, #2FA3AC 52%, #3889E6 100%);
+  outline: 1px solid rgba(19,33,71,0.40);
+  outline-offset: -1px;
   border: none;
   border-radius: 12px;
   color: #fff;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: opacity 0.2s;
   font-family: 'Inter', sans-serif;
 }
-.ewr-btn-continue:hover { background: #0d1730; }
+.ewr-btn-continue:hover { opacity: 0.92; }
 
 .error-input { border-color: #ef4444 !important; }
 
@@ -450,3 +452,5 @@
   .ewr-panel-right-inner { overflow: visible; padding: 24px 20px; }
   .ewr-actions { padding: 16px 20px; }
 }
+
+.panel-logo-img { height: 48px; width: auto; display: block; }

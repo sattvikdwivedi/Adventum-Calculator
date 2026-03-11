@@ -404,19 +404,21 @@
 .sdlt-btn-continue {
   flex: 2;
   height: 50px;
-  background: #22c55e !important;
+  background: linear-gradient(90deg, #24BF6B 0%, #2FA3AC 52%, #3889E6 100%) !important;
+  outline: 1px solid rgba(19,33,71,0.40);
+  outline-offset: -1px;
   border: none !important;
   border-radius: 12px;
   color: #fff !important;
   font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: opacity 0.2s;
   font-family: 'Inter', sans-serif;
   -webkit-appearance: none;
   appearance: none;
 }
-.sdlt-btn-continue:hover { background: #16a34a !important; }
+.sdlt-btn-continue:hover { opacity: 0.92; }
 
 .error-input { border-color: #ef4444 !important; }
 
@@ -429,3 +431,5 @@
   .sdlt-panel-right-inner { overflow: visible; padding: 24px 20px; }
   .sdlt-actions { padding: 16px 20px; }
 }
+
+.panel-logo-img { height: 48px; width: auto; display: block; }

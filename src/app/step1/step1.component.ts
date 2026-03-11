@@ -179,6 +179,7 @@ export class Step1Component implements OnInit {
     if (type === "skip") {
           this.calcData = {};
           this.calcData.Pincode = "HA87DB";
+          this.calcData.City = this.City || 'United Kingdom';
           this.calcData.lat = this.lat;
           this.calcData.long = this.long;
           this.calcData.Country="england";
@@ -256,12 +257,19 @@ export class Step1Component implements OnInit {
 
           if (length > 0) {
             for (let i = length - 1; i > 0; i--) {
-
-              if (results[0].address_components[i].types[0] == 'administrative_area_level_1') {
+              const types = results[0].address_components[i].types;
+              if (types.indexOf('postal_town') !== -1 || types.indexOf('locality') !== -1) {
+                this.City = results[0].address_components[i].long_name;
+                this.calcData.City = this.City;
+              }
+              if (types[0] == 'administrative_area_level_1') {
                 this.calcData.Country = results[0].address_components[i].long_name.toLowerCase();
-                break;
               }
             }
+          }
+          if (!this.calcData.City) {
+            this.calcData.City = this.Pincode;
+            this.City = this.Pincode;
           }
           this.calcData.reportSavedOnServer = false;
           localStorage.setItem("calcData", JSON.stringify(this.calcData));

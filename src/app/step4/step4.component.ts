@@ -23,6 +23,7 @@ export class Step4Component implements OnInit {
   miscelleneousExpense: string = "";
   legalFees: string = "";
   PropertyLondon: any;
+  City: string = '';
 
   // Computed display values for left panel
   processingFeeAmount: string = "";
@@ -57,6 +58,9 @@ export class Step4Component implements OnInit {
     }
     if (!this.dataService.EmptyNullOrUndefined(this.calcData.PropertyValue)) {
       this.PropertyValue = this.calcData.PropertyValue;
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.calcData.City)) {
+      this.City = this.calcData.City;
     }
     if (!this.dataService.EmptyNullOrUndefined(this.calcData.letteingManagFee)) {
       this.letteingManagFee = this.calcData.letteingManagFee;

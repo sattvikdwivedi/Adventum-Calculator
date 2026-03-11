@@ -63,6 +63,7 @@ export class CashflowStep1Component implements OnInit {
   selectCity(city: string, pincode: string, latVal: number, longVal: number) {
     this.City = city;
     this.Pincode = pincode;
+    this.searchQuery = pincode;
     this.calcData.Pincode = pincode;
     this.calcData.City = city;
     this.calcData.lat = latVal;

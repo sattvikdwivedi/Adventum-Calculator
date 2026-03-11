@@ -56,6 +56,7 @@ export class Step3Component implements OnInit {
   long :number=0;
   foreignbuyer='';
   PropertyLondon:any;
+  City: string = '';
 
   // Custom dropdown state
   currencyDropdownOpen = false;
@@ -215,7 +216,10 @@ export class Step3Component implements OnInit {
     } 
     if(!this.dataService.EmptyNullOrUndefined(this.calcData.ForeignBuyer)){
       this.foreignbuyer=this.calcData.ForeignBuyer; 
-    } 
+    }
+    if(!this.dataService.EmptyNullOrUndefined(this.calcData.City)){
+      this.City=this.calcData.City; 
+    }
     
   }
 

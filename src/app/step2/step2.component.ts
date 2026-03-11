@@ -55,6 +55,7 @@ export class Step2Component implements OnInit {
   
   lat :number | undefined;
   long :number | undefined;
+  City: string = '';
 
   constructor(
     private router:Router,
@@ -89,7 +90,10 @@ export class Step2Component implements OnInit {
   } 
   if(!this.dataService.EmptyNullOrUndefined(this.calcData.long)){
     this.long=this.calcData.long; 
-  } 
+  }
+  if(!this.dataService.EmptyNullOrUndefined(this.calcData.City)){
+    this.City=this.calcData.City; 
+  }
  
 }
   private get priceNum(): number {

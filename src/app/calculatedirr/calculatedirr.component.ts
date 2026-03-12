@@ -268,14 +268,18 @@ export class CalculatedirrComponent implements OnInit, AfterViewInit {
 
     const ctxpie = $('#can')[0].getContext('2d');
     const fxGrowth = this.TotalReturnOfInvestment - this.RentalIncome - this.capitalAppreciation;
+    // FX Appreciation gradient: 315deg rgba(45,97,237,0.60) → rgba(16,24,43,0.60) with rgba(255,255,255,0.30) overlay
+    const fxGrad = ctxpie.createLinearGradient(270, 0, 0, 270);
+    fxGrad.addColorStop(0, 'rgba(45,97,237,0.80)');
+    fxGrad.addColorStop(1, 'rgba(16,24,43,0.90)');
     var myPieChart = new Chart(ctxpie, {
       type: 'doughnut',
       data: {
         labels: ['Net Rental Income', 'FX Appreciation', 'Capital Growth'],
         datasets: [{
-          backgroundColor: ['#56637A', '#BBC1C4', '#8EAAD2'],
-          borderColor: ['#0c1a2e', '#0c1a2e', '#0c1a2e'],
-          borderWidth: 3,
+          backgroundColor: ['rgba(255,255,255,0.15)', fxGrad, '#506E9C'],
+          borderColor: 'transparent',
+          borderWidth: 0,
           data: [
             Math.max(this.RentalIncome, 0),
             Math.max(fxGrowth, 0),

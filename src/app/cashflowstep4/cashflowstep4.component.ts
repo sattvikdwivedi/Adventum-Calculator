@@ -1,239 +1,175 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
-import { trigger,state,style,animate,transition } from '@angular/animations';
-import { ValidationService } from '../validation.service'
-import{Router} from '@angular/router';
+import { ValidationService } from '../validation.service';
+import { Router } from '@angular/router';
 import { environment } from '../../environments/environment';
-declare var $: any;
 
 @Component({
   selector: 'app-cashflowstep4',
   templateUrl: './cashflowstep4.component.html',
-  styleUrls: ['./cashflowstep4.component.css'],
-  animations: [
-    trigger('afsfirst',[
-      state(
-        'visible',
-        style({
-          opacity:'1'
-         })
-        ),state(
-          'hide',
-          style({
-            opacity:'0',
-            height:'0px'
-           })
-          ),
-        transition('* => visible', [animate('1500ms ease-out')])
-    ]),
-    trigger('assfirst',[
-      state(
-        'visible',
-        style({
-          opacity:'1'
-         })
-        ),state(
-          'hide',
-          style({
-            opacity:'0',
-            height:'0px'
-           })
-          ),
-        transition('* => visible', [animate('1500ms ease-out')])
-    ]),
-    trigger('affirst',[
-      state(
-        'visible',
-        style({
-          opacity:'1'
-         })
-        ),state(
-          'hide',
-          style({
-            opacity:'0',
-            height:'0px'
-           })
-          ),
-        transition('* => visible', [animate('1.5s ease-out')])
-    ]),
-    trigger('asfirst',[
-      state(
-        'visible',
-        style({
-          opacity:'1'
-         })
-        ),state(
-          'hide',
-          style({
-            opacity:'0',
-            height:'0px'
-           })
-          ),
-        transition('* => visible', [animate('2s ease-out')])
-    ]),
-    trigger('atfirst',[
-      state(
-        'visible',
-        style({
-          opacity:'1'
-         })
-        ),state(
-          'hide',
-          style({
-            opacity:'0',
-            height:'0px'
-           })
-          ),
-        transition('* => visible', [animate('2.5s ease-out')])
-    ])
-  ]
+  styleUrls: ['./cashflowstep4.component.css']
 })
 export class Cashflowstep4Component implements OnInit {
-  foreignbuyer:string="";
-  stampDutyLandTax:string="";
-  loanOriginationFee:string="";
-  calcData:any;
-  MapLoad=true;
-  lat :number=0;
-  long :number=0;
-  country:string="";
-  PropertyValue:string="";
-  letteingManagFee:string="";
-  groundRent:string="";
-  serviceCharges:string="";
-  miscelleneousExpense:string="";
-  PropertyLondon:any;
+  foreignbuyer: string = '0';
+  stampDutyLandTax: string = '';
+  loanOriginationFee: string = '';
+  calcData: any;
+  country: string = '';
+  PropertyValue: string = '';
+  letteingManagFee: string = '';
+  groundRent: string = '';
+  serviceCharges: string = '';
+  miscelleneousExpense: string = '';
+  PropertyLondon: any;
 
-  constructor(private router:Router,
+  constructor(
+    private router: Router,
     private dataService: DataService,
-    public validation:ValidationService) {
-      this.calcData=JSON.parse(localStorage.getItem("calcData"));
-      if(!this.dataService.EmptyNullOrUndefined(this.calcData.foreignbuyer)){
-        this.foreignbuyer = this.calcData.foreignbuyer;
-      }
-      if(!this.dataService.EmptyNullOrUndefined(this.calcData.stampDutyLandTax)){
-        this.stampDutyLandTax=this.validation.amountWithComma(this.calcData.stampDutyLandTax);
-      }
-      if(!this.dataService.EmptyNullOrUndefined(this.calcData.loanOriginationFee)){
-        this.loanOriginationFee=this.calcData.loanOriginationFee+"%";
-      }
-      if(this.calcData.optmortgage=="0"){
-        this.loanOriginationFee="0"+"%";
-      }
-      if(!this.dataService.EmptyNullOrUndefined(this.calcData.lat)){
-        this.lat=this.calcData.lat; 
-      } 
-      if(!this.dataService.EmptyNullOrUndefined(this.calcData.long)){
-        this.long=this.calcData.long; 
-      } 
-      if(!this.dataService.EmptyNullOrUndefined(this.calcData.Country)){
-        this.country=this.calcData.Country; 
-      } 
-      if(!this.dataService.EmptyNullOrUndefined(this.calcData.PropertyValue)){
-        this.PropertyValue=this.calcData.PropertyValue; 
-      } 
-      if(!this.dataService.EmptyNullOrUndefined(this.calcData.letteingManagFee)){
-        this.letteingManagFee=this.calcData.letteingManagFee+"%";
-      }
-      if(!this.dataService.EmptyNullOrUndefined(this.calcData.groundRent)){
-        this.groundRent=this.validation.amountWithComma(this.calcData.groundRent);
-      }
-      if(!this.dataService.EmptyNullOrUndefined(this.calcData.serviceCharges)){
-        this.serviceCharges=this.validation.amountWithComma(this.calcData.serviceCharges);
-      }
-      if(!this.dataService.EmptyNullOrUndefined(this.calcData.miscelleneousExpense)){
-        this.miscelleneousExpense=this.validation.amountWithComma(this.calcData.miscelleneousExpense);
-      }
-     }
+    public validation: ValidationService
+  ) {
+    this.calcData = JSON.parse(localStorage.getItem('calcData') || '{}') || {};
+
+    if (!this.dataService.EmptyNullOrUndefined(this.calcData.foreignbuyer)) {
+      this.foreignbuyer = this.calcData.foreignbuyer;
+    } else if (!this.dataService.EmptyNullOrUndefined(this.calcData.ForeignBuyer)) {
+      this.foreignbuyer = this.calcData.ForeignBuyer;
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.calcData.stampDutyLandTax)) {
+      this.stampDutyLandTax = this.validation.amountWithComma(String(this.calcData.stampDutyLandTax));
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.calcData.loanOriginationFee)) {
+      this.loanOriginationFee = this.calcData.loanOriginationFee + '%';
+    }
+    if (this.calcData.optmortgage === '0') {
+      this.loanOriginationFee = '0%';
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.calcData.Country)) {
+      this.country = this.calcData.Country;
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.calcData.PropertyValue)) {
+      this.PropertyValue = this.calcData.PropertyValue;
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.calcData.letteingManagFee)) {
+      this.letteingManagFee = this.calcData.letteingManagFee + '%';
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.calcData.groundRent)) {
+      this.groundRent = this.validation.amountWithComma(String(this.calcData.groundRent));
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.calcData.serviceCharges)) {
+      this.serviceCharges = this.validation.amountWithComma(String(this.calcData.serviceCharges));
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.calcData.miscelleneousExpense)) {
+      this.miscelleneousExpense = this.validation.amountWithComma(String(this.calcData.miscelleneousExpense));
+    }
+  }
+
   ngOnInit(): void {
-
-    this.PropertyLondon=localStorage.getItem("PropertyLondon");
-    console.log(this.PropertyLondon);
-      // this.dataService.GetRequest('https://api.propertydata.co.uk/stamp-duty-calculator?key='+environment.PropertyDataKey+'&value='+this.PropertyValue+'&country='+this.country+'&mode=investment').subscribe(
-      //   (res: Response) => 
-      //     {
-      //     var obj = JSON.parse(JSON.stringify(res));
-      //      if(obj.status=="success"){
-      //        this.stampDutyLandTax=this.validation.amountWithComma(obj.transaction_tax_payable.toString());
-      //        
-      //      }
-      //     }
-      // );
-      // $(document).ready(function(){
-      //   $(".percent").on('input', function() {
-      //     $(this).val(function(i, v) {
-      //      return v.replace('%','') + '%';  });
-      //   });
-      // });
-  }
-  next(){
-    let flag=true;
-    if(!this.dataService.EmptyNullOrUndefined(this.foreignbuyer)){
-      this.calcData.foreignbuyer = this.foreignbuyer;
-    }else{
-      let element=document.getElementById("foreignbuyer");
-      element.classList.add("error-input");
-      flag=false;
-    }
-    if(!this.dataService.EmptyNullOrUndefined(this.stampDutyLandTax)){
-      this.calcData.stampDutyLandTax=this.stampDutyLandTax.replace(/,/g,'');
-    }else{
-      let element=document.getElementById("stampDutyLandTax");
-      element.classList.add("error-input");
-      flag=false;
-    }
-    if(!this.dataService.EmptyNullOrUndefined(this.loanOriginationFee)){
-      this.calcData.loanOriginationFee=this.loanOriginationFee.replace("%",'');
-    }
-    //else{
-    //   let element=document.getElementById("loanOriginationFee");
-    //   element.classList.add("error-input");
-    //   flag=false;
-    // }
-    if(!this.dataService.EmptyNullOrUndefined(this.letteingManagFee)){
-      this.calcData.letteingManagFee=this.letteingManagFee.replace("%",'');
-    }else{
-      let element=document.getElementById("letteingManagFee");
-      element.classList.add("error-input");
-      flag=false;
-    }
-    if(!this.dataService.EmptyNullOrUndefined(this.groundRent)){
-      this.calcData.groundRent=this.groundRent.replace(/,/g,'');
-    }
-    
-    if(!this.dataService.EmptyNullOrUndefined(this.serviceCharges)){
-      this.calcData.serviceCharges=this.serviceCharges.replace(/,/g,'');
-    }
-   
-    if(!this.dataService.EmptyNullOrUndefined(this.miscelleneousExpense)){
-      this.calcData.miscelleneousExpense=this.miscelleneousExpense.replace(/,/g,'');
-    }
-    if(flag){
-      // localStorage.setItem("calcData",JSON.stringify(this.calcData));
-      // this.router.navigate(['/step5']);
-      this.calcData.reportSavedOnServer=false;
-      localStorage.setItem("calcData",JSON.stringify(this.calcData));
-      this.router.navigate(['/cashflow/result'])
+    this.PropertyLondon = localStorage.getItem('PropertyLondon');
+    if (!this.stampDutyLandTax && this.PropertyValue) {
+      this.calculatestampduty();
     }
   }
 
-  calculatestampduty(){
-    if(this.foreignbuyer != ''){
-      this.dataService.GetRequest('https://api.propertydata.co.uk/stamp-duty-calculator?key='+environment.PropertyDataKey+'&value='+this.PropertyValue+'&country='+this.country+'&mode=investment').subscribe(
-        (res: Response) => 
-          {
-          var obj = JSON.parse(JSON.stringify(res));
-           if(obj.status=="success" && this.foreignbuyer == "1"){
-             this.stampDutyLandTax = (obj.transaction_tax_payable + (this.calcData.PropertyValue * 2/100))
-             this.stampDutyLandTax=this.validation.amountWithComma( this.stampDutyLandTax .toString());
-           }
-           else{
-            this.stampDutyLandTax=this.validation.amountWithComma(obj.transaction_tax_payable.toString());
-           }
+  calculatestampduty() {
+    const apiCountry = this.resolveApiCountry(this.country);
+    const pv = parseFloat(this.PropertyValue.toString().replace(/,/g, '')) || 0;
+    if (!pv) return;
+
+    this.dataService.GetRequest(
+      'https://api.propertydata.co.uk/stamp-duty-calculator?key=' + environment.PropertyDataKey +
+      '&value=' + pv + '&country=' + apiCountry + '&mode=investment'
+    ).subscribe(
+      (res: any) => {
+        const obj = JSON.parse(JSON.stringify(res));
+        if (obj.status === 'success') {
+          let sdlt = obj.transaction_tax_payable;
+          if (this.foreignbuyer === '1') {
+            sdlt = sdlt + (pv * 2 / 100);
           }
-      );
-    }
-
+          this.stampDutyLandTax = this.validation.amountWithComma(Math.round(sdlt).toString());
+        } else {
+          this.stampDutyLandTax = this.validation.amountWithComma(
+            this.calculateSdltFallback(pv, this.foreignbuyer === '1').toString()
+          );
+        }
+      },
+      (_err) => {
+        const pv2 = parseFloat(this.PropertyValue.toString().replace(/,/g, '')) || 0;
+        this.stampDutyLandTax = this.validation.amountWithComma(
+          this.calculateSdltFallback(pv2, this.foreignbuyer === '1').toString()
+        );
+      }
+    );
   }
 
+  resolveApiCountry(raw: string): string {
+    if (!raw) return 'england';
+    const r = raw.toLowerCase().trim();
+    if (r === 'scotland') return 'scotland';
+    if (r === 'wales') return 'wales';
+    if (r === 'northern-ireland' || r === 'northern ireland') return 'northern-ireland';
+    return 'england';
+  }
+
+  calculateSdltFallback(value: number, isForeignBuyer: boolean): number {
+    let sdlt = 0;
+    if (value > 250000) sdlt += Math.min(value - 250000, 675000) * 0.05;
+    if (value > 925000) sdlt += Math.min(value - 925000, 575000) * 0.10;
+    if (value > 1500000) sdlt += (value - 1500000) * 0.12;
+    sdlt += value * 0.05;
+    if (isForeignBuyer) sdlt += value * 0.02;
+    return Math.round(sdlt);
+  }
+
+  next() {
+    let flag = true;
+
+    if (!this.dataService.EmptyNullOrUndefined(this.foreignbuyer)) {
+      this.calcData.foreignbuyer = this.foreignbuyer;
+    } else {
+      flag = false;
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.stampDutyLandTax)) {
+      this.calcData.stampDutyLandTax = parseFloat(this.stampDutyLandTax.replace(/,/g, '')) || 0;
+    } else {
+      flag = false;
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.loanOriginationFee)) {
+      this.calcData.loanOriginationFee = parseFloat(this.loanOriginationFee.replace('%', '')) || 0;
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.letteingManagFee)) {
+      this.calcData.letteingManagFee = parseFloat(this.letteingManagFee.replace('%', '')) || 0;
+    } else {
+      this.calcData.letteingManagFee = 0;
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.groundRent)) {
+      this.calcData.groundRent = parseFloat(this.groundRent.replace(/,/g, '')) || 0;
+    } else {
+      this.calcData.groundRent = 0;
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.serviceCharges)) {
+      this.calcData.serviceCharges = parseFloat(this.serviceCharges.replace(/,/g, '')) || 0;
+    } else {
+      this.calcData.serviceCharges = 0;
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.miscelleneousExpense)) {
+      this.calcData.miscelleneousExpense = parseFloat(this.miscelleneousExpense.replace(/,/g, '')) || 0;
+    } else {
+      this.calcData.miscelleneousExpense = 0;
+    }
+
+    // Ensure defaults for result component
+    if (this.dataService.EmptyNullOrUndefined(this.calcData.homecurrency)) {
+      this.calcData.homecurrency = 1;
+    }
+    if (this.dataService.EmptyNullOrUndefined(this.calcData.fxgrowth)) {
+      this.calcData.fxgrowth = 0;
+    }
+
+    if (flag) {
+      this.calcData.reportSavedOnServer = false;
+      localStorage.setItem('calcData', JSON.stringify(this.calcData));
+      this.router.navigate(['/cashflow/result']);
+    }
+  }
 }

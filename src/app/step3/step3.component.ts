@@ -1,51 +1,18 @@
 import { Component, OnInit, HostListener } from '@angular/core';
 import{Router} from '@angular/router';
 import { DataService } from '../data.service';
-import { trigger,state,style,animate,transition } from '@angular/animations';
 import {ValidationService} from '../validation.service';
 import { environment } from '../../environments/environment';
 declare var $: any;
 @Component({
   selector: 'app-step3',
   templateUrl: './step3.component.html',
-  styleUrls: ['./step3.component.css'],
-  animations: [
-    trigger('affirst',[
-      state('visible', style({ opacity:'1', height:'*' })),
-      state('hide',    style({ opacity:'0', height:'0px', overflow:'hidden' })),
-      transition('hide => visible', [animate('400ms ease-out')]),
-      transition('visible => hide', [animate('200ms ease-in')])
-    ]),
-    trigger('asfirst',[
-      state('visible', style({ opacity:'1', height:'*' })),
-      state('hide',    style({ opacity:'0', height:'0px', overflow:'hidden' })),
-      transition('hide => visible', [animate('400ms ease-out')]),
-      transition('visible => hide', [animate('200ms ease-in')])
-    ]),
-    trigger('atfirst',[
-      state('visible', style({ opacity:'1', height:'*' })),
-      state('hide',    style({ opacity:'0', height:'0px', overflow:'hidden' })),
-      transition('hide => visible', [animate('400ms ease-out')]),
-      transition('visible => hide', [animate('200ms ease-in')])
-    ]),
-    trigger('afrfirst',[
-      state('visible', style({ opacity:'1', height:'*' })),
-      state('hide',    style({ opacity:'0', height:'0px', overflow:'hidden' })),
-      transition('hide => visible', [animate('400ms ease-out')]),
-      transition('visible => hide', [animate('200ms ease-in')])
-    ]),
-    trigger('aftfirst',[
-      state('visible', style({ opacity:'1', height:'*' })),
-      state('hide',    style({ opacity:'0', height:'0px', overflow:'hidden' })),
-      transition('hide => visible', [animate('400ms ease-out')]),
-      transition('visible => hide', [animate('200ms ease-in')])
-    ])
-  ]
+  styleUrls: ['./step3.component.css']
 })
 export class Step3Component implements OnInit {
   homecurrencyText:string="";
   homecurrency:string="";
-  investedTenure:string="";
+  investedTenure:string="5";
   rentalYeild:string="";
   rentalGrowthEscalation:string="";
   capitalgrowth:string="";

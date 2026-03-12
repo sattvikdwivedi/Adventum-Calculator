@@ -66,17 +66,6 @@
         </div>
       </div>
 
-      <!-- Progress bar at top -->
-      <div class="progress-wrap">
-        <progress-bar
-          [progress]="50+(homecurrency!=''?7.5:0)+(investedTenure!=''?7.5:0)+(rentalYeild!=''?7.5:0)+(capitalgrowth!=''?7.5:0)+(fxgrowth!=''?7.5:0)"
-          [color]="'#22c55e'">
-        </progress-bar>
-        <span class="progress-label">
-          {{50+(homecurrency!=''?7.5:0)+(investedTenure!=''?7.5:0)+(rentalYeild!=''?7.5:0)+(capitalgrowth!=''?7.5:0)+(fxgrowth!=''?7.5:0) | number:'1.0-0'}}% data received
-        </span>
-      </div>
-
       <!-- Heading -->
       <h2 class="section-title">Currency &amp; Growth</h2>
       <p class="section-sub">Set your home currency and expected growth rates.</p>
@@ -115,7 +104,7 @@
       </div>
 
       <!-- Investment Period — pill buttons -->
-      <div class="field-group" [@affirst]="homecurrencyText!=''?'visible':'hide'">
+      <div class="field-group">
         <div class="field-label-row">
           <span class="field-label">Investment Period</span>
         </div>
@@ -128,7 +117,7 @@
       </div>
 
       <!-- Gross Rental Yield -->
-      <div class="field-group" [@asfirst]="investedTenure!='' && homecurrencyText!=''?'visible':'hide'">
+      <div class="field-group">
         <div class="field-label-row">
           <span class="field-label">Gross Rental Yield</span>
           <span class="field-hint">10yr UK avg: 6.2%</span>
@@ -147,7 +136,7 @@
       </div>
 
       <!-- Annual Capital Growth -->
-      <div class="field-group" [@atfirst]="rentalYeild!=''?'visible':'hide'">
+      <div class="field-group">
         <div class="field-label-row">
           <span class="field-label">Annual Capital Growth</span>
           <span class="field-hint">10yr UK avg: 4.8%</span>
@@ -166,7 +155,7 @@
       </div>
 
       <!-- FX Appreciation -->
-      <div class="field-group" *ngIf="capitalgrowth!=''" [@afrfirst]="'visible'">
+      <div class="field-group">
         <div class="field-label-row">
           <span class="field-label">FX Appreciation</span>
           <span class="field-hint">GBP vs home currency</span>
@@ -185,7 +174,7 @@
       </div>
 
       <!-- Nav buttons -->
-      <div class="panel-nav" *ngIf="fxgrowth!=''">
+      <div class="panel-nav">
         <button class="btn-back-outline" [routerLink]="['/step2']">
           <img src="/assets/Frame 1000003040.svg" alt="Back" width="20" height="20">
           Back

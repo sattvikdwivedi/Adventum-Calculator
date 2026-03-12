@@ -586,6 +586,9 @@ export class CashflowresultComponent implements OnInit, AfterViewInit {
     cashFlow.splice(0, 0, InitialInvestMent);
     return finance.IRR.apply(this, cashFlow);
   }
+  goBack(): void {
+    this.router.navigate(['/cashflow/step4']);
+  }
   startagain(): void {
     localStorage.removeItem('calcData');
     this.router.navigate(['/']);

@@ -14,6 +14,9 @@ export class CashflowStep1Component implements OnInit {
   searchQuery: string = '';
   PropertyValue: string = '';
   loanAmount: string = '75';
+  loanTenure: string = '10';
+  optmortgage: string = '1';
+  mortgageType: string = '1';
   foreignbuyer: string = '1';
   calcData: any;
 
@@ -38,7 +41,7 @@ export class CashflowStep1Component implements OnInit {
     private dataService: DataService,
     public validation: ValidationService
   ) {
-    this.calcData = JSON.parse(localStorage.getItem('calcData')) || {};
+    this.calcData = JSON.parse(localStorage.getItem('calcData') || '{}') || {};
     if (!this.dataService.EmptyNullOrUndefined(this.calcData.City)) {
       this.City = this.calcData.City;
     }
@@ -46,10 +49,19 @@ export class CashflowStep1Component implements OnInit {
       this.Pincode = this.calcData.Pincode;
     }
     if (!this.dataService.EmptyNullOrUndefined(this.calcData.PropertyValue)) {
-      this.PropertyValue = this.validation.amountWithComma(this.calcData.PropertyValue);
+      this.PropertyValue = this.validation.amountWithComma(String(this.calcData.PropertyValue));
     }
     if (!this.dataService.EmptyNullOrUndefined(this.calcData.loanAmount)) {
       this.loanAmount = this.calcData.loanAmount;
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.calcData.loanTenure)) {
+      this.loanTenure = this.calcData.loanTenure;
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.calcData.optmortgage)) {
+      this.optmortgage = this.calcData.optmortgage;
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.calcData.mortgageType)) {
+      this.mortgageType = this.calcData.mortgageType;
     }
     if (!this.dataService.EmptyNullOrUndefined(this.calcData.ForeignBuyer)) {
       this.foreignbuyer = this.calcData.ForeignBuyer;
@@ -85,14 +97,13 @@ export class CashflowStep1Component implements OnInit {
 
   next() {
     if (!this.City) return;
-    if (!this.PropertyValue) return;
 
     this.calcData.City = this.City;
-    this.calcData.PropertyValue = this.PropertyValue.replace(/,/g, '');
     this.calcData.loanAmount = this.loanAmount;
+    this.calcData.loanTenure = this.loanTenure;
     this.calcData.ForeignBuyer = this.foreignbuyer;
-    this.calcData.optmortgage = '1';
-    this.calcData.mortgageType = '1';
+    this.calcData.optmortgage = this.optmortgage;
+    this.calcData.mortgageType = this.mortgageType;
     this.calcData.reportSavedOnServer = false;
     localStorage.setItem('calcData', JSON.stringify(this.calcData));
     this.router.navigate(['/cashflow/step2']);

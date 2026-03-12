@@ -407,10 +407,10 @@ export class CalculatedirrComponent implements OnInit, AfterViewInit {
       InitialInvesment = 0 - parseFloat(((this.calcData.PropertyValue * ((100 - this.calcData.loanAmount) / 100)) + parseFloat(this.calcData.stampDutyLandTax) + (this.calcData.PropertyValue * ((this.calcData.loanAmount) / 100)) * (this.calcData.loanOriginationFee / 100)).toFixed(4));
     }
     this.allCahsflow.splice(0, 0, InitialInvesment);
-    this.IrrInGBP = finance.IRR.apply(this, this.allCahsflow);
+    try { this.IrrInGBP = finance.IRR.apply(this, this.allCahsflow); } catch (e) { this.IrrInGBP = 0; }
     let InitialInvesmentInHomeCurrency = parseFloat((InitialInvesment * this.calcData.homecurrency).toFixed(4));
     this.allCashFlowInHomeCurrency.splice(0, 0, InitialInvesmentInHomeCurrency);
-    this.IrrInHomeCurrency = finance.IRR.apply(this, this.allCashFlowInHomeCurrency);
+    try { this.IrrInHomeCurrency = finance.IRR.apply(this, this.allCashFlowInHomeCurrency); } catch (e) { this.IrrInHomeCurrency = 0; }
     this.capitalAppreciation = parseFloat(((this.EquityCapital+ InitialInvesment)*this.calcData.homecurrency).toFixed(4));
     this.graphInitialInvestmentInHomeCurrency = InitialInvesmentInHomeCurrency;
     //console.log(this.allCashFlowInHomeCurrency);
@@ -457,7 +457,7 @@ export class CalculatedirrComponent implements OnInit, AfterViewInit {
       }
     }
     cashFlow.splice(0, 0, InitialInvestMent);
-    return finance.IRR.apply(this, cashFlow);
+    try { return finance.IRR.apply(this, cashFlow); } catch (e) { return 0; }
   }
   ReturnIRRInHomeCurrency(InitialInvestMent: number, index: number): number {
     let cashFlow = [];
@@ -472,7 +472,7 @@ export class CalculatedirrComponent implements OnInit, AfterViewInit {
       }
     }
     cashFlow.splice(0, 0, InitialInvestMent);
-    return finance.IRR.apply(this, cashFlow);
+    try { return finance.IRR.apply(this, cashFlow); } catch (e) { return 0; }
   }
   selectCountry(country: string): void {
     this.selectedCountry = country;

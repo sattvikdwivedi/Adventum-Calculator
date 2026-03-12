@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="rp-header__actions">
-        <button class="rp-btn rp-btn--ghost" (click)="startagain()">
+        <button class="rp-btn rp-btn--ghost" (click)="goBack()">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
           Back
         </button>
@@ -84,11 +84,11 @@
       <div class="rp-assumptions-card">
         <div class="rp-assumption-row">
           <span class="rp-assumption-row__label">Property Value</span>
-          <span class="rp-assumption-row__value">£{{calcData.PropertyValue | number:'1.0-0'}}</span>
+          <span class="rp-assumption-row__value">£{{+calcData.PropertyValue | number:'1.0-0'}}</span>
         </div>
         <div class="rp-assumption-row">
           <span class="rp-assumption-row__label">LTV</span>
-          <span class="rp-assumption-row__value">{{calcData.loanAmount}}%</span>
+          <span class="rp-assumption-row__value">{{+calcData.loanAmount}}%</span>
         </div>
         <div class="rp-assumption-row">
           <span class="rp-assumption-row__label">Period</span>
@@ -96,39 +96,39 @@
         </div>
         <div class="rp-assumption-row">
           <span class="rp-assumption-row__label">Yield</span>
-          <span class="rp-assumption-row__value">{{calcData.rentalYeild | number:'1.2-2'}}%</span>
+          <span class="rp-assumption-row__value">{{+calcData.rentalYeild | number:'1.2-2'}}%</span>
         </div>
         <div class="rp-assumption-row">
           <span class="rp-assumption-row__label">Growth</span>
-          <span class="rp-assumption-row__value">{{calcData.rentalGrowthEscalation | number:'1.2-2'}}% p.a.</span>
+          <span class="rp-assumption-row__value">{{+calcData.rentalGrowthEscalation | number:'1.2-2'}}% p.a.</span>
         </div>
-        <div class="rp-assumption-row">
+        <div class="rp-assumption-row" *ngIf="calcData.optmortgage !== '0'">
           <span class="rp-assumption-row__label">Mortgage Rate</span>
-          <span class="rp-assumption-row__value">{{calcData.mortgageInterestRate | number:'1.2-2'}}%</span>
+          <span class="rp-assumption-row__value">{{+calcData.mortgageInterestRate | number:'1.2-2'}}%</span>
         </div>
         <div class="rp-assumption-row">
           <span class="rp-assumption-row__label">Stamp Duty</span>
-          <span class="rp-assumption-row__value">£{{calcData.stampDutyLandTax | number:'1.0-0'}}</span>
+          <span class="rp-assumption-row__value">£{{+calcData.stampDutyLandTax | number:'1.0-0'}}</span>
         </div>
-        <div class="rp-assumption-row">
+        <div class="rp-assumption-row" *ngIf="calcData.optmortgage !== '0'">
           <span class="rp-assumption-row__label">Loan Origination Fee</span>
-          <span class="rp-assumption-row__value">£{{loanoriginationfee | number:'1.0-0'}}</span>
+          <span class="rp-assumption-row__value">£{{+loanoriginationfee | number:'1.0-0'}}</span>
         </div>
         <div class="rp-assumption-row">
           <span class="rp-assumption-row__label">Letting Fee</span>
-          <span class="rp-assumption-row__value">{{calcData.letteingManagFee | number:'1.2-2'}}%</span>
+          <span class="rp-assumption-row__value">{{+calcData.letteingManagFee | number:'1.2-2'}}%</span>
         </div>
         <div class="rp-assumption-row">
           <span class="rp-assumption-row__label">Ground Rent</span>
-          <span class="rp-assumption-row__value">£{{calcData.groundRent | number:'1.0-0'}}</span>
+          <span class="rp-assumption-row__value">£{{+calcData.groundRent | number:'1.0-0'}}</span>
         </div>
         <div class="rp-assumption-row">
           <span class="rp-assumption-row__label">Service Charges</span>
-          <span class="rp-assumption-row__value">£{{calcData.serviceCharges | number:'1.0-0'}}</span>
+          <span class="rp-assumption-row__value">£{{+calcData.serviceCharges | number:'1.0-0'}}</span>
         </div>
         <div class="rp-assumption-row rp-assumption-row--last">
           <span class="rp-assumption-row__label">Other Expenses</span>
-          <span class="rp-assumption-row__value">£{{calcData.miscelleneousExpense | number:'1.0-0'}}</span>
+          <span class="rp-assumption-row__value">£{{+calcData.miscelleneousExpense | number:'1.0-0'}}</span>
         </div>
       </div>
     </div>
@@ -295,7 +295,7 @@
 
 <!-- ═══ STICKY FOOTER ═══ -->
 <footer class="rp-footer">
-  <button class="rp-footer-btn rp-footer-back" (click)="startagain()">
+  <button class="rp-footer-btn rp-footer-back" (click)="goBack()">
     <img src="/assets/Icon (1).svg" width="8" height="14" alt="">
     Back
   </button>

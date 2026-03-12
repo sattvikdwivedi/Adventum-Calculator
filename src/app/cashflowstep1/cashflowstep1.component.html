@@ -1,153 +1,94 @@
-<!-- CASHFLOW STEP 1 — Property Selection + Buyer Status -->
+<!-- CASHFLOW STEP 1 — Where would you like to invest? -->
 <div class="cf-page">
 
   <!-- LEFT PANEL -->
   <div class="panel-left">
-    <div class="panel-left-bg"></div>
-    <div class="panel-left-inner">
-
-      <!-- Logo -->
-      <div class="panel-logo">
+    <div class="pl-inner">
+      <div class="logo-wrap">
         <a routerLink="/"><img src="assets/Calci_logo (1).png" alt="Adventum Calculators" class="panel-logo-img"></a>
       </div>
-
-      <!-- Hero card -->
       <div class="hero-card">
-        <div class="hero-card-text-block">
-          <div class="hero-card-heading">
-            <span class="hero-card-heading-light">Invest in </span><span class="hero-card-heading-bold">{{City || 'Manchester'}}'s</span><span class="hero-card-heading-light"> Future</span>
-          </div>
-          <p class="hero-card-sub">The UK's fastest-growing property market with 6-8% yields and strong capital appreciation.</p>
-        </div>
+        <p class="hero-pre">Cashflow Calculator</p>
+        <h2 class="hero-title">Invest in <strong>{{City || 'Manchester'}}</strong>'s Future</h2>
+        <p class="hero-body">The UK's fastest-growing property market with 6-8% yields and strong capital appreciation.</p>
         <div class="hero-stats">
-          <div class="hero-stat">
-            <div class="hero-stat-val">{{getHeroYield()}}</div>
-            <div class="hero-stat-lbl">Avg. Yield</div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-stat-val">{{getHeroGrowth()}}</div>
-            <div class="hero-stat-lbl">5yr Growth</div>
-          </div>
-          <div class="hero-stat">
-            <div class="hero-stat-val">{{City === 'Manchester' ? '#1' : City === 'Liverpool' ? '#2' : City === 'Birmingham' ? '#3' : 'UK'}}</div>
-            <div class="hero-stat-lbl">UK BTL City</div>
-          </div>
+          <div class="hstat"><div class="hstat-v">{{getHeroYield()}}</div><div class="hstat-l">Avg. Yield</div></div>
+          <div class="hstat"><div class="hstat-v">{{getHeroGrowth()}}</div><div class="hstat-l">5yr Growth</div></div>
+          <div class="hstat"><div class="hstat-v">{{City === 'Manchester' ? '#1' : City === 'Liverpool' ? '#2' : City === 'Birmingham' ? '#3' : 'UK'}}</div><div class="hstat-l">UK BTL City</div></div>
         </div>
       </div>
-
     </div>
   </div>
 
   <!-- RIGHT PANEL -->
   <div class="panel-right">
-    <div class="panel-right-inner">
+    <div class="pr-inner">
 
-      <!-- Top bar -->
+      <!-- Topbar -->
       <div class="topbar">
         <button (click)="router.navigate(['/'])" style="background: none; border: none; padding: 0; cursor: pointer; display: flex; align-items: center;">
           <img src="/assets/Frame 1000003040.svg" alt="Back" width="44" height="44">
         </button>
-        <div class="location-pill">
+        <div class="loc-pill">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           {{City || 'United Kingdom'}}
         </div>
       </div>
 
-      <!-- Heading -->
-      <h2 class="section-title">Where would you like to invest?</h2>
-      <p class="section-sub">Select a city to explore investment potential</p>
+      <h1 class="step-title">Where would you like to invest?</h1>
+      <p class="step-sub">Enter any UK postcode or select any city to explore investment potential</p>
 
-      <!-- Location search input -->
-      <div class="search-wrap">
-        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-        <input class="search-inp" type="text" placeholder="Search postcode or city..." [(ngModel)]="searchQuery" />
+      <!-- Location search -->
+      <div class="sw">
+        <svg class="si" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input class="sinp" type="text" placeholder="Search postcode or city..." [(ngModel)]="searchQuery" />
       </div>
 
-      <!-- Popular area chips -->
-      <p class="popular-label">Popular areas:</p>
-      <div class="area-chips">
-        <button class="area-chip" *ngIf="'London'    | cityFilter:searchQuery" [class.selected]="City==='London'"     (click)="selectCity('London','SW1A 1AA',51.5074,-0.1278)">London</button>
-        <button class="area-chip" *ngIf="'Liverpool' | cityFilter:searchQuery" [class.selected]="City==='Liverpool'"  (click)="selectCity('Liverpool','L1 1AA',53.4084,-2.9916)">Liverpool</button>
-        <button class="area-chip" *ngIf="'Manchester'| cityFilter:searchQuery" [class.selected]="City==='Manchester'" (click)="selectCity('Manchester','M1 1AA',53.4808,-2.2426)">Manchester</button>
-        <button class="area-chip" *ngIf="'Birmingham'| cityFilter:searchQuery" [class.selected]="City==='Birmingham'" (click)="selectCity('Birmingham','B1 1AA',52.4862,-1.8904)">Birmingham</button>
-        <button class="area-chip" *ngIf="'Others'    | cityFilter:searchQuery" [class.selected]="City==='Others'"     (click)="selectCity('Others','HA87DB',51.6112486,-0.2806403)">Others</button>
+      <p class="pop-lbl">Popular areas:</p>
+      <div class="area-pills">
+        <button class="ap" *ngIf="'London'    | cityFilter:searchQuery" [class.active]="City==='London'"     (click)="selectCity('London','SW1A 1AA',51.5074,-0.1278)">London</button>
+        <button class="ap" *ngIf="'Liverpool' | cityFilter:searchQuery" [class.active]="City==='Liverpool'"  (click)="selectCity('Liverpool','L1 1AA',53.4084,-2.9916)">Liverpool</button>
+        <button class="ap" *ngIf="'Manchester'| cityFilter:searchQuery" [class.active]="City==='Manchester'" (click)="selectCity('Manchester','M1 1AA',53.4808,-2.2426)">Manchester</button>
+        <button class="ap" *ngIf="'Birmingham'| cityFilter:searchQuery" [class.active]="City==='Birmingham'" (click)="selectCity('Birmingham','B1 1AA',52.4862,-1.8904)">Birmingham</button>
+        <button class="ap" *ngIf="'Others'    | cityFilter:searchQuery" [class.active]="City==='Others'"     (click)="selectCity('Others','HA87DB',51.6112486,-0.2806403)">Others</button>
       </div>
 
       <!-- City card -->
       <div class="city-card" *ngIf="City">
-        <div class="city-card-info">
-          <div class="city-card-name">{{City}}</div>
-          <div class="city-card-desc">{{getCityDesc()}}</div>
+        <div class="cc-left">
+          <h3>{{City}}</h3>
+          <p>{{getCityDesc()}}</p>
         </div>
-        <div class="city-card-stats">
-          <div class="city-stat">
-            <div class="city-stat-val">{{getCityStat('yield')}}</div>
-            <div class="city-stat-lbl">Avg Yield</div>
-          </div>
-          <div class="city-stat">
-            <div class="city-stat-val">{{getCityStat('growth')}}</div>
-            <div class="city-stat-lbl">5yr Growth</div>
-          </div>
-          <div class="city-stat">
-            <div class="city-stat-val">{{getCityStat('price')}}</div>
-            <div class="city-stat-lbl">Avg Price</div>
-          </div>
+        <div class="cc-stats">
+          <div class="ccs"><div class="ccs-v">{{getCityStat('yield')}}</div><div class="ccs-l">Avg Yield</div></div>
+          <div class="ccs"><div class="ccs-v">{{getCityStat('growth')}}</div><div class="ccs-l">5yr Growth</div></div>
+          <div class="ccs"><div class="ccs-v">{{getCityStat('price')}}</div><div class="ccs-l">Avg Price</div></div>
         </div>
       </div>
 
-      <!-- Property Value + LTV (always visible) -->
-      <div class="prop-row">
-        <div class="field">
-          <div class="field-label">Property Value</div>
-          <div class="input-wrap">
-            <span class="input-pre">£</span>
-            <input class="inp" type="text" autocomplete="off"
-              (keyup)="PropertyValue=validation.amountWithComma(PropertyValue)"
-              (keypress)="validation.numberOnly($event)"
-              placeholder="e.g. 400,000"
-              [(ngModel)]="PropertyValue">
-          </div>
-        </div>
-        <div class="field">
-          <div class="field-label">Loan to Value (LTV)</div>
-          <div class="pill-row">
-            <button class="pill" [class.active]="loanAmount==='50'" (click)="loanAmount='50'">50%</button>
-            <button class="pill" [class.active]="loanAmount==='60'" (click)="loanAmount='60'">60%</button>
-            <button class="pill" [class.active]="loanAmount==='75'" (click)="loanAmount='75'">75%</button>
-            <button class="pill" [class.active]="loanAmount==='80'" (click)="loanAmount='80'">80%</button>
-          </div>
-        </div>
-      </div>
-
-      <!-- Buyer Status card (always visible) -->
+      <!-- Buyer Status card -->
       <div class="buyer-card">
-        <div class="buyer-card-title">Buyer Status</div>
-        <div class="buyer-card-sub">This affects your stamp duty calculation</div>
+        <h4>Buyer Status</h4>
+        <p>This affects your stamp duty calculation</p>
         <div class="buyer-row">
-          <div class="buyer-row-labels">
-            <div class="buyer-row-label-main">Are You a Foreign (Non-UK Resident) Buyer?</div>
-            <div class="buyer-row-label-sub">Foreign buyers pay an additional 2% stamp duty surcharge</div>
+          <div class="buyer-row-left">
+            <h5>Are You a Foreign (Non-UK Resident) Buyer?</h5>
+            <p>Foreign buyers pay an additional 2% stamp duty surcharge</p>
           </div>
-          <div class="toggle-pair">
-            <button class="toggle-opt" [class.active]="foreignbuyer!=='1'" (click)="foreignbuyer='0'">UK Resident</button>
-            <button class="toggle-opt" [class.active]="foreignbuyer==='1'" (click)="foreignbuyer='1'">Foreign Buyer</button>
+          <div class="buyer-tgl">
+            <button class="bto" [class.active]="foreignbuyer!=='1'" (click)="foreignbuyer='0'">UK Resident</button>
+            <button class="bto" [class.active]="foreignbuyer==='1'" (click)="foreignbuyer='1'">Foreign Buyer</button>
           </div>
         </div>
       </div>
 
-      <!-- Nav buttons -->
-      <div class="panel-nav">
-        <button class="btn-back-outline" (click)="router.navigate(['/'])">
+      <!-- Actions -->
+      <div class="actions">
+        <button class="btn-back" (click)="router.navigate(['/'])">
           <img src="/assets/Frame 1000003040.svg" alt="Back" width="20" height="20">
           Back
         </button>
-        <button
-          class="btn-continue"
-          [class.btn-continue--active]="City!='' && PropertyValue!=''"
-          (click)="next()">
-          Continue
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
+        <button class="btn-cont" (click)="next()">Continue</button>
       </div>
 
     </div>

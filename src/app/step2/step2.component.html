@@ -57,17 +57,6 @@
         </div>
       </div>
 
-      <!-- Progress bar -->
-      <div class="progress-wrap">
-        <progress-bar
-          [progress]="10+(PropertyValue!=''?10:0)+(optmortgage==''?0:(optmortgage=='1'?6.25:31.25))+(optmortgage=='1'?((loanAmount!=''?6.25:0)+(mortgageInterestRate!=''?6.25:0)+(mortgageTenure!=''?6.25:0)+(mortgageType!=''?6.25:0)):0)"
-          [color]="'#22c55e'">
-        </progress-bar>
-        <span class="progress-label">
-          {{10+(PropertyValue!=''?10:0)+(optmortgage==''?0:(optmortgage=='1'?6.25:31.25))+(optmortgage=='1'?(+(loanAmount!=''?6.25:0)+(mortgageInterestRate!=''?6.25:0)+(mortgageTenure!=''?6.25:0)+(mortgageType!=''?6.25:0)):0)|number:'1.0-0'}}% data received
-        </span>
-      </div>
-
       <!-- Heading -->
       <h2 class="section-title">Property &amp; Financing</h2>
       <p class="section-sub">Set up your investment structure and mortgage preferences.</p>
@@ -93,7 +82,7 @@
       </div>
 
       <!-- Will you need a mortgage? -->
-      <div class="field-group" [@otpmort]="PropertyValue!=''?'visible':'hide'">
+      <div class="field-group">
         <div class="field-label-row">
           <span class="field-label">Will you need a mortgage?</span>
         </div>
@@ -114,7 +103,7 @@
       </div>
 
       <!-- Loan to Value — pill buttons -->
-      <div class="field-group" [@asfirst]="optmortgage=='1'?'visible':'hide'">
+      <div class="field-group">
         <div class="field-label-row">
           <span class="field-label">Loan to Value (LTV)</span>
           <span class="app-hint">Higher LTV = less deposit required</span>
@@ -131,7 +120,7 @@
       </div>
 
       <!-- Interest Rate -->
-      <div class="field-group" [@atfirst]="loanAmount!='' && optmortgage=='1'?'visible':'hide'">
+      <div class="field-group">
         <div class="field-label-row">
           <span class="field-label">Interest Rate</span>
           <span class="app-hint">Current avg: 5.2%</span>
@@ -151,7 +140,7 @@
       </div>
 
       <!-- Loan Tenure — pill buttons -->
-      <div class="field-group" [@afrfirst]="mortgageInterestRate!='' && optmortgage=='1'?'visible':'hide'">
+      <div class="field-group">
         <div class="field-label-row">
           <span class="field-label">Loan Tenure</span>
           <span class="app-hint">Typical BTL: 10-25 years</span>
@@ -166,7 +155,7 @@
       </div>
 
       <!-- Mortgage Type — toggle pair -->
-      <div class="field-group" [@affirst]="mortgageTenure!=''?'visible':'hide'">
+      <div class="field-group">
         <div class="field-label-row">
           <span class="field-label">Mortgage Type</span>
         </div>
@@ -187,7 +176,7 @@
       </div>
 
       <!-- Nav buttons -->
-      <div class="panel-nav" *ngIf="mortgageType!='' || optmortgage=='0'">
+      <div class="panel-nav">
         <button class="btn-back-outline" [routerLink]="['/step1']">
           <img src="/assets/Frame 1000003040.svg" alt="Back" width="20" height="20">
           Back

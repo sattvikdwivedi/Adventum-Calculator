@@ -1,144 +1,158 @@
-<!-- CASHFLOW STEP 2 — Rental Income -->
+<!-- CASHFLOW STEP 2 — Property & Financing -->
 <div class="cf-page">
 
   <!-- LEFT PANEL -->
   <div class="panel-left">
-    <div class="panel-left-bg"></div>
-    <div class="panel-left-inner">
-
-      <!-- Logo -->
-      <div class="panel-logo">
+    <div class="pl-inner">
+      <div class="logo-wrap">
         <a routerLink="/"><img src="assets/Calci_logo (1).png" alt="Adventum Calculators" class="panel-logo-img"></a>
       </div>
-
-      <!-- Preview card -->
-      <div class="hero-card">
-        <p class="hero-card-pretitle">Cashflow Calculator</p>
-        <h2 class="hero-card-title">Your <strong>Cashflow</strong> at a Glance</h2>
-        <p class="hero-card-sub">Watch your net income update as you configure — step 2 of 3.</p>
-        <div class="cf-stats-grid">
-          <div class="cf-stat">
-            <div class="cf-stat-lbl">Gross Annual</div>
-            <div class="cf-stat-val">£{{grossAnnual | number:'1.0-0'}}</div>
-          </div>
-          <div class="cf-stat accent">
-            <div class="cf-stat-lbl">Net Annual</div>
-            <div class="cf-stat-val">£{{netAnnual | number:'1.0-0'}}</div>
-          </div>
-          <div class="cf-stat">
-            <div class="cf-stat-lbl">Net Monthly</div>
-            <div class="cf-stat-val">£{{(netAnnual/12) | number:'1.0-0'}}</div>
-          </div>
-          <div class="cf-stat accent">
-            <div class="cf-stat-lbl">Net Yield</div>
-            <div class="cf-stat-val">{{netYield | number:'1.1-1'}}%</div>
-          </div>
+      <div class="cf-card">
+        <h3 class="cf-card-title">Your <strong>Cashflow</strong> at a Glance</h3>
+        <p class="cf-card-sub">Watch your net income update as you configure.</p>
+        <div class="cf-stats">
+          <div class="cfs"><div class="cfs-l">Deposit</div><div class="cfs-v">£{{deposit | number:'1.0-0'}}</div></div>
+          <div class="cfs acc"><div class="cfs-l">Loan Amount</div><div class="cfs-v">£{{loanAmountVal | number:'1.0-0'}}</div></div>
+          <div class="cfs"><div class="cfs-l">Annual Mortgage</div><div class="cfs-v">£{{annualMortgage | number:'1.0-0'}}</div></div>
+          <div class="cfs acc"><div class="cfs-l">Mortgage Type</div><div class="cfs-v">{{mortgageType==='1' ? 'Int Only' : 'Repayment'}}</div></div>
         </div>
       </div>
-
     </div>
   </div>
 
   <!-- RIGHT PANEL -->
   <div class="panel-right">
-    <div class="panel-right-inner">
+    <div class="pr-inner">
 
-      <!-- Top bar -->
+      <!-- Topbar -->
       <div class="topbar">
-        <button [routerLink]="['/cashflow/step1']" style="background: none; border: none; padding: 0; cursor: pointer; display: flex; align-items: center;">
+        <button (click)="router.navigate(['/cashflow/step1'])" style="background: none; border: none; padding: 0; cursor: pointer; display: flex; align-items: center;">
           <img src="/assets/Frame 1000003040.svg" alt="Back" width="44" height="44">
         </button>
-        <div class="location-pill">
+        <div class="loc-pill">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           {{calcData?.City || 'United Kingdom'}}
         </div>
       </div>
 
-      <!-- Progress bar -->
-      <div class="progress-wrap">
-        <progress-bar
-          [progress]="35+(investedTenure!=''?10:0)+(rentalYeild!=''?10:0)+(rentalGrowthEscalation!=''?10:0)"
-          [color]="'#22c55e'">
-        </progress-bar>
-        <span class="progress-label">
-          {{35+(investedTenure!=''?10:0)+(rentalYeild!=''?10:0)+(rentalGrowthEscalation!=''?10:0) | number:'1.0-0'}}% data received
-        </span>
-      </div>
+      <h1 class="step-title">Property &amp; Financing</h1>
+      <p class="step-sub">Enter property details to project your cashflow.</p>
 
-      <!-- Heading -->
-      <h2 class="section-title">Rental Income</h2>
-      <p class="section-sub">Define your investment horizon and rental expectations.</p>
-
-      <!-- Three fields row -->
-      <div class="fields-row3">
-        <div class="field">
-          <div class="field-label">Investment Period</div>
-          <div class="sel-wrap">
-            <select class="sel" id="investedTenure" [(ngModel)]="investedTenure" (change)="updatePreview()">
-              <option value="">Select</option>
-              <option value="3">3 yrs</option>
-              <option value="5">5 yrs</option>
-              <option value="7">7 yrs</option>
-              <option value="10">10 yrs</option>
-              <option value="15">15 yrs</option>
-              <option value="20">20 yrs</option>
-              <option value="25">25 yrs</option>
-            </select>
-          </div>
-        </div>
-        <div class="field">
-          <div class="field-label-row">
-            <span class="field-label">Gross Rental Yield</span>
-            <span class="field-hint">6–8% typical</span>
-          </div>
-          <div class="input-wrap">
-            <input class="inp" type="text" id="rentalYeild" autocomplete="off"
-              (keyup)="rentalYeild=validation.appendPercent($event,rentalYeild); updatePreview()"
-              (keypress)="validation.DesimalOnly($event,rentalYeild)"
-              placeholder="e.g. 6.2"
-              [(ngModel)]="rentalYeild">
-            <span class="input-suf">%</span>
-          </div>
-        </div>
-        <div class="field">
-          <div class="field-label-row">
-            <span class="field-label">Rental Growth p.a.</span>
-            <span class="field-hint">3% avg</span>
-          </div>
-          <div class="input-wrap">
-            <input class="inp" type="text" id="rentalGrowthEscalation" autocomplete="off"
-              (keyup)="rentalGrowthEscalation=validation.appendPercent($event,rentalGrowthEscalation); updatePreview()"
-              (keypress)="validation.DesimalOnly($event,rentalGrowthEscalation)"
-              placeholder="e.g. 4"
-              [(ngModel)]="rentalGrowthEscalation">
-            <span class="input-suf">%</span>
-          </div>
+      <!-- Property Value -->
+      <div class="field">
+        <div class="field-label">Property Value</div>
+        <div class="iw">
+          <span class="ipre">£</span>
+          <input class="inp" type="text" autocomplete="off"
+            [(ngModel)]="propertyValueDisplay"
+            (keyup)="propertyValueDisplay=validation.amountWithComma(propertyValueDisplay); updatePreview()"
+            (keypress)="validation.numberOnly($event)"
+            placeholder="e.g. 250,000">
         </div>
       </div>
 
-      <!-- Preview boxes -->
-      <div class="preview-boxes" *ngIf="rentalYeild!=''">
-        <div class="preview-box">
-          <div class="preview-box-lbl">Year 1 Gross Rent</div>
-          <div class="preview-box-val"><span>£</span>{{grossAnnual | number:'1.0-0'}}</div>
-        </div>
-        <div class="preview-box">
-          <div class="preview-box-lbl">Year 1 Net Cashflow</div>
-          <div class="preview-box-val"><span>£</span>{{netAnnual | number:'1.0-0'}}</div>
-          <div class="preview-box-sub">after all costs</div>
+      <!-- Will you need a mortgage? -->
+      <div class="field">
+        <div class="field-label">Will you need a mortgage?</div>
+        <div class="toggle-pair">
+          <button class="topt" [class.active]="optmortgage==='1'" (click)="optmortgage='1'; updatePreview()">Yes</button>
+          <button class="topt" [class.active]="optmortgage==='0'" (click)="optmortgage='0'; updatePreview()">No</button>
         </div>
       </div>
 
-      <!-- Nav buttons -->
-      <div class="panel-actions">
-        <button class="btn-back" [routerLink]="['/cashflow/step1']">
+      <!-- Mortgage fields -->
+      <div>
+
+        <!-- LTV -->
+        <div class="field">
+          <div class="field-label">
+            Loan to Value (LTV)
+            <span class="app-hint">
+              Higher LTV = less deposit required
+            </span>
+          </div>
+          <div class="pill-row">
+            <button class="pill" [class.active]="loanAmount==='50'" (click)="loanAmount='50'; updatePreview()">50%</button>
+            <button class="pill" [class.active]="loanAmount==='55'" (click)="loanAmount='55'; updatePreview()">55%</button>
+            <button class="pill" [class.active]="loanAmount==='60'" (click)="loanAmount='60'; updatePreview()">60%</button>
+            <button class="pill" [class.active]="loanAmount==='65'" (click)="loanAmount='65'; updatePreview()">65%</button>
+            <button class="pill" [class.active]="loanAmount==='70'" (click)="loanAmount='70'; updatePreview()">70%</button>
+            <button class="pill" [class.active]="loanAmount==='75'" (click)="loanAmount='75'; updatePreview()">75%</button>
+            <button class="pill" [class.active]="loanAmount==='80'" (click)="loanAmount='80'; updatePreview()">80%</button>
+          </div>
+        </div>
+
+        <!-- Interest Rate -->
+        <div class="field">
+          <div class="field-label">
+            Interest Rate
+            <span class="app-hint">
+              Current avg: 5.2%
+            </span>
+          </div>
+          <div class="iw">
+            <span class="ipre">%</span>
+            <input class="inp" type="text" autocomplete="off"
+              (keyup)="interestRate=validation.appendPercent($event,interestRate); updatePreview()"
+              (keypress)="validation.DesimalOnly($event,interestRate)"
+              placeholder="e.g. 5.0"
+              [(ngModel)]="interestRate">
+          </div>
+        </div>
+
+        <!-- Loan Tenure -->
+        <div class="field">
+          <div class="field-label">
+            Loan Tenure
+            <span class="app-hint">
+
+              Typical BTL: 10-25 years
+            </span>
+          </div>
+          <div class="pill-row">
+            <button class="pill" [class.active]="loanTenure==='5'"  (click)="loanTenure='5';  updatePreview()">5 Yrs</button>
+            <button class="pill" [class.active]="loanTenure==='10'" (click)="loanTenure='10'; updatePreview()">10 Yrs</button>
+            <button class="pill" [class.active]="loanTenure==='15'" (click)="loanTenure='15'; updatePreview()">15 Yrs</button>
+            <button class="pill" [class.active]="loanTenure==='20'" (click)="loanTenure='20'; updatePreview()">20 Yrs</button>
+            <button class="pill" [class.active]="loanTenure==='25'" (click)="loanTenure='25'; updatePreview()">25 Yrs</button>
+          </div>
+        </div>
+
+        <!-- Mortgage Type -->
+        <div class="field">
+          <div class="field-label">Mortgage Type</div>
+          <div class="toggle-pair">
+            <button class="topt" [class.active]="mortgageType==='1'" (click)="mortgageType='1'; updatePreview()">Interest Only</button>
+            <button class="topt" [class.active]="mortgageType==='2'" (click)="mortgageType='2'; updatePreview()">Repayment</button>
+          </div>
+        </div>
+
+        <!-- 3 live preview boxes -->
+        <div class="preview3">
+          <div class="prev-box">
+            <div class="prev-lbl">Deposit</div>
+            <div class="prev-val"><span class="sym">£</span>{{deposit | number:'1.0-0'}}</div>
+          </div>
+          <div class="prev-box">
+            <div class="prev-lbl">Loan Amount</div>
+            <div class="prev-val"><span class="sym">£</span>{{loanAmountVal | number:'1.0-0'}}</div>
+          </div>
+          <div class="prev-box">
+            <div class="prev-lbl">Annual Mortgage</div>
+            <div class="prev-val"><span class="sym">£</span>{{annualMortgage | number:'1.0-0'}}</div>
+            <div class="prev-note">{{mortgageType==='1' ? 'interest only' : 'repayment'}}</div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Actions -->
+      <div class="actions">
+        <button class="btn-back" (click)="router.navigate(['/cashflow/step1'])"
           <img src="/assets/Frame 1000003040.svg" alt="Back" width="20" height="20">
           Back
         </button>
-        <button class="btn-continue" type="button" (click)="next()">
-          Continue
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
+        <button class="btn-cont" type="button" (click)="next()">Continue</button>
       </div>
 
     </div>

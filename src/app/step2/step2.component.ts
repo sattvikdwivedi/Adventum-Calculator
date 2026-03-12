@@ -1,55 +1,22 @@
 import { Component, ElementRef, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { DataService } from '../data.service';
-import { trigger,state,style,animate,transition } from '@angular/animations';
 import { ValidationService } from '../validation.service';
 @Component({
   selector: 'app-step2',
   templateUrl: './step2.component.html',
-  styleUrls: ['./step2.component.css'],
-  animations: [
-    trigger('otpmort',[
-      state('visible', style({ opacity:'1', height:'*' })),
-      state('hide',    style({ opacity:'0', height:'0px', overflow:'hidden' })),
-      transition('hide => visible', [animate('400ms ease-out')]),
-      transition('visible => hide', [animate('200ms ease-in')])
-    ]),
-    trigger('affirst',[
-      state('visible', style({ opacity:'1', height:'*' })),
-      state('hide',    style({ opacity:'0', height:'0px', overflow:'hidden' })),
-      transition('hide => visible', [animate('400ms ease-out')]),
-      transition('visible => hide', [animate('200ms ease-in')])
-    ]),
-    trigger('asfirst',[
-      state('visible', style({ opacity:'1', height:'*' })),
-      state('hide',    style({ opacity:'0', height:'0px', overflow:'hidden' })),
-      transition('hide => visible', [animate('400ms ease-out')]),
-      transition('visible => hide', [animate('200ms ease-in')])
-    ]),
-    trigger('atfirst',[
-      state('visible', style({ opacity:'1', height:'*' })),
-      state('hide',    style({ opacity:'0', height:'0px', overflow:'hidden' })),
-      transition('hide => visible', [animate('400ms ease-out')]),
-      transition('visible => hide', [animate('200ms ease-in')])
-    ]),
-    trigger('afrfirst',[
-      state('visible', style({ opacity:'1', height:'*' })),
-      state('hide',    style({ opacity:'0', height:'0px', overflow:'hidden' })),
-      transition('hide => visible', [animate('400ms ease-out')]),
-      transition('visible => hide', [animate('200ms ease-in')])
-    ])
-  ]
+  styleUrls: ['./step2.component.css']
 })
 
 export class Step2Component implements OnInit {
   percentInput: ElementRef | undefined;
   PropertyValue:string="";
-  optmortgage:string="";
+  optmortgage:string="1";
   loanvalue:any="";
-  mortgageType:string="";
-  loanAmount:string="";
+  mortgageType:string="1";
+  loanAmount:string="75";
   mortgageInterestRate:string="";
-  mortgageTenure:string="";
+  mortgageTenure:string="10";
   calcData:any;
   MapLoad=true;
   

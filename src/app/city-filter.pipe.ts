@@ -4,6 +4,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class CityFilterPipe implements PipeTransform {
   transform(city: string, query: string): boolean {
     if (!query || !query.trim()) return true;
-    return city.toLowerCase().includes(query.trim().toLowerCase());
+    const q = query.trim();
+    // If query contains digits (looks like a postcode), show all city pills
+    if (/\d/.test(q)) return true;
+    return city.toLowerCase().includes(q.toLowerCase());
   }
 }

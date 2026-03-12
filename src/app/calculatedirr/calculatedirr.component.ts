@@ -532,7 +532,7 @@ export class CalculatedirrComponent implements OnInit, AfterViewInit {
 
   startagain(): void {
     localStorage.removeItem('calcData');
-    this.router.navigate(['/step1']);
+    this.router.navigate(['/']);
   }
 
   printScreen() {

@@ -137,6 +137,15 @@
   color: rgba(255,255,255,0.65);
   line-height: 1.6;
   margin: 0;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.35s ease, opacity 0.25s ease;
+}
+
+.calc-card:hover p {
+  max-height: 120px;
+  opacity: 1;
 }
 
 .calc-card-bottom {

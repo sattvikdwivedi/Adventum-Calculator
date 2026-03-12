@@ -188,7 +188,7 @@ export class Step4Component implements OnInit {
     this.calcData.serviceCharges = this.serviceCharges ? this.serviceCharges.replace(/,/g, '') : '0';
     this.calcData.miscelleneousExpense = this.miscelleneousExpense ? this.miscelleneousExpense.replace(/,/g, '') : '0';
     this.calcData.legalFees = '0';
-    this.calcData.rentalGrowthEscalation = this.rentalGrowthEscalation || '0';
+    this.calcData.rentalGrowthEscalation = (this.rentalGrowthEscalation || '0').replace('%', '');
     this.calcData.reportSavedOnServer = false;
     localStorage.setItem("calcData", JSON.stringify(this.calcData));
     this.router.navigate(['/calculated-irr']);

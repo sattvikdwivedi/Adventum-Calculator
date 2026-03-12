@@ -373,7 +373,7 @@ export class Step3Component implements OnInit {
     // rentalGrowthEscalation defaults to capitalgrowth if not separately set
     if(!this.dataService.EmptyNullOrUndefined(this.capitalgrowth)){
       this.calcData.capitalgrowth=this.capitalgrowth.replace("%",'');
-      this.calcData.rentalGrowthEscalation=this.calcData.rentalGrowthEscalation || this.capitalgrowth.replace("%",'');
+      // rentalGrowthEscalation is set independently in step4 — do not default it here
     }else{
       document.getElementById("capitalgrowth")?.classList.add("error-input");
       flag=false;

@@ -8,7 +8,7 @@
 
       <!-- Logo -->
       <div class="panel-logo">
-        <img src="assets\Calci_logo (1).png" alt="Adventum Calculators" class="panel-logo-img">
+        <a routerLink="/"><img src="assets/Calci_logo (1).png" alt="Adventum Calculators" class="panel-logo-img"></a>
       </div>
 
       <!-- Hero card -->
@@ -97,150 +97,149 @@
       </div>
 
       <!-- Heading -->
-      <div class="section-heading">
-        <h2 class="section-title">Costs &amp; Expenses</h2>
-        <p class="section-sub">Define your acquisition costs and expected ongoing expenses.</p>
+      <h2 class="section-title">Costs &amp; Expenses</h2>
+      <p class="section-sub">Define your acquisition costs and expected ongoing expenses.</p>
+
+      <!-- SDLT Banner -->
+      <div class="sdlt-card">
+        <div class="sdlt-card-left">
+          <div class="sdlt-card-name">Stamp Duty &amp; Land Tax</div>
+          <div class="sdlt-card-note">{{calcData?.ForeignBuyer=='1' ? '(incl. 2% foreign buyer surcharge)' : 'Standard investment rates'}}</div>
+        </div>
+        <div class="sdlt-card-val">£{{stampDutyLandTax || '0'}}</div>
       </div>
 
-      <!-- Acquisition Costs -->
-      <div class="costs-block">
-        <div class="costs-section-label">Acquisition Costs</div>
+      <!-- Section: Acquisition Costs -->
+      <p class="costs-section-label">Acquisition Costs</p>
 
-        <!-- SDLT Banner -->
-        <div class="sdlt-card">
-          <div class="sdlt-card-left">
-            <div class="sdlt-card-name">Stamp Duty &amp; Land Tax</div>
-            <div class="sdlt-card-note">{{calcData?.ForeignBuyer=='1' ? '(incl. 2% foreign buyer surcharge)' : 'Standard investment rates'}}</div>
-          </div>
-          <div class="sdlt-card-val">£{{stampDutyLandTax || '0'}}</div>
+      <!-- Processing Fee (only if mortgage) -->
+      <div class="field-group" *ngIf="calcData?.optmortgage!='0'">
+        <div class="field-label-row">
+          <span class="field-label">Processing Fee</span>
+          <span class="app-hint">% of loan amount</span>
         </div>
-
-        <!-- 3-column inputs row -->
-        <div class="costs-inputs-row">
-
-          <!-- Processing Fee (only if mortgage) -->
-          <div class="cost-field" *ngIf="calcData?.optmortgage!='0'">
-            <div class="cost-field-lbl">Processing Fee</div>
-            <div class="field-suffix-card">
-              <input
-                class="field-val-input"
-                type="text"
-                id="loanOriginationFee"
-                autocomplete="off"
-                placeholder="1"
-                [(ngModel)]="loanOriginationFee"
-                (keyup)="onFeeChange()"
-                (keypress)="validation.DesimalOnly($event,loanOriginationFee)">
-              <span class="field-suffix-text">% of loan</span>
-            </div>
-          </div>
-
-          <!-- Legal/Solicitor Fees -->
-          <div class="cost-field">
-            <div class="cost-field-lbl">Legal/Solicitor Fees</div>
-            <div class="field-prefix-card">
-              <span class="field-prefix-text">£</span>
-              <input
-                class="field-val-input"
-                type="text"
-                id="groundRent"
-                autocomplete="off"
-                placeholder="1500"
-                [(ngModel)]="groundRent"
-                (keyup)="groundRent=validation.amountWithComma(groundRent); calcTotals()"
-                (keypress)="validation.numberOnly($event)">
-            </div>
-          </div>
-
-          <!-- Other Expenses -->
-          <div class="cost-field">
-            <div class="cost-field-lbl">Other Expenses</div>
-            <div class="field-prefix-card">
-              <span class="field-prefix-text">£</span>
-              <input
-                class="field-val-input"
-                type="text"
-                id="miscelleneousExpense"
-                autocomplete="off"
-                placeholder="0"
-                [(ngModel)]="miscelleneousExpense"
-                (keyup)="miscelleneousExpense=validation.amountWithComma(miscelleneousExpense); calcTotals()"
-                (keypress)="validation.numberOnly($event)">
-            </div>
-          </div>
-
+        <div class="field-input-wrap">
+          <input
+            class="field-input"
+            type="text"
+            id="loanOriginationFee"
+            autocomplete="off"
+            placeholder="e.g. 1"
+            [(ngModel)]="loanOriginationFee"
+            (keyup)="onFeeChange()"
+            (keypress)="validation.DesimalOnly($event,loanOriginationFee)">
+          <span class="field-suffix">%</span>
         </div>
       </div>
 
-      <!-- Annual Running Costs -->
-      <div class="costs-block">
-        <div class="costs-section-label">Annual Running Costs</div>
+      <!-- Legal/Solicitor Fees -->
+      <div class="field-group">
+        <div class="field-label-row">
+          <span class="field-label">Legal / Solicitor Fees</span>
+          <span class="app-hint">Typical: £1,500–£3,000</span>
+        </div>
+        <div class="field-input-wrap">
+          <span class="field-prefix">£</span>
+          <input
+            class="field-input"
+            type="text"
+            id="groundRent"
+            autocomplete="off"
+            placeholder="e.g. 1,500"
+            [(ngModel)]="groundRent"
+            (keyup)="groundRent=validation.amountWithComma(groundRent); calcTotals()"
+            (keypress)="validation.numberOnly($event)">
+        </div>
+      </div>
 
-        <div class="costs-inputs-row">
+      <!-- Other Expenses -->
+      <div class="field-group">
+        <div class="field-label-row">
+          <span class="field-label">Other Expenses</span>
+        </div>
+        <div class="field-input-wrap">
+          <span class="field-prefix">£</span>
+          <input
+            class="field-input"
+            type="text"
+            id="miscelleneousExpense"
+            autocomplete="off"
+            placeholder="e.g. 0"
+            [(ngModel)]="miscelleneousExpense"
+            (keyup)="miscelleneousExpense=validation.amountWithComma(miscelleneousExpense); calcTotals()"
+            (keypress)="validation.numberOnly($event)">
+        </div>
+      </div>
 
-          <!-- Lettings Fee -->
-          <div class="cost-field">
-            <div class="cost-field-lbl">Lettings Fee p.a.</div>
-            <div class="field-suffix-card">
-              <input
-                class="field-val-input"
-                type="text"
-                id="letteingManagFee"
-                autocomplete="off"
-                placeholder="{{PropertyLondon == 1 ? '12' : '10'}}"
-                [(ngModel)]="letteingManagFee"
-                (keyup)="calcTotals()"
-                (keypress)="validation.DesimalOnly($event,letteingManagFee)">
-              <span class="field-suffix-text">% of rent</span>
-            </div>
-          </div>
+      <!-- Section: Annual Running Costs -->
+      <p class="costs-section-label">Annual Running Costs</p>
 
-          <!-- Service Charges -->
-          <div class="cost-field">
-            <div class="cost-field-lbl">Service Charges p.a.</div>
-            <div class="field-prefix-card">
-              <span class="field-prefix-text">£</span>
-              <input
-                class="field-val-input"
-                type="text"
-                id="serviceCharges"
-                autocomplete="off"
-                placeholder="{{PropertyLondon == 1 ? '3000' : '1000'}}"
-                [(ngModel)]="serviceCharges"
-                (keyup)="serviceCharges=validation.amountWithComma(serviceCharges); calcTotals()"
-                (keypress)="validation.numberOnly($event)">
-            </div>
-          </div>
+      <!-- Lettings Fee -->
+      <div class="field-group">
+        <div class="field-label-row">
+          <span class="field-label">Lettings / Management Fee</span>
+          <span class="app-hint">{{PropertyLondon == 1 ? 'London avg: 12%' : 'UK avg: 10%'}}</span>
+        </div>
+        <div class="field-input-wrap">
+          <input
+            class="field-input"
+            type="text"
+            id="letteingManagFee"
+            autocomplete="off"
+            placeholder="{{PropertyLondon == 1 ? '12' : '10'}}"
+            [(ngModel)]="letteingManagFee"
+            (keyup)="calcTotals()"
+            (keypress)="validation.DesimalOnly($event,letteingManagFee)">
+          <span class="field-suffix">% of rent</span>
+        </div>
+      </div>
 
-          <!-- Rental Escalation -->
-          <div class="cost-field">
-            <div class="cost-field-lbl">Rental Escalation p.a.
-              <!-- <span class="app-hint">UK avg: 3–5%</span> -->
-            </div>
-            <div class="field-suffix-card">
-              <input
-                class="field-val-input"
-                type="text"
-                id="rentalGrowthEscalation"
-                autocomplete="off"
-                placeholder="e.g. 3"
-                [(ngModel)]="rentalGrowthEscalation"
-                (keyup)="rentalGrowthEscalation=validation.appendPercent($event,rentalGrowthEscalation)"
-                (keypress)="validation.DesimalOnly($event,rentalGrowthEscalation)">
-              <span class="field-suffix-text">% p.a.</span>
-            </div>
-          </div>
+      <!-- Service Charges -->
+      <div class="field-group">
+        <div class="field-label-row">
+          <span class="field-label">Service Charges p.a.</span>
+          <span class="app-hint">{{PropertyLondon == 1 ? 'London avg: £3,000' : 'UK avg: £1,000'}}</span>
+        </div>
+        <div class="field-input-wrap">
+          <span class="field-prefix">£</span>
+          <input
+            class="field-input"
+            type="text"
+            id="serviceCharges"
+            autocomplete="off"
+            placeholder="{{PropertyLondon == 1 ? '3000' : '1000'}}"
+            [(ngModel)]="serviceCharges"
+            (keyup)="serviceCharges=validation.amountWithComma(serviceCharges); calcTotals()"
+            (keypress)="validation.numberOnly($event)">
+        </div>
+      </div>
 
+      <!-- Rental Escalation -->
+      <div class="field-group">
+        <div class="field-label-row">
+          <span class="field-label">Rental Escalation p.a.</span>
+          <span class="app-hint">UK avg: 3–5%</span>
+        </div>
+        <div class="field-input-wrap">
+          <input
+            class="field-input"
+            type="text"
+            id="rentalGrowthEscalation"
+            autocomplete="off"
+            placeholder="e.g. 3"
+            [(ngModel)]="rentalGrowthEscalation"
+            (keyup)="rentalGrowthEscalation=validation.appendPercent($event,rentalGrowthEscalation)"
+            (keypress)="validation.DesimalOnly($event,rentalGrowthEscalation)">
         </div>
       </div>
 
       <!-- Nav buttons -->
       <div class="panel-nav">
-        <button class="btn-back" [routerLink]="['/step3']">
+        <button class="btn-back-outline" [routerLink]="['/step3']">
           <img src="/assets/Frame 1000003040.svg" alt="Back" width="20" height="20">
           Back
         </button>
-        <button class="btn-calculate" type="button" (click)="next()">
+        <button class="btn-continue btn-continue--active" type="button" (click)="next()">
           Calculate Returns
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </button>

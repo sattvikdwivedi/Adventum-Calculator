@@ -1,4 +1,26 @@
 /* ─────────────────────────────────────────────────────────
+   INTER DISPLAY — LOCAL FONT FACES
+───────────────────────────────────────────────────────── */
+@font-face { font-family: 'Inter Display'; src: url('assets/fonts/InterDisplay-Thin.ttf') format('truetype'); font-weight: 100; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Inter Display'; src: url('assets/fonts/InterDisplay-ThinItalic.ttf') format('truetype'); font-weight: 100; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Inter Display'; src: url('assets/fonts/InterDisplay-ExtraLight.ttf') format('truetype'); font-weight: 200; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Inter Display'; src: url('assets/fonts/InterDisplay-ExtraLightItalic.ttf') format('truetype'); font-weight: 200; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Inter Display'; src: url('assets/fonts/InterDisplay-Light.ttf') format('truetype'); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Inter Display'; src: url('assets/fonts/InterDisplay-LightItalic.ttf') format('truetype'); font-weight: 300; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Inter Display'; src: url('assets/fonts/InterDisplay-Regular.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Inter Display'; src: url('assets/fonts/InterDisplay-Italic.ttf') format('truetype'); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Inter Display'; src: url('assets/fonts/InterDisplay-Medium.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Inter Display'; src: url('assets/fonts/InterDisplay-MediumItalic.ttf') format('truetype'); font-weight: 500; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Inter Display'; src: url('assets/fonts/InterDisplay-SemiBold.ttf') format('truetype'); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Inter Display'; src: url('assets/fonts/InterDisplay-SemiBoldItalic.ttf') format('truetype'); font-weight: 600; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Inter Display'; src: url('assets/fonts/InterDisplay-Bold.ttf') format('truetype'); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Inter Display'; src: url('assets/fonts/InterDisplay-BoldItalic.ttf') format('truetype'); font-weight: 700; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Inter Display'; src: url('assets/fonts/InterDisplay-ExtraBold.ttf') format('truetype'); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Inter Display'; src: url('assets/fonts/InterDisplay-ExtraBoldItalic.ttf') format('truetype'); font-weight: 800; font-style: italic; font-display: swap; }
+@font-face { font-family: 'Inter Display'; src: url('assets/fonts/InterDisplay-Black.ttf') format('truetype'); font-weight: 900; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Inter Display'; src: url('assets/fonts/InterDisplay-BlackItalic.ttf') format('truetype'); font-weight: 900; font-style: italic; font-display: swap; }
+
+/* ─────────────────────────────────────────────────────────
    GLOBAL CSS VARIABLES
 ───────────────────────────────────────────────────────── */
 :root {
@@ -36,12 +58,17 @@ html {
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Inter Display', sans-serif;
   background: var(--white);
   color: var(--navy);
   min-height: 100vh;
   overflow-x: hidden;
   font-weight: 400;
+}
+
+h1, h2, h3, h4, h5, h6,
+p, span, a, button, input, select, textarea, label, li {
+  font-family: 'Inter Display', sans-serif;
 }
 
 /* SVG — do NOT force 100% width (breaks sized icons) */
@@ -285,4 +312,35 @@ button:focus {
 @media only screen and (max-width: 330px) {
   #navbar-modal .modal-body { margin-top: 8px; }
   .navmobile-link li { margin-bottom: 8px; }
+}
+.panel-logo a {
+  display: inline-block;
+  line-height: 0;
+  cursor: pointer;
+}
+
+.app-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 24px;
+  background: linear-gradient(221deg, rgba(36,177,75,0.10) 0%, rgba(36,177,75,0.10) 100%);
+  border-radius: 100px;
+  outline: 1px rgba(36,177,75,0.20) solid;
+  outline-offset: -1px;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(51,58,68,0.70);
+  font-family: 'Inter', sans-serif;
+  line-height: 20px;
+}
+
+.app-hint::before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 13px;
+  background: url('/assets/Vector 63.svg') center/contain no-repeat;
+  flex-shrink: 0;
 }

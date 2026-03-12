@@ -8,7 +8,7 @@
 
       <!-- Logo -->
       <div class="panel-logo">
-        <img src="assets\Calci_logo (1).png" alt="Adventum Calculators" class="panel-logo-img">
+        <a routerLink="/"><img src="assets/Calci_logo (1).png" alt="Adventum Calculators" class="panel-logo-img"></a>
       </div>
 
       <!-- Hero card -->
@@ -76,7 +76,7 @@
       <div class="field-group">
         <div class="field-label-row">
           <span class="field-label">Property Value</span>
-          <span class="field-hint">UK market average: £280k</span>
+          <span class="app-hint">UK market average: £280k</span>
         </div>
         <div class="field-input-wrap" [class.field-input-wrap--error]="PropertyValue==''">
           <span class="field-prefix">£</span>
@@ -117,7 +117,7 @@
       <div class="field-group" [@asfirst]="optmortgage=='1'?'visible':'hide'">
         <div class="field-label-row">
           <span class="field-label">Loan to Value (LTV)</span>
-          <span class="field-hint">Higher LTV = less deposit required</span>
+          <span class="app-hint">Higher LTV = less deposit required</span>
         </div>
         <div class="pill-row">
           <button class="pill-btn" [class.active]="loanAmount=='50'" (click)="loanAmount='50'">50%</button>
@@ -134,7 +134,7 @@
       <div class="field-group" [@atfirst]="loanAmount!='' && optmortgage=='1'?'visible':'hide'">
         <div class="field-label-row">
           <span class="field-label">Interest Rate</span>
-          <span class="field-hint">Current avg: 5.2%</span>
+          <span class="app-hint">Current avg: 5.2%</span>
         </div>
         <div class="field-input-wrap">
           <span class="field-prefix">%</span>
@@ -154,7 +154,7 @@
       <div class="field-group" [@afrfirst]="mortgageInterestRate!='' && optmortgage=='1'?'visible':'hide'">
         <div class="field-label-row">
           <span class="field-label">Loan Tenure</span>
-          <span class="field-hint">Typical BTL: 10-25 years</span>
+          <span class="app-hint">Typical BTL: 10-25 years</span>
         </div>
         <div class="pill-row">
           <button class="pill-btn" [class.active]="mortgageTenure=='5'"  (click)="mortgageTenure='5'">5 Yrs</button>

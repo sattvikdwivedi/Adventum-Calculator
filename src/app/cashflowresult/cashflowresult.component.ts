@@ -588,7 +588,7 @@ export class CashflowresultComponent implements OnInit, AfterViewInit {
   }
   startagain(): void {
     localStorage.removeItem('calcData');
-    this.router.navigate(['/cashflow/step1']);
+    this.router.navigate(['/']);
   }
 
   printScreen() {

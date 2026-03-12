@@ -48,8 +48,8 @@
 
       <!-- Top bar -->
       <div class="panel-topbar">
-        <button class="btn-circle-back" [routerLink]="['/step1']">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <button [routerLink]="['/step1']" style="background: none; border: none; padding: 0; cursor: pointer; display: flex; align-items: center;">
+          <img src="/assets/Frame 1000003040.svg" alt="Back" width="44" height="44">
         </button>
         <div class="location-pill">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
@@ -76,7 +76,7 @@
       <div class="field-group">
         <div class="field-label-row">
           <span class="field-label">Property Value</span>
-          <span class="field-hint">+ UK market average: £280k</span>
+          <span class="field-hint">UK market average: £280k</span>
         </div>
         <div class="field-input-wrap" [class.field-input-wrap--error]="PropertyValue==''">
           <span class="field-prefix">£</span>
@@ -117,7 +117,7 @@
       <div class="field-group" [@asfirst]="optmortgage=='1'?'visible':'hide'">
         <div class="field-label-row">
           <span class="field-label">Loan to Value (LTV)</span>
-          <span class="field-hint">+ Higher LTV = less deposit required</span>
+          <span class="field-hint">Higher LTV = less deposit required</span>
         </div>
         <div class="pill-row">
           <button class="pill-btn" [class.active]="loanAmount=='50'" (click)="loanAmount='50'">50%</button>
@@ -134,7 +134,7 @@
       <div class="field-group" [@atfirst]="loanAmount!='' && optmortgage=='1'?'visible':'hide'">
         <div class="field-label-row">
           <span class="field-label">Interest Rate</span>
-          <span class="field-hint">+ Current avg: 5.2%</span>
+          <span class="field-hint">Current avg: 5.2%</span>
         </div>
         <div class="field-input-wrap">
           <span class="field-prefix">%</span>
@@ -154,7 +154,7 @@
       <div class="field-group" [@afrfirst]="mortgageInterestRate!='' && optmortgage=='1'?'visible':'hide'">
         <div class="field-label-row">
           <span class="field-label">Loan Tenure</span>
-          <span class="field-hint">+ Typical BTL: 10-25 years</span>
+          <span class="field-hint">Typical BTL: 10-25 years</span>
         </div>
         <div class="pill-row">
           <button class="pill-btn" [class.active]="mortgageTenure=='5'"  (click)="mortgageTenure='5'">5 Yrs</button>
@@ -189,7 +189,7 @@
       <!-- Nav buttons -->
       <div class="panel-nav" *ngIf="mortgageType!='' || optmortgage=='0'">
         <button class="btn-back-outline" [routerLink]="['/step1']">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+          <img src="/assets/Frame 1000003040.svg" alt="Back" width="20" height="20">
           Back
         </button>
         <button

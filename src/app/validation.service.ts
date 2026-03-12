@@ -35,10 +35,6 @@ export class ValidationService {
     if (charCode == 8) {
       value = value.slice(0, -1);
     }
-    if (!this.isNullEmptyUndefined(value))
-      value = value.replace('%', '') + "%";
-    else
-      value = "";
     return value;
   }
   amountWithComma(value: string): string {

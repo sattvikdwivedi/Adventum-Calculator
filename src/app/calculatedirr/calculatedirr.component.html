@@ -358,7 +358,7 @@
             <span class="rp-input-val">{{calcData?.letteingManagFee}}%</span>
           </div>
           <div class="rp-input-row">
-            <span class="rp-input-label">Ground Rent</span>
+            <span class="rp-input-label">Legal Fees</span>
             <span class="rp-input-val">{{(calcData?.groundRent || 0) | currency:'GBP':'symbol':'1.0-0'}}</span>
           </div>
           <div class="rp-input-row">
@@ -369,10 +369,7 @@
             <span class="rp-input-label">Misc. Expenses</span>
             <span class="rp-input-val">{{(calcData?.miscelleneousExpense || 0) | currency:'GBP':'symbol':'1.0-0'}}</span>
           </div>
-          <div class="rp-input-row">
-            <span class="rp-input-label">Legal Fees</span>
-            <span class="rp-input-val">{{(calcData?.legalFees || 0) | currency:'GBP':'symbol':'1.0-0'}}</span>
-          </div>
+
           <div class="rp-input-row">
             <span class="rp-input-label">Foreign Buyer</span>
             <span class="rp-input-val">{{calcData?.ForeignBuyer=='1' ? 'Yes' : 'No'}}</span>

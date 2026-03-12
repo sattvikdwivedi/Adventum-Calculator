@@ -143,7 +143,7 @@ export class StampDutyResultComponent implements OnInit, AfterViewInit {
 
   startagain(): void {
     localStorage.removeItem('calcData');
-    this.router.navigate(['/stamp-duty-calculator/question']);
+    this.router.navigate(['/']);
   }
 
   printScreen(): void {

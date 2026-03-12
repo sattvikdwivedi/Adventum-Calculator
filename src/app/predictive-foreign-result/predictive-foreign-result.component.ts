@@ -152,7 +152,7 @@ export class PredictiveForeignResultComponent implements OnInit, AfterViewInit {
 
   startagain(): void {
     localStorage.removeItem('calcData');
-    this.router.navigate(['/Predictive-Foreign-calculator/question']);
+    this.router.navigate(['/']);
   }
 
   printScreen(): void {

@@ -109,7 +109,30 @@
 .field { margin-bottom: 18px; }
 .field-label { font-size: 13px; font-weight: 600; color: #132147; margin-bottom: 8px; display: block; }
 .field-label-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; }
-.field-hint { font-size: 11px; color: #16a34a; background: rgba(34,197,94,0.1); padding: 2px 9px; border-radius: 50px; font-weight: 500; }
+.field-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 24px;
+  background: linear-gradient(221deg, rgba(36,177,75,0.10) 0%, rgba(36,177,75,0.10) 100%);
+  border-radius: 100px;
+  outline: 1px rgba(36,177,75,0.20) solid;
+  outline-offset: -1px;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 300;
+  color: rgba(51,58,68,0.70);
+  font-family: 'Inter', sans-serif;
+  line-height: 20px;
+}
+.field-hint::before {
+  content: '';
+  display: inline-block;
+  width: 12px;
+  height: 13px;
+  background: url('/assets/Vector 63.svg') center/contain no-repeat;
+  flex-shrink: 0;
+}
 
 /* Select */
 .sel-wrap { position: relative; }

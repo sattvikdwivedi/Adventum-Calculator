@@ -321,6 +321,10 @@ export class CalculatedirrComponent implements OnInit, AfterViewInit {
     this.calcData.mortgageInterestRate = parseFloat(this.calcData.mortgageInterestRate) || 0;
     this.calcData.loanOriginationFee = parseFloat(this.calcData.loanOriginationFee) || 0;
     this.calcData.legalFees = parseFloat((this.calcData.legalFees + '').replace(/,/g,'')) || 0;
+    this.calcData.groundRent = parseFloat((this.calcData.groundRent + '').replace(/,/g,'')) || 0;
+    this.calcData.serviceCharges = parseFloat((this.calcData.serviceCharges + '').replace(/,/g,'')) || 0;
+    this.calcData.miscelleneousExpense = parseFloat((this.calcData.miscelleneousExpense + '').replace(/,/g,'')) || 0;
+    this.calcData.mortgageTenure = parseFloat(this.calcData.mortgageTenure) || this.investedTenure;
     this.calcData.homecurrency = parseFloat(this.calcData.homecurrency) || 1;
     this.homecurrency = this.calcData.homecurrency;
     this.Initialhomecurrency = this.calcData.homecurrency;
@@ -351,7 +355,7 @@ export class CalculatedirrComponent implements OnInit, AfterViewInit {
         } else {
           const P = this.calcData.PropertyValue * (this.calcData.loanAmount / 100);
           const R = ((this.calcData.mortgageInterestRate / 100) / 12);
-          const N = this.investedTenure * 12;
+          const N = this.calcData.mortgageTenure * 12;
           data.EMI = parseFloat(((P * R * Math.pow(1 + R, N) / (Math.pow(1 + R, N) - 1)) * 12).toFixed(4));
           if (i == 0) {
             data.Interest = (this.calcData.PropertyValue * (this.calcData.loanAmount / 100)) * (this.calcData.mortgageInterestRate / 100);
@@ -366,9 +370,9 @@ export class CalculatedirrComponent implements OnInit, AfterViewInit {
           }
         }
       }
-      data.GroundRent = this.dataService.EmptyNullOrUndefined(this.calcData.groundRent) ? 0 : this.calcData.groundRent;
-      data.ServiceCharges = this.dataService.EmptyNullOrUndefined(this.calcData.serviceCharges) ? 0 : this.calcData.serviceCharges;
-      data.MiscelleneousExpense = this.dataService.EmptyNullOrUndefined(this.calcData.miscelleneousExpense) ? 0 : this.calcData.miscelleneousExpense;
+      data.GroundRent = this.calcData.groundRent || 0;
+      data.ServiceCharges = this.calcData.serviceCharges || 0;
+      data.MiscelleneousExpense = this.calcData.miscelleneousExpense || 0;
 
       // if(this.calcData.optmortgage == "1"){
       //   data.CashFlow = parseInt((data.GrossRent - data.LettingFee).toFixed()) - data.GroundRent - data.ServiceCharges - data.MiscelleneousExpense - data.Interest - data.PrincipleRepayment;
@@ -524,7 +528,7 @@ export class CalculatedirrComponent implements OnInit, AfterViewInit {
 
   startagain(): void {
     localStorage.removeItem('calcData');
-    this.router.navigate(['/step1']);
+    this.router.navigate(['/']);
   }
 
   printScreen() {

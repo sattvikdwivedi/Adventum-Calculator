@@ -261,7 +261,7 @@ export class EstimatedWeeklyRentResultComponent implements OnInit,AfterViewInit 
   }
   startagain(): void {
     localStorage.removeItem('calcData');
-    this.router.navigate(['/estimated-weekly-rent-calculator/question']);
+    this.router.navigate(['/']);
   }
 
    

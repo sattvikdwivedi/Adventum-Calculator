@@ -59,7 +59,7 @@ export class AtedresultComponent implements OnInit {
       this.calcData.reportSavedOnServer=false;
       localStorage.setItem("calcData",JSON.stringify(this.calcData));
       // localStorage.clear();
-      this.router.navigate(['/ated/step2']);
+      this.router.navigate(['/']);
     }
   
     

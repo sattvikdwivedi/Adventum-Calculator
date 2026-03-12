@@ -161,18 +161,18 @@ export class Step4Component implements OnInit {
     const feeRate = parseFloat(this.loanOriginationFee || '0') || 0;
     const loanAmt = propVal * (parseFloat(this.calcData.loanAmount || '0') / 100);
     const procFee = loanAmt * (feeRate / 100);
-    const legal = parseFloat((this.legalFees || '0').replace(/,/g, '')) || 0;
-    const misc = parseFloat((this.miscelleneousExpense || '0').replace(/,/g, '')) || 0;
-
     this.processingFeeAmount = procFee > 0 ? this.validation.amountWithComma(Math.round(procFee).toString()) : '0';
 
-    const acqTotal = sdlt + procFee + legal + misc;
+    const acqTotal = sdlt + procFee;
     this.acquisitionTotal = acqTotal > 0 ? this.validation.amountWithComma(Math.round(acqTotal).toString()) : '';
 
+    const ground = parseFloat((this.groundRent || '0').replace(/,/g, '')) || 0;
     const svcCharges = parseFloat((this.serviceCharges || '0').replace(/,/g, '')) || 0;
-    this.runningCostTotal = svcCharges > 0 ? this.validation.amountWithComma(Math.round(svcCharges).toString()) : '';
+    const misc = parseFloat((this.miscelleneousExpense || '0').replace(/,/g, '')) || 0;
+    const annualTotal = ground + svcCharges + misc;
+    this.runningCostTotal = annualTotal > 0 ? this.validation.amountWithComma(Math.round(annualTotal).toString()) : '';
 
-    const yr1 = acqTotal + svcCharges;
+    const yr1 = acqTotal + annualTotal;
     this.year1Total = yr1 > 0 ? this.validation.amountWithComma(Math.round(yr1).toString()) : '';
   }
 
@@ -183,7 +183,7 @@ export class Step4Component implements OnInit {
     this.calcData.groundRent = this.groundRent ? this.groundRent.replace(/,/g, '') : '0';
     this.calcData.serviceCharges = this.serviceCharges ? this.serviceCharges.replace(/,/g, '') : '0';
     this.calcData.miscelleneousExpense = this.miscelleneousExpense ? this.miscelleneousExpense.replace(/,/g, '') : '0';
-    this.calcData.legalFees = this.legalFees ? this.legalFees.replace(/,/g, '') : '0';
+    this.calcData.legalFees = '0';
     this.calcData.reportSavedOnServer = false;
     localStorage.setItem("calcData", JSON.stringify(this.calcData));
     this.router.navigate(['/calculated-irr']);

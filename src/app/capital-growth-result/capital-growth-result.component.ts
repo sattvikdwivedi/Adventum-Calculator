@@ -127,7 +127,7 @@ export class CapitalGrowthResultComponent implements OnInit,AfterViewInit {
 }
   startagain(): void {
     localStorage.removeItem('calcData');
-    this.router.navigate(['/capital-growth-calculator/question']);
+    this.router.navigate(['/']);
   }
 
   

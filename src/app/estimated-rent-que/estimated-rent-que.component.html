@@ -8,7 +8,7 @@
     <div class="ewr-panel-left-inner">
 
       <div class="panel-logo">
-        <img src="/assets/Adventum_Calc_Logo (1).svg" alt="Adventum Calculators" class="panel-logo-img">
+        <img src="assets\Calci_logo (1).png" alt="Adventum Calculators" class="panel-logo-img">
       </div>
 
       <!-- Live preview card -->
@@ -84,10 +84,10 @@
       <div class="ewr-field">
         <div class="ewr-label">Home Currency</div>
         <div class="ewr-custom-select" [class.ewr-custom-select--open]="currencyDropdownOpen">
-          <div class="ewr-custom-trigger" (click)="currencyDropdownOpen=!currencyDropdownOpen">
-            <span [class.ewr-custom-placeholder]="!homecurrencyText">{{homecurrencyText ? selectedCurrencyName + ' (' + homecurrencyText + ')' : 'Select currency'}}</span>
+          <button type="button" class="ewr-custom-trigger" (click)="currencyDropdownOpen=!currencyDropdownOpen">
+            <span [class.ewr-custom-placeholder]="!homecurrencyText">{{homecurrencyText ? selectedCurrencyName : 'Select currency'}}</span>
             <svg class="ewr-custom-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
-          </div>
+          </button>
           <div class="ewr-custom-dropdown" *ngIf="currencyDropdownOpen">
             <div class="ewr-custom-search-wrap">
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>

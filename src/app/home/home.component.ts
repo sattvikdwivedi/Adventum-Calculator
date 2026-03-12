@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { trigger,state,style,animate,transition } from '@angular/animations';
 import { ViewportScroller } from '@angular/common';
 import { Router } from '@angular/router';
@@ -80,7 +80,8 @@ declare var $: any;
   ])
 ]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, AfterViewInit {
+  @ViewChild('bgVideo') bgVideo: ElementRef<HTMLVideoElement>;
   showthirdsection:boolean;
   CalculatorType='';
   constructor(
@@ -88,6 +89,14 @@ export class HomeComponent implements OnInit {
     public viewportScroller:ViewportScroller
     ) {
     localStorage.clear();
+  }
+
+  ngAfterViewInit(): void {
+    const video = this.bgVideo?.nativeElement;
+    if (video) {
+      video.muted = true;
+      video.play().catch(() => {});
+    }
   }
 
   ngOnInit(): void {

@@ -63,13 +63,13 @@ export class Step3Component implements OnInit {
   currencySearch = '';
 
   currencyList = [
+    { code: 'INR', name: 'Indian Rupee' },
     { code: 'GBP', name: 'Great Britain Pound' },
     { code: 'AED', name: 'UAE Dirham' },
     { code: 'USD', name: 'US Dollar' },
     { code: 'SGD', name: 'Singapore Dollar' },
     { code: 'HKD', name: 'Hong Kong Dollar' },
     { code: 'EUR', name: 'Euro' },
-    { code: 'INR', name: 'Indian Rupee' },
     { code: 'NGN', name: 'Nigerian Naira' },
     { code: 'BDT', name: 'Bangladeshi Taka' },
     { code: 'PKR', name: 'Pakistani Rupee' },

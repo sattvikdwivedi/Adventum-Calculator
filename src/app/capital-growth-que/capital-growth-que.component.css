@@ -264,11 +264,11 @@
 .cg-custom-select { position: relative; }
 .cg-custom-trigger {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 13px 16px;
+  width: 100%; padding: 13px 16px;
   border: 1.5px solid #e5e7eb; border-radius: 12px;
   background: #fff; cursor: pointer; transition: border 0.2s;
   font-size: 15px; font-weight: 500; color: #132147; font-family: 'Inter', sans-serif;
-  user-select: none;
+  outline: none; text-align: left; user-select: none;
 }
 .cg-custom-trigger:hover, .cg-custom-select--open .cg-custom-trigger { border-color: #132147; }
 .cg-custom-placeholder { color: #9ca3af; font-weight: 400; }

@@ -22,6 +22,7 @@ export class Step4Component implements OnInit {
   serviceCharges: string = "";
   miscelleneousExpense: string = "";
   legalFees: string = "";
+  rentalGrowthEscalation: string = "";
   PropertyLondon: any;
   City: string = '';
 
@@ -76,6 +77,9 @@ export class Step4Component implements OnInit {
     }
     if (!this.dataService.EmptyNullOrUndefined(this.calcData.legalFees)) {
       this.legalFees = this.validation.amountWithComma(this.calcData.legalFees);
+    }
+    if (!this.dataService.EmptyNullOrUndefined(this.calcData.rentalGrowthEscalation)) {
+      this.rentalGrowthEscalation = this.calcData.rentalGrowthEscalation;
     }
   }
 
@@ -184,6 +188,7 @@ export class Step4Component implements OnInit {
     this.calcData.serviceCharges = this.serviceCharges ? this.serviceCharges.replace(/,/g, '') : '0';
     this.calcData.miscelleneousExpense = this.miscelleneousExpense ? this.miscelleneousExpense.replace(/,/g, '') : '0';
     this.calcData.legalFees = '0';
+    this.calcData.rentalGrowthEscalation = this.rentalGrowthEscalation || '0';
     this.calcData.reportSavedOnServer = false;
     localStorage.setItem("calcData", JSON.stringify(this.calcData));
     this.router.navigate(['/calculated-irr']);

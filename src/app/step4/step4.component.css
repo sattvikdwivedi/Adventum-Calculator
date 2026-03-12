@@ -30,14 +30,14 @@
   z-index: 2;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  align-items: stretch;
   padding: 36px 40px;
   height: 100vh;
   box-sizing: border-box;
   overflow-y: auto;
 }
 
-.panel-logo { display: flex; align-items: center; flex-shrink: 0; margin-bottom: 32px; }
+.panel-logo { display: flex; align-items: center; flex-shrink: 0; }
 .panel-logo-img { height: 41px; width: auto; display: block; }
 
 /* Hero card */
@@ -45,6 +45,8 @@
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
+  margin-top: auto;
+  margin-bottom: auto;
   gap: 14px;
   padding: 18px;
   background:
@@ -373,8 +375,8 @@
     padding: 28px 20px;
     overflow: visible;
   }
-  .panel-logo { margin-bottom: 20px; }
-  .panel-hero-card { margin-top: 0; }
+  .panel-logo { margin-bottom: 0; }
+  .panel-hero-card { margin-top: 24px; margin-bottom: 24px; }
   .panel-right { height: auto; }
   .panel-right-inner { padding: 24px 20px; }
   .panel-nav { grid-template-columns: 1fr 1fr; }

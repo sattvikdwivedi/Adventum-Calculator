@@ -457,6 +457,7 @@
   margin-top: auto;
   padding-top: 28px;
   border-top: 1px solid #f3f4f6;
+  margin-bottom: 2px;
 }
 
 .btn-back-outline {
@@ -533,6 +534,27 @@
   .panel-nav {
     grid-template-columns: 1fr 1fr;
   }
+}
+
+@media (max-width: 480px) {
+  .panel-left-content { padding: 20px 16px; min-height: 200px; }
+  .panel-hero-card { padding: 20px; }
+  .panel-hero-title { font-size: 20px; }
+  .panel-stat-val { font-size: 18px; }
+  .panel-right-inner { padding: 20px 16px; }
+  .section-title { font-size: 22px; }
+  .section-sub { font-size: 13px; }
+  .field-label { font-size: 13px; }
+  .field-input { padding: 11px 14px; font-size: 14px; }
+  .field-prefix { padding: 11px 12px; }
+  .field-hint { padding: 8px 16px; font-size: 12px; gap: 6px; }
+  .toggle-opt { padding: 10px; font-size: 13px; }
+  .pill-btn { padding: 8px 14px; font-size: 12px; }
+  .summary-grid { grid-template-columns: 1fr; gap: 8px; }
+  .summary-card-val { font-size: 18px; }
+  .panel-nav { gap: 8px; padding-top: 20px; }
+  .btn-back-outline, .btn-continue { padding: 12px; font-size: 14px; }
+  .location-pill { padding: 6px 12px; font-size: 12px; }
 }
 
 /* ── OLD CSS COMMENTED OUT ──

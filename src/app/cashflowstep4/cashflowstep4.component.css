@@ -177,7 +177,7 @@
 /* Actions */
 .actions {
   display: flex; gap: 10px; padding-top: 20px;
-  margin-top: auto; border-top: 1px solid #f3f4f6;
+  margin-top: auto; margin-bottom: 2px; border-top: 1px solid #f3f4f6;
 }
 .btn-back {
   flex: 1; padding: 13px; border-radius: 12px; border: 1.5px solid #e5e7eb;
@@ -203,4 +203,27 @@
   .panel-right { height: auto; }
   .pr-inner { padding: 24px 20px; }
   .row3 { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .pl-inner { padding: 20px 16px; min-height: 200px; }
+  .pr-inner { padding: 20px 16px; }
+  .step-title { font-size: 22px; }
+  .step-sub { font-size: 13px; }
+  .loc-pill { padding: 6px 12px; font-size: 11px; }
+  .field-lbl, .field-label { font-size: 13px; }
+  .iw .inp, .field-input { padding: 10px 12px; font-size: 14px; }
+  .ipre, .field-prefix { padding: 10px; }
+  .isuf, .field-suffix { padding: 10px; font-size: 12px; }
+  .row3 { grid-template-columns: 1fr; }
+  .sdlt-banner { flex-direction: column; align-items: flex-start; padding: 12px; }
+  .sdlt-val { font-size: 16px; }
+  .tax-alert { padding: 16px; }
+  .tax-alert-title { font-size: 14px; }
+  .tax-alert-text { font-size: 13px; }
+  .btn-back, .btn-calc { padding: 12px; font-size: 14px; }
+  .actions { gap: 8px; padding-top: 16px; }
+  .cf-card { padding: 20px; }
+  .cf-title { font-size: 20px; }
+  .cf-val { font-size: 18px; }
 }

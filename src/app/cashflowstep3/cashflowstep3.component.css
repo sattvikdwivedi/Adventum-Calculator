@@ -139,7 +139,7 @@
 /* Actions */
 .actions {
   display: flex; gap: 10px; padding-top: 20px;
-  margin-top: auto; border-top: 1px solid #f3f4f6;
+  margin-top: auto; margin-bottom: 2px; border-top: 1px solid #f3f4f6;
 }
 .btn-back {
   flex: 1; padding: 13px; border-radius: 12px; border: 1.5px solid #e5e7eb;
@@ -163,4 +163,24 @@
   .pr-inner { padding: 24px 20px; }
   .fields-row { flex-direction: column; }
   .preview-row { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .pl-inner { padding: 20px 16px; min-height: 200px; }
+  .pr-inner { padding: 20px 16px; }
+  .step-title { font-size: 22px; }
+  .step-sub { font-size: 13px; }
+  .loc-pill { padding: 6px 12px; font-size: 11px; }
+  .field-lbl { font-size: 13px; }
+  .inp-val { padding: 10px 12px; font-size: 14px; }
+  .inp-unit { padding: 10px; font-size: 12px; }
+  .inp-sel { padding: 10px 12px; font-size: 14px; }
+  .preview-row { grid-template-columns: 1fr; gap: 8px; }
+  .prev-val { font-size: 18px; }
+  .btn-back, .btn-cont { padding: 12px; font-size: 14px; }
+  .actions { gap: 8px; padding-top: 20px; }
+  .cf-card { padding: 20px; }
+  .cf-title { font-size: 20px; }
+  .cf-val { font-size: 18px; }
+  .fields-row { grid-template-columns: 1fr; }
 }

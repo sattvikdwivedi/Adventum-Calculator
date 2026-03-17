@@ -379,6 +379,7 @@
   align-items: center;
   gap: 10px;
   padding: 20px 48px;
+  margin-bottom: 2px;
   border-top: 1px solid #f3f4f6;
   background: #fff;
   flex-shrink: 0;
@@ -430,6 +431,22 @@
   .sdlt-panel-right { height: auto; overflow: visible; }
   .sdlt-panel-right-inner { overflow: visible; padding: 24px 20px; }
   .sdlt-actions { padding: 16px 20px; }
+}
+
+@media (max-width: 480px) {
+  .sdlt-left-inner { padding: 20px 16px; min-height: 200px; }
+  .sdlt-right-inner { padding: 20px 16px; }
+  .sdlt-title { font-size: 22px; }
+  .sdlt-sub { font-size: 13px; }
+  .sdlt-field-label { font-size: 13px; }
+  .sdlt-input, .sdlt-select { font-size: 14px; padding: 10px 14px; height: 44px; }
+  .sdlt-toggle-btn { padding: 10px; font-size: 13px; }
+  .sdlt-hero-card { padding: 20px; }
+  .sdlt-hero-title { font-size: 20px; }
+  .sdlt-stat-val { font-size: 18px; }
+  .sdlt-btn-back, .sdlt-btn-calc { padding: 12px; font-size: 14px; }
+  .sdlt-nav { gap: 8px; }
+  .sdlt-pill { padding: 6px 12px; font-size: 12px; }
 }
 
 .panel-logo-img { height: 48px; width: auto; display: block; }

@@ -1113,6 +1113,22 @@
   .rp-annexure-section--two-col { flex-direction: column; }
 }
 
+@media (max-width: 480px) {
+  .rp-header { padding: 20px 16px 0; }
+  .rp-body { padding: 0 16px 100px; }
+  .rp-title { font-size: 22px; }
+  .rp-sub { font-size: 13px; }
+  .rp-kpi { height: auto; min-height: 140px; padding: 16px; }
+  .rp-kpi__val { font-size: 22px; }
+  .rp-kpi__label { font-size: 10px; }
+  .rp-kpi__icon-wrap { width: 80px; height: 80px; }
+  .rp-chart-wrap { height: 200px; }
+  .rp-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .rp-table-header, .rp-table-row { min-width: 600px; }
+  .rp-footer { padding: 12px 16px; }
+  .rp-footer-btn { font-size: 13px; padding: 10px 16px; }
+  .rp-assumptions-grid { grid-template-columns: 1fr; }
+}
 
 /* Country tabs under IRR chart */
 .country-tabs {

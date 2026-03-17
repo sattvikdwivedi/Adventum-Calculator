@@ -355,3 +355,15 @@
   .rp-footer { padding: 12px 16px; gap: 8px; }
   .rp-footer-btn { font-size: 15px; padding: 14px; }
 }
+
+@media (max-width: 480px) {
+  .rp-header { padding: 20px 16px 0; }
+  .rp-body { padding: 0 16px 100px; }
+  .rp-title { font-size: 22px; }
+  .rp-kpi { height: auto; min-height: 140px; padding: 16px; }
+  .rp-kpi-val { font-size: 22px; }
+  .rp-kpi-label { font-size: 10px; }
+  .rp-breakdown-row { font-size: 13px; }
+  .rp-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .rp-footer { padding: 12px 16px; }
+}

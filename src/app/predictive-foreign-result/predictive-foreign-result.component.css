@@ -430,3 +430,16 @@
 .rp-footer-recalc { background: linear-gradient(90deg, #24BF6B 0%, #2FA3AC 52%, #3889E6 100%); outline: 1px solid rgba(19,33,71,0.40); outline-offset: -1px; color: #ffffff; }
 .rp-footer-recalc:hover { opacity: 0.9; }
 @media (max-width: 640px) { .rp-footer { padding: 12px 16px; } }
+
+@media (max-width: 480px) {
+  .rp-header { padding: 20px 16px 0; }
+  .rp-body { padding: 0 16px 100px; }
+  .rp-title { font-size: 22px; }
+  .rp-kpi { height: auto; min-height: 140px; padding: 16px; }
+  .rp-kpi-val, .rp-kpi__val { font-size: 22px; }
+  .rp-kpi-label, .rp-kpi__label { font-size: 10px; }
+  .rp-chart-wrap { height: 200px; }
+  .rp-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .rp-table-header, .rp-table-body > div { min-width: 500px; }
+  .rp-footer { padding: 12px 16px; }
+}

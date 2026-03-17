@@ -160,3 +160,10 @@
   .adv-navbar { height: 60px; padding: 0 16px; }
   .adv-logo-wordmark { font-size: 15px; }
 }
+
+@media (max-width: 480px) {
+  .adv-navbar { padding: 0 16px; height: 56px; }
+  .adv-navbar-logo img { height: 28px; }
+  .adv-navbar-links { gap: 12px; }
+  .adv-navbar-links a { font-size: 12px; }
+}
